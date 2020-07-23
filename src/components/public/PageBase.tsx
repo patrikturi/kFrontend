@@ -5,9 +5,9 @@ import {GettingStartedPage} from './GettingStartedPage';
 import {LoginPage} from './LoginPage';
 
 export const PageBase = () => {
-    //"px-4 py-2 bg-light pageBase">
+
     return (
-        <div className="text-white">
+        <div className="row pt-5 m-0">
             <Switch>
                 <Route exact path="/" component={LandingPage} />
                 <Route path="/getting-started" component={GettingStartedPage} />

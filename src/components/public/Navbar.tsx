@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 export const Navbar = () => {
     return (
-        <BootstrapNavbar bg="dark" variant="dark" expand="lg">
+        <BootstrapNavbar bg="dark" variant="dark" expand="md">
             <BootstrapNavbar.Brand>
             <img
                 src={logo}

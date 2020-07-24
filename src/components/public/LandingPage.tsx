@@ -16,16 +16,22 @@ export const LandingPage = () => {
                     Make your name among other players and become a superstar.
                 </p>
                 <p className="lead pt-5">
-                What is SecondLife?
+                <a href="/getting-started#secondlife">What is SecondLife?</a>
                 </p>
 
                 <p className="lead">
-                What is kSoccer?
+                <a href="/getting-started#ksoccer">What is kSoccer?</a>
                 </p>
 
-                <p className="lead">
-                Register
-                </p>
+                <button type="button" className="btn btn-success btn-lg">Register now!</button>
+
+            {/*TODO:
+                Are you...
+                 new? => <Get Started in SecondLife>
+                 a SecondLife player? => <Get Started with kSoccer>
+                 a kSoccer player? => <Register here>
+                    (or Log In if you already registered)
+            */}
             </div>
         </>
     );

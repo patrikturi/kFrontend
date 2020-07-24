@@ -25,6 +25,9 @@ export const Navbar = () => {
                 <LinkContainer to="/getting-started">
                     <Nav.Link>Getting Started</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to="/updates">
+                    <Nav.Link>Updates</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>
                 </LinkContainer>

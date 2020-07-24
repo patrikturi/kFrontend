@@ -4,8 +4,8 @@ export const GettingStartedPage = () => {
 
     return (
         <>
-            <div className="col-md-2"></div>
-            <div className="col-md-8 text-left">
+            <div className="col-md-3"></div>
+            <div className="col-md-6 text-left">
 
                 <p id="secondlife" className="lead">
                 Getting Started in SecondLife

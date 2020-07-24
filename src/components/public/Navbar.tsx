@@ -5,7 +5,13 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 export const Navbar = () => {
     return (
+        <>
+        <div className="row m-0 bg-dark">
+        <div className="col-md-2">
+        </div>
+        <div className="col-md-8">
         <BootstrapNavbar bg="dark" variant="dark" expand="md">
+            
             <BootstrapNavbar.Brand>
             <img
                 src={logo}
@@ -34,5 +40,10 @@ export const Navbar = () => {
             </Nav>
             </BootstrapNavbar.Collapse>
         </BootstrapNavbar>
+        </div>
+        <div className="col-md-2">
+        </div>
+        </div>
+        </>
     );
 }

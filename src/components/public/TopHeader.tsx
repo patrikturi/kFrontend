@@ -21,6 +21,7 @@ export const TopHeader = () => {
             <Switch>
                 <Route exact path="/" component={welcomeImage} />
                 <Route path="/getting-started" component={otherImage} />
+                <Route path="/updates" component={otherImage} />
                 <Route path="/login" component={otherImage} />
                 <Route component={welcomeImage} />
             </Switch>

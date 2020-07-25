@@ -1,10 +1,12 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
+#
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
+#
+variables:
+    - group: Credentials
+    
 trigger:
 - master
+- azure-pipeline
 
 pool:
   vmImage: 'ubuntu-18.04'
@@ -13,9 +15,22 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '12.x'
-  displayName: 'Install Node.js'
+  displayName: 'Install Node'
 
-- script: |
+- bash: |
+    set -ex
+    curl -sL https://firebase.tools | bash
     npm install
+  displayName: 'Install'
+
+- bash: |
+    set -ex
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'Build'
+
+- bash: |
+    set -ex
+    firebase deploy
+  displayName: 'Deploy to Staging'
+  env:
+    FIREBASE_TOKEN: $(FIREBASE_TOKEN)

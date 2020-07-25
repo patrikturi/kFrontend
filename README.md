@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/patrikturi/kFrontend/_apis/build/status/patrikturi.kFrontend?branchName=master)](https://dev.azure.com/patrikturi/kFrontend/_build/latest?definitionId=4&branchName=master)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

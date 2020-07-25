@@ -2,15 +2,16 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {PublicSite} from './components/public/PublicSite';
-import {MemberSite} from './components/member/MemberSite';
+import {SiteContextProvider} from './context/SiteContext';
+import {Site} from './components/Site';
 
 
 function App() {
-  const site = <PublicSite/>;
   return (
     <div className="App" style={{height: "100%"}}>
-      {site}
+      <SiteContextProvider>
+        <Site />
+      </SiteContextProvider>
     </div>
   );
 }

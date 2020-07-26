@@ -3,7 +3,7 @@ import '../../member-site.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTachometerAlt, faUsers, faStopwatch, faMapMarkerAlt, faSearch, faTrophy, faFutbol, faHandsHelping, faAngleLeft, faAngleRight, faCogs, faList, faSignOutAlt, faUser, faCircle, faAngleUp, faBars } from '@fortawesome/free-solid-svg-icons'
 import { Dropdown, Nav } from 'react-bootstrap';
-import profilePicture from '../../profile.jpg';
+import profilePicture from '../../img/profile.jpg';
 
 export const MemberSite = () => {
 

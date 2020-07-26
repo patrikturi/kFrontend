@@ -1,6 +1,6 @@
 import React from 'react';
-import headerImg from '../../soccer-boots.jpg';
-import otherImg from '../../stadium.jpg';
+import headerImg from '../../img/soccer-boots.jpg';
+import otherImg from '../../img/stadium.jpg';
 import { Route, Switch } from 'react-router-dom';
 
 export const TopHeader = () => {

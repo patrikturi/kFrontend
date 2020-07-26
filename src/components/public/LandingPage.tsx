@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import playerImage from '../../player.png';
+import playerImage from '../../img/player.png';
 import {RegistrationForm} from './RegistrationForm';
 
 export const LandingPage = () => {

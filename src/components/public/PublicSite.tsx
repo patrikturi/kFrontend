@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 export const PublicSite = () => {
     return (
-        <div style={{height: "100%"}}>
+        <div className="container-fluid height-full bg-light px-0">
           <Router>
             <TopHeader />
             <Navbar />

@@ -1,14 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../../member-site.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTachometerAlt, faUsers, faStopwatch, faMapMarkerAlt, faSearch, faTrophy, faFutbol, faHandsHelping, faAngleLeft, faCogs, faList, faSignOutAlt, faUser, faCircle, faAngleUp, faBars } from '@fortawesome/free-solid-svg-icons'
-import { FormText } from 'react-bootstrap';
+import { faTachometerAlt, faUsers, faStopwatch, faMapMarkerAlt, faSearch, faTrophy, faFutbol, faHandsHelping, faAngleLeft, faAngleRight, faCogs, faList, faSignOutAlt, faUser, faCircle, faAngleUp, faBars } from '@fortawesome/free-solid-svg-icons'
+import { Dropdown, Nav } from 'react-bootstrap';
+import profilePicture from '../../profile.jpg';
 
 export const MemberSite = () => {
+
+    const [isSidebarToggled, setSidebarToggled] = useState(false);
+
+    let sidebarClassName = "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion";
+    if(isSidebarToggled) {
+      sidebarClassName += " toggled";
+    }
+
+    const handleToggleSidebar = () => {
+      setSidebarToggled(!isSidebarToggled);
+    }
+
     return (
     <div className="memberWrapper">
     {/*<!-- Sidebar -->*/}
-    <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul className={sidebarClassName} id="accordionSidebar">
 
       {/*<!-- Sidebar - Brand -->*/}
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -61,8 +74,8 @@ export const MemberSite = () => {
 
       {/*<!-- Sidebar Toggler (Sidebar) -->*/}
       <div className="text-center d-none d-md-inline">
-        <button className="rounded-circle border-0" id="sidebarToggle">
-            <FontAwesomeIcon icon={faAngleLeft} id="sidebarToggleArrow" color="#b7b9cc" />
+        <button className="rounded-circle border-0" id="sidebarToggle" onClick={handleToggleSidebar}>
+            <FontAwesomeIcon icon={isSidebarToggled ? faAngleRight : faAngleLeft} id="sidebarToggleArrow" color="#b7b9cc" />
         </button>
       </div>
 
@@ -79,7 +92,7 @@ export const MemberSite = () => {
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           {/*<!-- Sidebar Toggle (Topbar) -->*/}
-          <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
+          <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3" onClick={handleToggleSidebar}>
             <FontAwesomeIcon icon={faBars} />
           </button>
 
@@ -119,32 +132,34 @@ export const MemberSite = () => {
             </li>
 
             {/*<!-- Nav Item - User Information -->*/}
-            <li className="nav-item dropdown no-arrow">
-              <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <Nav.Item>
+            <Dropdown className="nav-item no-arrow" navbar={true}>
+              <Dropdown.Toggle className="nav-link" href="#" id="userDropdown" data-toggle="dropdown" role="button" variant="none" aria-haspopup="true" aria-expanded="false">
                 <span className="mr-2 d-none d-lg-inline text-gray-600 small">kreison Jacabus</span>
-                <img className="img-profile rounded-circle" src="https://lh3.googleusercontent.com/proxy/mR5rkfpBBYXzmrVcQ5Mfj_NacNgmBCL6OJ7qTj3jcU3OGyL3Dz_DyS7exotxMxt0buoLv_kZ1Bk9wx7UpzdIGEMe63XroubH-PBCX8kWSn4r4nq9ozZDDMEVEZc5cvUffDr1" />
-              </a>
+                <img className="img-profile rounded-circle" src={profilePicture} />
+              </Dropdown.Toggle>
               {/*<!-- Dropdown - User Information -->*/}
-              <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a className="dropdown-item" href="#">
+              <Dropdown.Menu className="shadow" aria-labelledby="userDropdown" alignRight>
+                <Dropdown.Item href="#">
                   <FontAwesomeIcon icon={faUser} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Profile
-                </a>
-                <a className="dropdown-item" href="#">
+                </Dropdown.Item>
+                <Dropdown.Item href="#">
                 <FontAwesomeIcon icon={faCogs} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Settings
-                </a>
-                <a className="dropdown-item" href="#">
+                </Dropdown.Item>
+                <Dropdown.Item href="#">
                 <FontAwesomeIcon icon={faList} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Activity Log
-                </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                </Dropdown.Item>
+                <Dropdown.Divider></Dropdown.Divider>
+                <Dropdown.Item href="#" data-toggle="modal" data-target="#logoutModal">
                 <FontAwesomeIcon icon={faSignOutAlt} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Logout
-                </a>
-              </div>
-            </li>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            </Nav.Item>
 
           </ul>
 

@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTachometerAlt, faUsers, faStopwatch, faMapMarkerAlt, faSearch, faTrophy, faFutbol, faHandsHelping, faAngleLeft, faAngleRight, faCogs, faList, faSignOutAlt, faUser, faCircle, faAngleUp, faBars } from '@fortawesome/free-solid-svg-icons'
 import { Dropdown, Nav } from 'react-bootstrap';
 import profilePicture from '../../img/profile.jpg';
+import {DoughnutChart} from './DoughnutChart';
+
 
 export const MemberSite = () => {
 
@@ -276,7 +278,7 @@ export const MemberSite = () => {
                 {/*<!-- Card Body -->*/}
                 <div className="card-body">
                   <div className="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
+                    <DoughnutChart />
                   </div>
                   <div className="mt-4 text-center small">
                     <span className="mr-2">

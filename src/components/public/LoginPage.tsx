@@ -5,7 +5,7 @@ import {SiteContext} from '../../context/SiteContext';
 export const LoginPage = () => {
     const [, dispatch] = useContext(SiteContext);
 
-    const onClick = () => {
+    const handleLogin = () => {
         dispatch({type: 'LOGIN_SUCCESS'});
     }
 
@@ -23,7 +23,7 @@ export const LoginPage = () => {
             <label htmlFor="exampleInputPassword1">Password</label>
             <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
         </Form.Group>
-        <Button type="submit" className="btn-primary" onClick={onClick}>Login</Button>
+        <Button type="submit" className="btn-primary" onClick={handleLogin}>Login</Button>
         </Form>
         </div>
         </>

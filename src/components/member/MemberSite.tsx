@@ -1,7 +1,8 @@
 import React from 'react';
 import '../../member-site.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTachometerAlt, faUsers, faStopwatch, faMapMarkerAlt, faSearch, faTrophy, faFutbol, faHandsHelping, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faTachometerAlt, faUsers, faStopwatch, faMapMarkerAlt, faSearch, faTrophy, faFutbol, faHandsHelping, faAngleLeft, faCogs, faList, faSignOutAlt, faUser, faCircle, faAngleUp, faBars } from '@fortawesome/free-solid-svg-icons'
+import { FormText } from 'react-bootstrap';
 
 export const MemberSite = () => {
     return (
@@ -37,21 +38,21 @@ export const MemberSite = () => {
       {/*<!-- Nav Item - Charts -->*/}
       <li className="nav-item">
         <a className="nav-link" href="#">
-          <FontAwesomeIcon icon={faUsers} />
+          <FontAwesomeIcon icon={faUsers} fixedWidth />
           <span>Teams</span></a>
       </li>
 
       {/*<!-- Nav Item - Tables -->*/}
       <li className="nav-item">
         <a className="nav-link" href="#">
-        <FontAwesomeIcon icon={faStopwatch} />
+        <FontAwesomeIcon icon={faStopwatch} fixedWidth />
           <span>Matches</span></a>
       </li>
 
       {/*<!-- Nav Item - Tables -->*/}
       <li className="nav-item">
         <a className="nav-link" href="#">
-        <FontAwesomeIcon icon={faMapMarkerAlt} />
+        <FontAwesomeIcon icon={faMapMarkerAlt} fixedWidth />
           <span>Fields</span></a>
       </li>
 
@@ -79,7 +80,7 @@ export const MemberSite = () => {
 
           {/*<!-- Sidebar Toggle (Topbar) -->*/}
           <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
-            <i className="fa fa-bars"></i>
+            <FontAwesomeIcon icon={faBars} />
           </button>
 
           {/*<!-- Topbar Search -->*/}
@@ -109,7 +110,7 @@ export const MemberSite = () => {
                     <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div className="input-group-append">
                       <button className="btn btn-primary" type="button">
-                        <i className="fas fa-search fa-sm"></i>
+                        <FontAwesomeIcon icon={faSearch} size="sm" />
                       </button>
                     </div>
                   </div>
@@ -126,20 +127,20 @@ export const MemberSite = () => {
               {/*<!-- Dropdown - User Information -->*/}
               <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a className="dropdown-item" href="#">
-                  <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  <FontAwesomeIcon icon={faUser} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Profile
                 </a>
                 <a className="dropdown-item" href="#">
-                  <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                <FontAwesomeIcon icon={faCogs} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Settings
                 </a>
                 <a className="dropdown-item" href="#">
-                  <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                <FontAwesomeIcon icon={faList} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Activity Log
                 </a>
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                <FontAwesomeIcon icon={faSignOutAlt} size="sm" className="mr-2 text-gray-400" fixedWidth />
                   Logout
                 </a>
               </div>
@@ -264,10 +265,10 @@ export const MemberSite = () => {
                   </div>
                   <div className="mt-4 text-center small">
                     <span className="mr-2">
-                      <i className="fas fa-circle text-primary"></i> Goals
+                      <FontAwesomeIcon icon={faCircle} className="text-primary"/> Goals
                     </span>
                     <span className="mr-2">
-                      <i className="fas fa-circle text-success"></i> Assists
+                      <FontAwesomeIcon icon={faCircle} className="text-success"/> Assists
                     </span>
                   </div>
                 </div>
@@ -295,7 +296,7 @@ export const MemberSite = () => {
 
     {/* <!-- Scroll to Top Button--> */}
   <a className="scroll-to-top rounded" href="#page-top">
-    <i className="fas fa-angle-up"></i>
+    <FontAwesomeIcon icon={faAngleUp} />
   </a>
 
   {/* <!-- Logout Modal--> */}

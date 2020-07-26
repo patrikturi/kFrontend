@@ -10488,6 +10488,7 @@ a:focus {
   .sidebar .nav-item .nav-link svg {
     font-size: 0.85rem;
     margin-right: 0.25rem;
+    width: 1.25rem;
   }
   .sidebar .nav-item .nav-link span {
     font-size: 0.85rem;

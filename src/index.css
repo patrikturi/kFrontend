@@ -11,6 +11,10 @@ html, body {
   min-height: 100%;
 }
 
+html {
+  font-size: 14.5px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

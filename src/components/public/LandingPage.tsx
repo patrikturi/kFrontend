@@ -27,8 +27,8 @@ export const LandingPage = () => {
         <p className="lead text-left">
             Are you...
             <ul>
-                <li>new? <br /><a href="/getting-started#secondlife">Get Started in SecondLife here</a></li>
-                <li>a SecondLife player? <br /> <a href="/getting-started#ksoccer">Get Started with kSoccer here</a></li>
+                <li>new? <br /><a href="https://secondlife.com" target="_blank" rel="noopener noreferrer">Get Started in SecondLife here</a></li>
+                <li>a SecondLife player? <br /> <a href="/getting-started">Get Started with kSoccer here</a></li>
                 <li>a kSoccer player? <br /><a href="/register" onClick={handleRegisterNow}>Register now!</a><br />
                 <small>or <a href="/login">Log in</a> if you already have an account</small></li>
             </ul>

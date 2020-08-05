@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../../img/logo.svg';
 import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
+import {LOGIN_ENABLED} from '../../Settings';
 
 export const Navbar = () => {
     return (
@@ -34,8 +35,13 @@ export const Navbar = () => {
                 <LinkContainer to="/updates">
                     <Nav.Link>Updates</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/login">
+
+                {LOGIN_ENABLED && <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>
+                </LinkContainer>}
+
+                <LinkContainer to="/leagues/1-mini-league" className="nav-important" style={{backgroundColor: "#ff5500", height: "100%", borderRadius: "4px"}}>
+                    <Nav.Link>League: Mini League</Nav.Link>
                 </LinkContainer>
             </Nav>
             </BootstrapNavbar.Collapse>

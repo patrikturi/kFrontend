@@ -37,7 +37,7 @@ export const LandingPage = () => {
 
     return (
         <>
-            <div className="col-md-4 d-none d-md-block text-right">
+            <div className="col-md-4 d-none d-md-block text-right" style={{minWidth: 300}}>
                 <img src={playerImage} alt="Soccer Player"/>
             </div>
             <div className="col-md-4">

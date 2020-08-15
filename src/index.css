@@ -44,3 +44,82 @@ code {
 .bg-league {
   background-color: #e4d1b6;
 }
+
+.topscorers-stadings {
+  width: 200px;
+  color: white;
+  font-size: 1.5em;
+}
+
+.topscorers-item {
+  background-color: #00000088;
+  height: 1.5em;
+  width: 250px;
+  margin: 12px;
+  vertical-align: middle;
+}
+
+.topscorers-goals {
+  display: inline-block;
+  min-width: 1.5em;
+  text-align: right;
+}
+
+.scoreboard-team-icon {
+  width: 19px;
+  height: 19px;
+  padding: 0 0;
+  border: 1px black solid;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.scoreboard-team-name {
+  vertical-align: middle;
+}
+
+.scoreboard-up {
+  vertical-align: middle;
+  color: #00cc00;
+}
+
+.scoreboard-down {
+  vertical-align: middle;
+  color: red;
+}
+
+.scoreboard-same {
+  vertical-align: middle;
+  color: black;
+}
+
+.results-item {
+  background-color: white;
+  min-height: 3.5rem;
+  font-size: 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid #efefef;
+}
+
+.results-item:hover {
+  background-color: #81C1FF;
+}
+
+.results-date {
+  font-size: 1.4em;
+  line-height: 3.5rem;
+  color: black;
+  margin-left: 1rem;
+}
+
+.results-result {
+  width: 350px;
+  line-height: 3.5rem;
+  display: inline-block;
+  text-align: center;
+}
+
+.results-info {
+  line-height: 3.5rem;
+  display: inline-block;
+}

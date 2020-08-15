@@ -40,3 +40,7 @@ code {
 .pageBase {
   height: 100%;
 }
+
+.bg-league {
+  background-color: #e4d1b6;
+}

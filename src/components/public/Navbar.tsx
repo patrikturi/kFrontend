@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from '../../img/logo.svg';
+import ksoccerLogo from '../../img/ksoccer_logo.png';
+import leagueLogo from '../../img/league_logo.png';
 import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import {LOGIN_ENABLED} from '../../Settings';
@@ -15,11 +16,11 @@ export const Navbar = () => {
             
             <BootstrapNavbar.Brand>
             <img
-                src={logo}
+                src={ksoccerLogo}
                 width="32"
                 height="32"
                 className="d-inline-block align-top"
-                alt="React Bootstrap logo"
+                alt="kSoccer Logo"
             />
             kSoccer
             </BootstrapNavbar.Brand>
@@ -39,9 +40,50 @@ export const Navbar = () => {
                 {LOGIN_ENABLED && <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>
                 </LinkContainer>}
+            </Nav>
+            </BootstrapNavbar.Collapse>
+        </BootstrapNavbar>
+        </div>
+        <div className="col-md-2">
+        </div>
+        </div>
 
-                <LinkContainer to="/leagues/1-mini-league" className="nav-important" style={{backgroundColor: "#ff5500", height: "100%", borderRadius: "4px"}}>
-                    <Nav.Link>League: Mini League</Nav.Link>
+        <div className="row m-0 bg-league">
+        <div className="col-md-2">
+        </div>
+        <div className="col-md-8">
+        <BootstrapNavbar className="bg-league" variant="light" expand="md">
+            
+            <BootstrapNavbar.Brand>
+            <img
+                src={leagueLogo}
+                width="32"
+                height="32"
+                className="d-inline-block align-top"
+                alt="League Logo"
+            />
+            Mini League
+            </BootstrapNavbar.Brand>
+            <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+            <BootstrapNavbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+                <LinkContainer exact to="/leagues/1/results">
+                    <Nav.Link>Results</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/leagues/1/standings">
+                    <Nav.Link>Standings</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/leagues/1/schedule">
+                    <Nav.Link>Schedule</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/leagues/1/top-scorers">
+                    <Nav.Link>Top Scorers</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/leagues/1/media">
+                    <Nav.Link>Media</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/leagues/1/rules">
+                    <Nav.Link>Rules</Nav.Link>
                 </LinkContainer>
             </Nav>
             </BootstrapNavbar.Collapse>

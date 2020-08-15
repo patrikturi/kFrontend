@@ -31,7 +31,7 @@ export const LandingPage = () => {
                 <li>new? <br /><a href="https://secondlife.com" target="_blank" rel="noopener noreferrer">Get Started in SecondLife here</a></li>
                 <li>a SecondLife player? <br /> <a href="/getting-started">Get Started with kSoccer here</a></li>
                 <li>a kSoccer player? <br />
-                <a href="/leagues/1-mini-league">Go to the League =></a>
+                <a href="/leagues/1/results">Go to the League</a>
                 {LOGIN_ENABLED && <><a href="/register" onClick={handleRegisterNow}>Register now!</a><br />
                 <small>or <a href="/login">Log in</a> if you already have an account</small></>}
                 </li>

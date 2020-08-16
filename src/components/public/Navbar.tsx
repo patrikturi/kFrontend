@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import ksoccerLogo from '../../img/ksoccer_logo.png';
 import leagueLogo from '../../img/league_logo.png';
 import { Navbar as BootstrapNavbar, Nav } from 'react-bootstrap';
@@ -6,6 +7,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import {LOGIN_ENABLED} from '../../Settings';
 
 export const Navbar = () => {
+    const { t, i18n } = useTranslation();
+
     return (
         <>
         <div className="row m-0 bg-dark">
@@ -28,17 +31,17 @@ export const Navbar = () => {
             <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
                 <LinkContainer exact to="/">
-                    <Nav.Link>Home</Nav.Link>
+                    <Nav.Link>{t('Home')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/getting-started">
-                    <Nav.Link>Getting Started</Nav.Link>
+                    <Nav.Link>{t('Getting Started')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/updates">
-                    <Nav.Link>Updates</Nav.Link>
+                    <Nav.Link>{t('Updates')}</Nav.Link>
                 </LinkContainer>
 
                 {LOGIN_ENABLED && <LinkContainer to="/login">
-                    <Nav.Link>Login</Nav.Link>
+                    <Nav.Link>{t('Login')}</Nav.Link>
                 </LinkContainer>}
             </Nav>
             </BootstrapNavbar.Collapse>

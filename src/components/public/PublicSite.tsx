@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {TopHeader} from './TopHeader';
 import {Navbar} from './Navbar';
 import {PageBase} from './PageBase';
@@ -9,7 +9,9 @@ export const PublicSite = () => {
         <div className="container-fluid height-full bg-light px-0">
           <Router>
             <TopHeader />
-            <Navbar />
+            <Suspense fallback="loading">
+              <Navbar />
+            </Suspense>
             <PageBase />
           </Router>
         </div>

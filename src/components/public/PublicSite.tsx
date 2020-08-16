@@ -12,7 +12,9 @@ export const PublicSite = () => {
             <Suspense fallback="loading">
               <Navbar />
             </Suspense>
-            <PageBase />
+            <Suspense fallback="loading">
+              <PageBase />
+            </Suspense>
           </Router>
         </div>
     );

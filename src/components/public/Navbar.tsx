@@ -107,22 +107,22 @@ export const Navbar = () => {
             <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
                 <LinkContainer exact to="/leagues/1/results">
-                    <Nav.Link>Results</Nav.Link>
+                    <Nav.Link>{t('Results')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/leagues/1/standings">
-                    <Nav.Link>Standings</Nav.Link>
+                    <Nav.Link>{t('Standings')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/leagues/1/schedule">
-                    <Nav.Link>Schedule</Nav.Link>
+                    <Nav.Link>{t('Schedule')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/leagues/1/top-scorers">
-                    <Nav.Link>Top Scorers</Nav.Link>
+                    <Nav.Link>{t('Top Scorers')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/leagues/1/media">
-                    <Nav.Link>Media</Nav.Link>
+                    <Nav.Link>{t('Media')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/leagues/1/rules">
-                    <Nav.Link>Rules</Nav.Link>
+                    <Nav.Link>{t('Rules')}</Nav.Link>
                 </LinkContainer>
             </Nav>
             </BootstrapNavbar.Collapse>

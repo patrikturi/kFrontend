@@ -15,17 +15,34 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '12.x'
-  displayName: 'Install Node'
+  displayName: 'Use Node'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.6'
+    architecture: 'x64'
+  displayName: 'Use Python'
 
 - bash: |
     set -ex
-    curl -sL https://firebase.tools | bash
+    npm install -g i18next-parser
     npm install
+    curl -sL https://firebase.tools | bash
+    pip3 install -r requirements.txt
   displayName: 'Install'
 
 - bash: |
     set -ex
+    ./scripts/download_translations.py
+  displayName: 'Download Translations'
+  env:
+    DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
+
+- bash: |
+    set -ex
     npm run build
+    i18next
+    ./scripts/fill_empty_translations.py ./public/locales/en/translation.json
   displayName: 'Build'
 
 - bash: |
@@ -34,3 +51,10 @@ steps:
   displayName: 'Deploy to Staging'
   env:
     FIREBASE_TOKEN: $(FIREBASE_TOKEN)
+
+- bash: |
+    set -ex
+    ./scripts/upload_translations.py
+  displayName: 'Upload Translations'
+  env:
+    DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

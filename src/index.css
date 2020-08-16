@@ -123,3 +123,7 @@ code {
   line-height: 3.5rem;
   display: inline-block;
 }
+
+.navbar-nav {
+  width: 100%;
+}

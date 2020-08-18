@@ -3,3 +3,4 @@ build/
 public/locales/
 virtualenv/
 env.sh
+*.pyc

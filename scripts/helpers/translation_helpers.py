@@ -1,11 +1,25 @@
 import json
-import os
 import re
-import sys
 from xml.etree import ElementTree as ET
 
 
-def check_file(file_content):
+def fill_empty_values(src_file_path, dest_file_path):
+  print(f'Filling empty values in {src_file_path}')
+  with open(src_file_path, 'r') as file:
+
+    def map_line(line):
+      # eg.:   "Getting Started": ""
+      match = re.match(r'\s*\"(.*)\": \"\"', line)
+
+      return line.replace('""', f'"{match.group(1)}"') if match else line
+
+    out_lines = list(map(map_line, file.readlines()))
+
+  with open(dest_file_path, 'w') as file:
+    file.write(''.join(out_lines))
+
+
+def check_file_contents(file_content):
   errors = []
   try:
     data = json.loads(file_content)
@@ -44,17 +58,13 @@ def check_file(file_content):
   return errors
 
 
-if __name__ == '__main__':
-  success = True
-  for root, dir, files in os.walk('./public/locales'):
-    for file_name in files:
-      file_path = os.path.join(root, file_name)
-      print(f'\nChecking {file_path}...')
+def check_file(file_path, _):
+  ret_val = 0
+  print(f'\nChecking {file_path}...')
 
-      with open(file_path, 'r') as file:
-        errors = check_file(file.read())
-        for error in errors:
-          print(f'  ERROR: {error}')
-          success = False
-  if not success:
-    sys.exit(-1)
+  with open(file_path, 'r') as file:
+    errors = check_file_contents(file.read())
+    for error in errors:
+      print(f'  ERROR: {error}')
+      ret_val = -1
+  return ret_val

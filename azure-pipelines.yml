@@ -33,16 +33,19 @@ steps:
 
 - bash: |
     set -ex
-    ./scripts/download_translations.py
+    ./scripts/translations.py download
+    ./scripts/translations.py verify
   displayName: 'Download Translations'
   env:
     DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
 
 - bash: |
     set -ex
+    python -m unittest discover scripts
     npm run build
     i18next
-    ./scripts/fill_empty_translations.py ./public/locales/en/translation.json
+    ./scripts/translations.py normalize
+    ./scripts/translations.py verify
   displayName: 'Build'
 
 - bash: |
@@ -54,7 +57,7 @@ steps:
 
 - bash: |
     set -ex
-    ./scripts/upload_translations.py
+    ./scripts/translations.py upload
   displayName: 'Upload Translations'
   env:
     DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

@@ -29,8 +29,13 @@ def download(args):
     dbx.download_tree('./public', DROPBOX_PATH)
 
 def upload(args):
+  if not args.dest_path:
+    raise ValueError('Argument --dest-path was not specified on the command line')
+  if not args.dest_path.startswith('/'):
+    raise ValueError('--dest-path must start with / because it is a Dropbox path')
+
   with DropboxWrapper() as dbx:
-    for_each_file(LOCAL_PATH, DROPBOX_PATH, dbx.upload_file)
+    for_each_file(LOCAL_PATH, args.dest_path, dbx.upload_file)
 
 def normalize(args):
   for_each_file(LOCAL_PATH, LOCAL_PATH, fill_empty_values)
@@ -50,6 +55,7 @@ if __name__ == '__main__':
 
   parser = argparse.ArgumentParser()
   parser.add_argument('action', choices=ACTIONS.keys())
+  parser.add_argument('--dest-path')
   args = parser.parse_args()
 
   ACTIONS[args.action](args)

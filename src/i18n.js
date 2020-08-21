@@ -10,6 +10,28 @@ const detectionOptions = {
   lookupLocalStorage: 'i18nextLng',
 }
 
+const i18nDebugOptions = {
+  debug: true,
+  backend: {
+    loadPath: '/locales/{{lng}}/{{ns}}.json',
+  },
+}
+
+const i18nStagingOptions = {
+  debug: false,
+  backend: {
+    loadPath: 'https://ksoccer-translations.imfast.io/staging/locales/{{lng}}/{{ns}}.json',
+  },
+}
+
+const i18nProductionOptions = {
+  debug: false,
+  backend: {
+    loadPath: 'https://ksoccer-translations.imfast.io/production/locales/{{lng}}/{{ns}}.json',
+  },
+}
+
+
 i18n
   // learn more: https://github.com/i18next/i18next-http-backend
   .use(Backend)
@@ -18,13 +40,15 @@ i18n
   .use(initReactI18next)
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
+    ...i18nDebugOptions,
+  
     fallbackLng: 'en',
     debug: true,
     detection: detectionOptions,
-
+  
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
-    }
+    }  
   });
 
 

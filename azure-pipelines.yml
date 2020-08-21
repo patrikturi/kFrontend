@@ -2,62 +2,69 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 #
 variables:
-    - group: Credentials
-    
+- group: Credentials
+
 trigger:
 - master
 - azure-pipeline
 
-pool:
-  vmImage: 'ubuntu-18.04'
+jobs:
+- job: Stage
+  timeoutInMinutes: 10
+  pool:
+    vmImage: 'ubuntu-18.04'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '12.x'
-  displayName: 'Use Node'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.x'
+    displayName: 'Use Node'
 
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.6'
-    architecture: 'x64'
-  displayName: 'Use Python'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.6'
+      architecture: 'x64'
+    displayName: 'Use Python'
 
-- bash: |
-    set -ex
-    npm install -g i18next-parser
-    npm install
-    curl -sL https://firebase.tools | bash
-    pip3 install -r requirements.txt
-  displayName: 'Install'
+  - bash: |
+      set -ex
+      npm install -g i18next-parser
+      npm install
+      curl -sL https://firebase.tools | bash
+      pip3 install -r requirements.txt
+    displayName: 'Install'
 
-- bash: |
-    set -ex
-    ./scripts/translations.py download
-    ./scripts/translations.py verify
-  displayName: 'Download Translations'
-  env:
-    DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
+  - bash: |
+      set -ex
+      ./scripts/translations.py download
+      ./scripts/translations.py verify
+    displayName: 'Download Translations'
+    env:
+      DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
 
-- bash: |
-    set -ex
-    python -m unittest discover scripts
-    npm run build
-    i18next
-    ./scripts/translations.py normalize
-    ./scripts/translations.py verify
-  displayName: 'Build'
+  - bash: |
+      set -ex
+      python -m unittest discover scripts
 
-- bash: |
-    set -ex
-    firebase deploy
-  displayName: 'Deploy to Staging'
-  env:
-    FIREBASE_TOKEN: $(FIREBASE_TOKEN)
+      ./scripts/switchconfig.sh staging
+      npm run build
 
-- bash: |
-    set -ex
-    ./scripts/translations.py upload
-  displayName: 'Upload Translations'
-  env:
-    DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
+      i18next
+      ./scripts/translations.py normalize
+      ./scripts/translations.py verify
+    displayName: 'Build'
+
+  - bash: |
+      set -ex
+      firebase deploy
+    displayName: 'Deploy to Staging'
+    env:
+      FIREBASE_TOKEN: $(FIREBASE_TOKEN)
+
+  - bash: |
+      set -ex
+      ./scripts/translations.py upload --dest-path /locales
+      ./scripts/translations.py upload --dest-path /Fast.io/ksoccer-translations.imfast.io/staging/locales
+    displayName: 'Upload Translations'
+    env:
+      DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

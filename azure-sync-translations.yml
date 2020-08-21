@@ -1,0 +1,32 @@
+variables:
+- group: Credentials
+
+trigger:
+- none
+
+jobs:
+- job: SyncTranslations
+  timeoutInMinutes: 5
+  pool:
+    vmImage: 'ubuntu-18.04'
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.6'
+      architecture: 'x64'
+    displayName: 'Use Python'
+
+  - bash: |
+      set -ex
+      pip3 install -r requirements.txt
+    displayName: 'Install'
+
+  - bash: |
+      set -ex
+      ./scripts/translations.py download
+      ./scripts/translations.py verify
+      ./scripts/translations.py upload --dest-path /Fast.io/ksoccer-translations.imfast.io/staging/locales
+    displayName: 'Sync'
+    env:
+      DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

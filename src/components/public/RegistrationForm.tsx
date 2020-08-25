@@ -28,18 +28,21 @@ export const RegistrationForm = (props: RegProps) => {
             </a> Go back
         </Card.Header>
         <Card.Body className="text-left">
-        <h2>Register</h2>
-            <p>Register to get access to your kSoccer stats, join a team and more.</p>
+        <h2>Login</h2>
         <Form>
         <Form.Group>
-            <label htmlFor="exampleInputEmail1">Email address</label>
-            <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+            <label htmlFor="exampleInputEmail1">SL First Name</label>
+            <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter First Name"/>
+        </Form.Group>
+        <Form.Group>
+            <label htmlFor="exampleInputEmail1">SL Last Name</label>
+            <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter Last Name" defaultValue="Resident"/>
         </Form.Group>
         <Form.Group>
             <label htmlFor="exampleInputPassword1">Password</label>
-            <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+            <input type="password" className="form-control" id="exampleInputPassword1" placeholder="password"/>
         </Form.Group>
-        <Button type="submit" className="btn-primary" onClick={handleRegister}>Register</Button>
+        <Button type="submit" className="btn-primary" onClick={handleRegister}>Log in</Button>
         </Form>
         </Card.Body>
         </Card>

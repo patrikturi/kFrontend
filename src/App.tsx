@@ -8,7 +8,7 @@ import {Site} from './components/Site';
 
 function App() {
   return (
-    <div className="App" style={{height: "100%"}}>
+    <div className="App">
       <SiteContextProvider>
         <Site />
       </SiteContextProvider>

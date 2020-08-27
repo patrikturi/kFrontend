@@ -8,8 +8,26 @@ body {
 }
 
 html, body {
+  margin:0;
+  padding:0;
+  height: 100%;
+}
+
+#root {
+  background-color: #9CA2A7;
   min-height: 100%;
 }
+
+.App {
+  min-height: 100%;
+  display: flex;
+}
+
+.App > div {
+  min-height: 100vh;
+  background-color: darkslateblue;
+}
+
 
 html {
   font-size: 14.5px;
@@ -20,10 +38,6 @@ code {
     monospace;
 }
 
-#root {
-  background-color: #9CA2A7;
-  min-height: 100%;
-}
 
 .headerContainer {
   margin: 0 0;

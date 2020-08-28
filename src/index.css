@@ -20,12 +20,15 @@ html, body {
 
 .App {
   min-height: 100%;
-  display: flex;
 }
 
 .App > div {
   min-height: 100vh;
   background-color: darkslateblue;
+}
+
+.navbar-nav .dropdown-menu {
+  transform: translate(-100px, 0px);
 }
 
 

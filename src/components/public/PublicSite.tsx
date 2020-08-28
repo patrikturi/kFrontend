@@ -1,21 +1,32 @@
 import React, { Suspense } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import styled from 'styled-components';
+import {Container} from 'react-bootstrap';
+
 import {Navbar} from './Navbar';
 import {PageBase} from './PageBase';
-import { BrowserRouter as Router } from 'react-router-dom';
+
 
 export const PublicSite = () => {
+
+  const PageWrapper = styled.div`
+    display: flex;
+    background-color: #f8f9fc;
+    width: 100%;
+  `;
+
     return (
-      <div className="memberWrapper">
-        <div className="container-fluid height-full bg-light px-0">
+      <PageWrapper>
+        <Container className="bg-light px-0" fluid>
           <Router>
-            <Suspense fallback="loading">
+            <Suspense fallback="Loading">
               <Navbar />
             </Suspense>
-            <Suspense fallback="loading">
+            <Suspense fallback="Loading">
               <PageBase />
             </Suspense>
           </Router>
-        </div>
-      </div>
+        </Container>
+      </PageWrapper>
     );
 }

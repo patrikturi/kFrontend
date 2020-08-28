@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ksoccerLogo from '../../img/ksoccer_logo.png';
 import leagueLogo from '../../img/league_logo.png';
-import { Navbar as BootstrapNavbar, Nav, NavDropdown, Dropdown } from 'react-bootstrap';
+import { Navbar as BootstrapNavbar, Nav, NavDropdown, Dropdown, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import {LOGIN_ENABLED} from '../../Settings';
 import {LanguageCode, languages} from '../../common/languages';
@@ -18,7 +18,7 @@ export const Navbar = () => {
 
     const currentLanguageComp = 
     (<>
-        <span className={`flag-icon flag-icon-${currentLanguage.flag}`} /> {currentLanguage.name}
+        <span className={`flag-icon flag-icon-${currentLanguage.flag}`} />
     </>);
 
 
@@ -41,10 +41,8 @@ export const Navbar = () => {
 
     return (
         <>
-        <div className="row m-0 bg-dark">
-        <div className="col-md-2">
-        </div>
-        <div className="col-md-8">
+        <Row className="m-0 bg-dark">
+        <Col>
         <BootstrapNavbar bg="dark" variant="dark" expand="md">
             
             <BootstrapNavbar.Brand>
@@ -59,8 +57,8 @@ export const Navbar = () => {
             </BootstrapNavbar.Brand>
             <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
             <BootstrapNavbar.Collapse id="basic-navbar-nav">
-            <Nav>
-                <LinkContainer exact to="/">
+            <Nav style={{ width: "100%" }}>
+                <LinkContainer exact to="/" className="ml-auto">
                     <Nav.Link>{t('Home')}</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/getting-started">
@@ -76,18 +74,16 @@ export const Navbar = () => {
 
                 <BootstrapNavbar.Toggle />
 
-                <NavDropdown title={currentLanguageComp} id="nav-language" className="ml-auto">
+                <NavDropdown title={currentLanguageComp} id="nav-language" >
                     {languageMenuItems}
                 </NavDropdown>
             </Nav>
             </BootstrapNavbar.Collapse>
         </BootstrapNavbar>
-        </div>
-        <div className="col-md-2">
-        </div>
-        </div>
+        </Col>
+        </Row>
 
-        <div className="row m-0 bg-league">
+        <Row className="m-0 bg-league">
         <div className="col-md-2">
         </div>
         <div className="col-md-8">
@@ -130,7 +126,7 @@ export const Navbar = () => {
         </div>
         <div className="col-md-2">
         </div>
-        </div>
+        </Row>
         </>
     );
 }

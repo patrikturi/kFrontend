@@ -1,15 +1,16 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 
-import {SiteContext} from '../context/SiteContext';
-import {PublicSite} from './public/PublicSite';
-import {MemberSite} from './member/MemberSite';
+import { MemberSite } from './member/MemberSite';
+import { PublicSite } from './public/PublicSite';
+import { SiteContext } from '../context/SiteContext';
+
 
 export function Site() {
     const [state] = useContext(SiteContext);
 
     return (
         <>
-        {state.isLoggedIn ? <MemberSite /> : <PublicSite />}
+            {state.isLoggedIn ? <MemberSite /> : <PublicSite />}
         </>
     );
 }

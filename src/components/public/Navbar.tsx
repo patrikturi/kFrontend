@@ -82,51 +82,6 @@ export const Navbar = () => {
         </BootstrapNavbar>
         </Col>
         </Row>
-
-        <Row className="m-0 bg-league">
-        <div className="col-md-2">
-        </div>
-        <div className="col-md-8">
-        <BootstrapNavbar className="bg-league" variant="light" expand="md">
-            
-            <BootstrapNavbar.Brand>
-            <img
-                src={leagueLogo}
-                width="32"
-                height="32"
-                className="d-inline-block align-top"
-                alt="League Logo"
-            />
-            Mini League
-            </BootstrapNavbar.Brand>
-            <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
-            <BootstrapNavbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-                <LinkContainer exact to="/leagues/1/results">
-                    <Nav.Link>{t('Results')}</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/leagues/1/standings">
-                    <Nav.Link>{t('Standings')}</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/leagues/1/schedule">
-                    <Nav.Link>{t('Schedule')}</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/leagues/1/top-scorers">
-                    <Nav.Link>{t('Top Scorers')}</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/leagues/1/media">
-                    <Nav.Link>{t('Media')}</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/leagues/1/rules">
-                    <Nav.Link>{t('Rules')}</Nav.Link>
-                </LinkContainer>
-            </Nav>
-            </BootstrapNavbar.Collapse>
-        </BootstrapNavbar>
-        </div>
-        <div className="col-md-2">
-        </div>
-        </Row>
         </>
     );
 }

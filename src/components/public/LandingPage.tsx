@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import playerImage from '../../img/player.png';
 import {RegistrationForm} from './RegistrationForm';
 import {LOGIN_ENABLED} from '../../Settings';
 import { Trans, useTranslation } from 'react-i18next'
@@ -63,7 +62,6 @@ export const LandingPage = () => {
     return (
         <>
             <div className="col-md-4 d-none d-md-block text-right" style={{minWidth: 300}}>
-                <img src={playerImage} alt="Soccer Player"/>
             </div>
             <div className="col-md-4">
                 {isRegistering ? <RegistrationForm onGoBack={handleGoBack} /> : welcomeText}

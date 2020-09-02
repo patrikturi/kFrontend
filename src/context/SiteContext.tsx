@@ -1,36 +1,34 @@
-import React, { useReducer, createContext } from "react";
+import React, { useReducer, createContext } from 'react';
 
 interface SiteState {
-    isLoggedIn: boolean;
+  isLoggedIn: boolean;
 }
 
 const initialState: SiteState = {
-    isLoggedIn: false,
+  isLoggedIn: false,
 };
 
-type SiteAction = 
-    | { type: 'LOGIN_SUCCESS'}
+type SiteAction = { type: 'LOGIN_SUCCESS' };
 
 type SiteContext = [SiteState, React.Dispatch<SiteAction>];
 
 export const SiteContext = createContext<SiteContext>(undefined!);
 
-
 const reducer = (state: SiteState, action: SiteAction): SiteState => {
-    switch(action.type) {
-        case "LOGIN_SUCCESS":
-            return {...state, isLoggedIn: true};
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case 'LOGIN_SUCCESS':
+      return { ...state, isLoggedIn: true };
+    default:
+      return state;
+  }
+};
 
 export const SiteContextProvider = (props: any) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-  
-    return (
-      <SiteContext.Provider value={[state, dispatch]}>
-        {props.children}
-      </SiteContext.Provider>
-    )
-}
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <SiteContext.Provider value={[state, dispatch]}>
+      {props.children}
+    </SiteContext.Provider>
+  );
+};

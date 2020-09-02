@@ -8,29 +8,30 @@ const detectionOptions = {
   order: ['querystring', 'localStorage'],
   lookupQuerystring: 'lng',
   lookupLocalStorage: 'i18nextLng',
-}
+};
 
 const i18nDebugOptions = {
   debug: true,
   backend: {
     loadPath: '/locales/{{lng}}/{{ns}}.json',
   },
-}
+};
 
 const i18nStagingOptions = {
   debug: false,
   backend: {
-    loadPath: 'https://ksoccer-translations.imfast.io/staging/locales/{{lng}}/{{ns}}.json',
+    loadPath:
+      'https://ksoccer-translations.imfast.io/staging/locales/{{lng}}/{{ns}}.json',
   },
-}
+};
 
 const i18nProductionOptions = {
   debug: false,
   backend: {
-    loadPath: 'https://ksoccer-translations.imfast.io/production/locales/{{lng}}/{{ns}}.json',
+    loadPath:
+      'https://ksoccer-translations.imfast.io/production/locales/{{lng}}/{{ns}}.json',
   },
-}
-
+};
 
 i18n
   // learn more: https://github.com/i18next/i18next-http-backend
@@ -41,15 +42,14 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     ...i18nDebugOptions,
-  
+
     fallbackLng: 'en',
     debug: true,
     detection: detectionOptions,
-  
+
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
-    }  
+    },
   });
-
 
 export default i18n;

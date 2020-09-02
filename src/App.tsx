@@ -9,7 +9,6 @@ import { SiteContextProvider } from './context/SiteContext';
 import './fonts/stylesheet.css';
 
 function App() {
-
   const App = styled.div`
     min-height: 100%;
   `;

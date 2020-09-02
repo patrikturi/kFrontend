@@ -12,7 +12,6 @@ import { SchedulePage } from '../league/SchedulePage';
 import { MediaPage } from '../league/MediaPage';
 
 import styled from 'styled-components';
-import HomeBackground from '../../img/home_background.jpg';
 
 export const PageBase = () => {
   const Base = styled.div`

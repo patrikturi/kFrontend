@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { RegistrationForm } from './RegistrationForm';
 import { LOGIN_ENABLED } from '../../Settings';
 import { Trans, useTranslation } from 'react-i18next';
+import SearchPlayerInput from './SearchPlayerInput';
 
 export const LandingPage = () => {
   const { t, i18n } = useTranslation();
@@ -75,6 +76,7 @@ export const LandingPage = () => {
 
   return (
     <>
+      <SearchPlayerInput />
       <div
         className="col-md-4 d-none d-md-block text-right"
         style={{ minWidth: 300 }}

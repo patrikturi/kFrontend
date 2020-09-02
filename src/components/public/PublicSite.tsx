@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container } from 'react-bootstrap';
-import { Navbar } from './Navbar';
+import { Navbar } from './navbar/Navbar';
 import { PageBase } from './PageBase';
 
 import KickingTheBall from '../../img/kicking_the_ball_large.jpg';

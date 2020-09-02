@@ -6,7 +6,11 @@ import { Navbar as BootstrapNavbar, Nav, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { LOGIN_ENABLED } from '../../../Settings';
 import NavbarBrand from './NavbarBrand';
-import { PRIMARY_COLOR, NAVBAR_FONT_SIZE } from '../../../common/styles';
+import {
+  PRIMARY_COLOR,
+  NAVBAR_FONT_SIZE,
+  NAVBAR_HEIGHT,
+} from '../../../common/styles';
 import LanguageSelector from './LanguageSelector';
 
 export const Navbar = () => {
@@ -16,7 +20,7 @@ export const Navbar = () => {
     padding: 0;
     margin: 0;
     background-color: rgba(35, 37, 38, 0.502);
-    height: 112px;
+    height: ${NAVBAR_HEIGHT};
     color: ${PRIMARY_COLOR};
   `;
 

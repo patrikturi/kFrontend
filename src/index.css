@@ -13,6 +13,11 @@ html, body {
   height: 100%;
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 #root {
   background-color: #9CA2A7;
   min-height: 100%;
@@ -28,13 +33,10 @@ html, body {
 }
 
 .navbar-nav .dropdown-menu {
-  transform: translate(-100px, 0px);
+  transform: translate(-100px, 25px);
 }
 
 
-html {
-  font-size: 14.5px;
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -143,4 +145,10 @@ code {
 
 .navbar-nav {
   width: 100%;
+}
+
+
+
+.dropdown-toggle::after {
+  color: #E3C190;
 }

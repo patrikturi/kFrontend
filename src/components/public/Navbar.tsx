@@ -1,11 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import ksoccerLogo from '../../img/ksoccer_logo.png';
-import leagueLogo from '../../img/league_logo.png';
 import { Navbar as BootstrapNavbar, Nav, NavDropdown, Dropdown, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import {LOGIN_ENABLED} from '../../Settings';
 import {LanguageCode, languages} from '../../common/languages';
+import ksoccer from '../../img/ksoccer.png';
 
 
 export const Navbar = () => {
@@ -16,10 +17,17 @@ export const Navbar = () => {
     const currentCode = (i18n.language || 'en') as LanguageCode;
     const currentLanguage = languages[currentCode];
 
-    const currentLanguageComp = 
-    (<>
-        <span className={`flag-icon flag-icon-${currentLanguage.flag}`} />
-    </>);
+    const navbarTextColor = '#E3C190';
+    const navbarFontSize = '30px';
+
+    const StyledCurrentLanguageComp = styled.span`
+        height: ${navbarFontSize}!important;
+        font-size: 26px!important;
+        padding 0;
+    `;
+    const currentLanguageComp = (
+        <StyledCurrentLanguageComp className={`flag-icon flag-icon-${currentLanguage.flag}`} />
+    );
 
 
     const handleLanguageChange = (eventKey: any, event: React.SyntheticEvent<unknown>) => {
@@ -39,47 +47,84 @@ export const Navbar = () => {
                                         <span className={`flag-icon flag-icon-${lang.flag}`} /> {lang.name}
                                     </Dropdown.Item>))
 
+    const StyledNavLink = styled(Nav.Link)`
+        color: ${navbarTextColor}!important;
+        font-size: ${navbarFontSize}!important;
+        font-family: bebas_kairegular, tahoma;
+        letter-spacing: 4px;
+        padding-right: 65px!important;
+    `;
+
+    const StyledNavDropdown = styled(NavDropdown)`
+        height: ${navbarFontSize}!important;
+        padding-top: 8px;
+    `;
+
+    const StyledNavbar = styled(BootstrapNavbar)`
+        padding: 0;
+        margin: 0;
+        background-color: rgba(35, 37, 38, .502);
+        height: 112px;
+        color: ${navbarTextColor};
+    `;
+
+    const StyledNavbarBrand = styled(BootstrapNavbar.Brand)`
+        font-family: Proxima Nova Bd;
+        font-size: 40px;
+        color: ${navbarTextColor}!important;
+        letter-spacing: 4px;
+    `;
+
     return (
         <>
-        <Row className="m-0 bg-dark">
-        <Col>
-        <BootstrapNavbar bg="dark" variant="dark" expand="md">
-            
-            <BootstrapNavbar.Brand>
+        <Row className="m-0">
+        <Col className="p-0">
+        <StyledNavbar expand="md">
+
+            <StyledNavbarBrand>
             <img
                 src={ksoccerLogo}
-                width="32"
-                height="32"
+                width="72px"
+                height="72px"
                 className="d-inline-block align-top"
                 alt="kSoccer Logo"
             />
-            kSoccer
-            </BootstrapNavbar.Brand>
+            <img
+                src={ksoccer}
+                alt="KSOCCER"
+            />
+            </StyledNavbarBrand>
             <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
             <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav style={{ width: "100%" }}>
                 <LinkContainer exact to="/" className="ml-auto">
-                    <Nav.Link>{t('Home')}</Nav.Link>
+                    <StyledNavLink>{t('Home')}</StyledNavLink>
                 </LinkContainer>
                 <LinkContainer to="/getting-started">
-                    <Nav.Link>{t('Getting Started')}</Nav.Link>
+                    <StyledNavLink>{t('Get Started')}</StyledNavLink>
+                </LinkContainer>
+                <LinkContainer to="/dummy">
+                    <StyledNavLink>{'Marketplace'}</StyledNavLink>
                 </LinkContainer>
                 <LinkContainer to="/updates">
-                    <Nav.Link>{t('Updates')}</Nav.Link>
+                    <StyledNavLink>{t('Updates')}</StyledNavLink>
+                </LinkContainer>
+                <LinkContainer to="/dummy">
+                    <StyledNavLink>{'KCoins'}</StyledNavLink>
                 </LinkContainer>
 
                 {LOGIN_ENABLED && <LinkContainer to="/login">
-                    <Nav.Link>{t('Login')}</Nav.Link>
+                    <StyledNavLink>{t('Login')}</StyledNavLink>
                 </LinkContainer>}
 
                 <BootstrapNavbar.Toggle />
 
-                <NavDropdown title={currentLanguageComp} id="nav-language" >
+                <StyledNavDropdown title={currentLanguageComp} >
                     {languageMenuItems}
-                </NavDropdown>
+                </StyledNavDropdown>
             </Nav>
             </BootstrapNavbar.Collapse>
-        </BootstrapNavbar>
+        </StyledNavbar>
         </Col>
         </Row>
         </>

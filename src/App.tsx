@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Site } from './components/Site';
 import { SiteContextProvider } from './context/SiteContext';
 
+import './fonts/stylesheet.css';
 
 function App() {
 

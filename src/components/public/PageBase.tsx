@@ -11,13 +11,7 @@ import { RulesPage } from '../league/RulesPage';
 import { SchedulePage } from '../league/SchedulePage';
 import { MediaPage } from '../league/MediaPage';
 
-import styled from 'styled-components';
-
-export const PageBase = () => {
-  const Base = styled.div`
-    background-color: transparent;
-  `;
-
+export const PageBase: React.FC = () => {
   return (
     <div className="row pt-5 pb-5 m-0">
       <Switch>

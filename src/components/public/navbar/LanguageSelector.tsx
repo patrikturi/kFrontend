@@ -5,17 +5,23 @@ import { LanguageCode, languages } from '../../../common/languages';
 import { useTranslation } from 'react-i18next';
 import { NAVBAR_FONT_SIZE } from '../../../common/styles';
 
+const StyledCurrentLanguageComp = styled.span`
+  height: ${NAVBAR_FONT_SIZE}!important;
+  font-size: 26px!important;
+  padding 0;
+`;
+
+const StyledNavDropdown = styled(NavDropdown)`
+  height: ${NAVBAR_FONT_SIZE}!important;
+  padding-top: 8px;
+`;
+
 const LanguageSelector: React.FC = () => {
   const { i18n } = useTranslation();
 
   const currentCode = (i18n.language || 'en') as LanguageCode;
   const currentLanguage = languages[currentCode];
 
-  const StyledCurrentLanguageComp = styled.span`
-        height: ${NAVBAR_FONT_SIZE}!important;
-        font-size: 26px!important;
-        padding 0;
-    `;
   const currentLanguageComp = (
     <StyledCurrentLanguageComp
       className={`flag-icon flag-icon-${currentLanguage.flag}`}
@@ -37,16 +43,11 @@ const LanguageSelector: React.FC = () => {
 
   const languageMenuItems = Object.entries(languages)
     .filter(([code, _lang]) => code !== currentCode)
-    .map(([_code, lang]) => (
-      <Dropdown.Item onSelect={handleLanguageChange}>
+    .map(([code, lang]) => (
+      <Dropdown.Item key={code} onSelect={handleLanguageChange}>
         <span className={`flag-icon flag-icon-${lang.flag}`} /> {lang.name}
       </Dropdown.Item>
     ));
-
-  const StyledNavDropdown = styled(NavDropdown)`
-    height: ${NAVBAR_FONT_SIZE}!important;
-    padding-top: 8px;
-  `;
 
   return (
     <StyledNavDropdown title={currentLanguageComp}>

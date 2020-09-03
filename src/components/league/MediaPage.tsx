@@ -9,6 +9,7 @@ export const MediaPage = () => {
         <div>
           {/* TODO: shrink size after breakpoint */}
           <iframe
+            title="first"
             src="https://www.youtube.com/embed/O1_8GpHYky4"
             style={{ width: 560, height: 315 }}
             frameBorder="0"
@@ -18,6 +19,7 @@ export const MediaPage = () => {
         </div>
         <div>
           <iframe
+            title="second"
             src="https://www.youtube.com/embed/fEemNFGdikM"
             style={{ width: 560, height: 315 }}
             frameBorder="0"
@@ -27,6 +29,7 @@ export const MediaPage = () => {
         </div>
         <div>
           <iframe
+            title="third"
             src="https://www.youtube.com/embed/DU9eo7TmvxA"
             style={{ width: 560, height: 315 }}
             frameBorder="0"

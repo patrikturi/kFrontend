@@ -13,24 +13,24 @@ import {
 } from '../../../common/styles';
 import LanguageSelector from './LanguageSelector';
 
-export const Navbar = () => {
+const StyledNavbar = styled(BootstrapNavbar)`
+  padding: 0;
+  margin: 0;
+  background-color: rgba(35, 37, 38, 0.502);
+  height: ${NAVBAR_HEIGHT};
+  color: ${PRIMARY_COLOR};
+`;
+
+const StyledNavLink = styled(Nav.Link)`
+  color: ${PRIMARY_COLOR}!important;
+  font-size: ${NAVBAR_FONT_SIZE}!important;
+  font-family: bebas_kairegular, tahoma;
+  letter-spacing: 4px;
+  padding-right: 65px !important;
+`;
+
+export const Navbar: React.FC = () => {
   const { t } = useTranslation();
-
-  const StyledNavbar = styled(BootstrapNavbar)`
-    padding: 0;
-    margin: 0;
-    background-color: rgba(35, 37, 38, 0.502);
-    height: ${NAVBAR_HEIGHT};
-    color: ${PRIMARY_COLOR};
-  `;
-
-  const StyledNavLink = styled(Nav.Link)`
-    color: ${PRIMARY_COLOR}!important;
-    font-size: ${NAVBAR_FONT_SIZE}!important;
-    font-family: bebas_kairegular, tahoma;
-    letter-spacing: 4px;
-    padding-right: 65px !important;
-  `;
 
   return (
     <>

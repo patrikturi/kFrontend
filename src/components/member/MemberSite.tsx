@@ -70,7 +70,7 @@ export const MemberSite = () => {
 
         {/*<!-- Nav Item - Charts -->*/}
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="/">
             <FontAwesomeIcon icon={faUsers} fixedWidth />
             <span>Teams</span>
           </a>
@@ -78,7 +78,7 @@ export const MemberSite = () => {
 
         {/*<!-- Nav Item - Tables -->*/}
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="/">
             <FontAwesomeIcon icon={faStopwatch} fixedWidth />
             <span>Matches</span>
           </a>
@@ -86,7 +86,7 @@ export const MemberSite = () => {
 
         {/*<!-- Nav Item - Tables -->*/}
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="/">
             <FontAwesomeIcon icon={faMapMarkerAlt} fixedWidth />
             <span>Fields</span>
           </a>
@@ -151,7 +151,7 @@ export const MemberSite = () => {
               <li className="nav-item dropdown no-arrow d-sm-none">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  href="/"
                   id="searchDropdown"
                   role="button"
                   data-toggle="dropdown"
@@ -189,7 +189,7 @@ export const MemberSite = () => {
                 <Dropdown className="nav-item no-arrow" navbar={true}>
                   <Dropdown.Toggle
                     className="nav-link"
-                    href="#"
+                    href="/"
                     id="userDropdown"
                     data-toggle="dropdown"
                     role="button"
@@ -202,6 +202,7 @@ export const MemberSite = () => {
                     </span>
                     <img
                       className="img-profile rounded-circle"
+                      alt="profile"
                       src={profilePicture}
                     />
                   </Dropdown.Toggle>
@@ -211,7 +212,7 @@ export const MemberSite = () => {
                     aria-labelledby="userDropdown"
                     alignRight
                   >
-                    <Dropdown.Item href="#">
+                    <Dropdown.Item href="/">
                       <FontAwesomeIcon
                         icon={faUser}
                         size="sm"
@@ -220,7 +221,7 @@ export const MemberSite = () => {
                       />
                       Profile
                     </Dropdown.Item>
-                    <Dropdown.Item href="#">
+                    <Dropdown.Item href="/">
                       <FontAwesomeIcon
                         icon={faCogs}
                         size="sm"
@@ -229,7 +230,7 @@ export const MemberSite = () => {
                       />
                       Settings
                     </Dropdown.Item>
-                    <Dropdown.Item href="#">
+                    <Dropdown.Item href="/">
                       <FontAwesomeIcon
                         icon={faList}
                         size="sm"
@@ -240,7 +241,7 @@ export const MemberSite = () => {
                     </Dropdown.Item>
                     <Dropdown.Divider></Dropdown.Divider>
                     <Dropdown.Item
-                      href="#"
+                      href="/"
                       data-toggle="modal"
                       data-target="#logoutModal"
                     >

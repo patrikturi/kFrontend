@@ -8,17 +8,17 @@ import { SiteContextProvider } from './context/SiteContext';
 
 import './fonts/stylesheet.css';
 
-function App() {
-  const App = styled.div`
-    min-height: 100%;
-  `;
+const StyledApp = styled.div`
+  min-height: 100%;
+`;
 
+function App() {
   return (
-    <App className="App">
+    <StyledApp className="App">
       <SiteContextProvider>
         <Site />
       </SiteContextProvider>
-    </App>
+    </StyledApp>
   );
 }
 

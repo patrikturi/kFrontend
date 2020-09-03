@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import { Dropdown, NavDropdown } from 'react-bootstrap';
 import { LanguageCode, languages } from '../../../common/languages';
 import { useTranslation } from 'react-i18next';
-import { NAVBAR_FONT_SIZE } from '../../../common/styles';
 
 const StyledCurrentLanguageComp = styled.span`
-  height: ${NAVBAR_FONT_SIZE}!important;
-  font-size: 26px!important;
+  height: 24px;
+  font-size: 24px!important;
   padding 0;
 `;
 
 const StyledNavDropdown = styled(NavDropdown)`
-  height: ${NAVBAR_FONT_SIZE}!important;
+  height: 24px !important;
   padding-top: 8px;
 `;
 

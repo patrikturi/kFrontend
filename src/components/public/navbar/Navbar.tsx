@@ -10,6 +10,7 @@ import {
   PRIMARY_COLOR,
   NAVBAR_FONT_SIZE,
   NAVBAR_HEIGHT,
+  MEDIA_WX,
 } from '../../../common/styles';
 import LanguageSelector from './LanguageSelector';
 

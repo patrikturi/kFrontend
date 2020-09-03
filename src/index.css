@@ -4,12 +4,13 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
-  margin:0;
-  padding:0;
+html,
+body {
+  margin: 0;
+  padding: 0;
   height: 100%;
 }
 
@@ -19,7 +20,7 @@ html, body {
 }
 
 #root {
-  background-color: #9CA2A7;
+  background-color: #9ca2a7;
   min-height: 100%;
 }
 
@@ -36,13 +37,10 @@ html, body {
   transform: translate(-100px, 25px);
 }
 
-
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
 
 .headerContainer {
   margin: 0 0;
@@ -121,7 +119,7 @@ code {
 }
 
 .results-item:hover {
-  background-color: #81C1FF;
+  background-color: #81c1ff;
 }
 
 .results-date {
@@ -147,8 +145,7 @@ code {
   width: 100%;
 }
 
-
-
+/* Bootstrap fixes */
 .dropdown-toggle::after {
-  color: #E3C190;
+  color: #e3c190;
 }

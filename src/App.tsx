@@ -1,18 +1,24 @@
-import React from 'react';
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {SiteContextProvider} from './context/SiteContext';
-import {Site} from './components/Site';
+import React from 'react';
+import styled from 'styled-components';
 
+import { Site } from './components/Site';
+import { SiteContextProvider } from './context/SiteContext';
+
+import './fonts/stylesheet.css';
 
 function App() {
+  const App = styled.div`
+    min-height: 100%;
+  `;
+
   return (
-    <div className="App" style={{height: "100%"}}>
+    <App className="App">
       <SiteContextProvider>
         <Site />
       </SiteContextProvider>
-    </div>
+    </App>
   );
 }
 

@@ -8,22 +8,41 @@ body {
 }
 
 html, body {
-  min-height: 100%;
+  margin:0;
+  padding:0;
+  height: 100%;
 }
 
-html {
-  font-size: 14.5px;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   background-color: #9CA2A7;
   min-height: 100%;
 }
+
+.App {
+  min-height: 100%;
+}
+
+.App > div {
+  min-height: 100vh;
+  background-color: darkslateblue;
+}
+
+.navbar-nav .dropdown-menu {
+  transform: translate(-100px, 25px);
+}
+
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
 
 .headerContainer {
   margin: 0 0;
@@ -126,4 +145,10 @@ code {
 
 .navbar-nav {
   width: 100%;
+}
+
+
+
+.dropdown-toggle::after {
+  color: #E3C190;
 }

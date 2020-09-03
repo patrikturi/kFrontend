@@ -6,7 +6,6 @@ import { Navbar } from './navbar/Navbar';
 import { PageBase } from './PageBase';
 import { NAVBAR_HEIGHT } from '../../common/styles';
 
-import KickingTheBall from '../../img/kicking_the_ball_large.jpg';
 import DegradeLarge from '../../img/degrade_large.png';
 import DegradeInverseLarge from '../../img/degrade_inverse_large.png';
 
@@ -52,11 +51,10 @@ const DegradeInverse = styled.div`
 export const PublicSite: React.FC = () => {
   return (
     <PageWrapper>
-      {/* <Background src={KickingTheBall} alt="background" /> */}
       <Container className="px-0" fluid>
-        {/* <Darkener />
+        <Darkener />
         <Degrade />
-        <DegradeInverse /> */}
+        <DegradeInverse />
         <Router>
           <Suspense fallback="Loading">
             <Navbar />

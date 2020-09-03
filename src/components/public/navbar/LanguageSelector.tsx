@@ -4,15 +4,15 @@ import { Dropdown, NavDropdown } from 'react-bootstrap';
 import { LanguageCode, languages } from '../../../common/languages';
 import { useTranslation } from 'react-i18next';
 
+const StyledNavDropdown = styled(NavDropdown)`
+  height: 24px !important;
+  padding-top: 8px;
+`;
+
 const StyledCurrentLanguageComp = styled.span`
   height: 24px;
   font-size: 24px!important;
   padding 0;
-`;
-
-const StyledNavDropdown = styled(NavDropdown)`
-  height: 24px !important;
-  padding-top: 8px;
 `;
 
 const LanguageSelector: React.FC = () => {

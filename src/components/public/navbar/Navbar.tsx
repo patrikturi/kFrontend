@@ -28,6 +28,20 @@ const StyledNavLink = styled(Nav.Link)`
   font-family: bebas_kairegular, tahoma;
   letter-spacing: 4px;
   padding-right: 65px !important;
+
+  margin-left: auto;
+  @media (min-width: 768px) {
+    margin-left: 0;
+  }
+`;
+
+const LanguageSelectorWrapper = styled.div`
+  width: 110px;
+  margin-left: auto;
+  @media (min-width: 768px) {
+    margin-left: 0;
+    width: 75px;
+  }
 `;
 
 export const Navbar: React.FC = () => {
@@ -65,9 +79,9 @@ export const Navbar: React.FC = () => {
                   </LinkContainer>
                 )}
 
-                <BootstrapNavbar.Toggle />
-
-                <LanguageSelector />
+                <LanguageSelectorWrapper>
+                  <LanguageSelector />
+                </LanguageSelectorWrapper>
               </Nav>
             </BootstrapNavbar.Collapse>
           </StyledNavbar>

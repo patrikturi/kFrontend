@@ -29,6 +29,11 @@ const KSoccerText = styled.img`
   height: ${NAVBAR_FONT_SIZE};
   margin-left: 31px;
   vertical-align: middle;
+
+  display: none;
+  @media (min-width: 1440px) {
+    display: inline-block;
+  }
 `;
 
 const NavbarBrand: React.FC = () => (

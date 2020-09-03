@@ -145,3 +145,7 @@ code {
 .dropdown-toggle::after {
   color: #e3c190;
 }
+
+button.navbar-toggler {
+  margin-right: 15px;
+}

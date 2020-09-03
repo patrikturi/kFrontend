@@ -15,7 +15,7 @@ export const PageBase: React.FC = () => {
   return (
     <div className="row pt-5 pb-5 m-0">
       <Switch>
-        <Route exact path="/" component={LandingPage} />
+        {/* <Route exact path="/" component={LandingPage} /> */}
         <Route path="/getting-started" component={GettingStartedPage} />
         <Route path="/updates" component={UpdatesPage} />
         <Route path="/login" component={LoginPage} />
@@ -28,7 +28,7 @@ export const PageBase: React.FC = () => {
         />
         <Route path="/leagues/:leagueId/media" component={MediaPage} />
         <Route path="/leagues/:leagueId/rules" component={RulesPage} />
-        <Route component={LandingPage} />
+        {/* <Route component={LandingPage} /> */}
       </Switch>
     </div>
   );

@@ -5,6 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-image: url('img/kicking_the_ball_large.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
 }
 
 html,
@@ -20,17 +27,11 @@ body {
 }
 
 #root {
-  background-color: #9ca2a7;
-  min-height: 100%;
-}
-
-.App {
   min-height: 100%;
 }
 
 .App > div {
   min-height: 100vh;
-  background-color: darkslateblue;
 }
 
 .navbar-nav .dropdown-menu {
@@ -58,10 +59,6 @@ code {
   height: 100%;
 }
 
-.bg-league {
-  background-color: #e4d1b6;
-}
-
 .topscorers-stadings {
   width: 200px;
   color: white;
@@ -69,7 +66,6 @@ code {
 }
 
 .topscorers-item {
-  background-color: #00000088;
   height: 1.5em;
   width: 250px;
   margin: 12px;

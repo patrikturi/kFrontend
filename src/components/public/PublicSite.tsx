@@ -15,11 +15,6 @@ const PageWrapper = styled.div`
   width: 100%;
 `;
 
-const CustomContainer = styled(Container)`
-  background-image: url(${KickingTheBall});
-  background-size: 1920px 1080px;
-`;
-
 const Darkener = styled.div`
   position: absolute;
   top: ${NAVBAR_HEIGHT};
@@ -57,10 +52,11 @@ const DegradeInverse = styled.div`
 export const PublicSite: React.FC = () => {
   return (
     <PageWrapper>
-      <CustomContainer className="bg-light px-0" fluid>
-        <Darkener />
+      {/* <Background src={KickingTheBall} alt="background" /> */}
+      <Container className="px-0" fluid>
+        {/* <Darkener />
         <Degrade />
-        <DegradeInverse />
+        <DegradeInverse /> */}
         <Router>
           <Suspense fallback="Loading">
             <Navbar />
@@ -69,7 +65,7 @@ export const PublicSite: React.FC = () => {
             <PageBase />
           </Suspense>
         </Router>
-      </CustomContainer>
+      </Container>
     </PageWrapper>
   );
 };

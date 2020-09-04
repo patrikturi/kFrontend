@@ -3,25 +3,57 @@ import { RegistrationForm } from './RegistrationForm';
 // import { Trans, useTranslation } from 'react-i18next';
 import SearchPlayerInput from './SearchPlayerInput';
 import styled from 'styled-components';
-import { Col } from 'react-bootstrap';
 import { PRIMARY_COLOR } from '../../common/styles';
+import { WIDTH_XS, WIDTH_WX } from '../../common/styles';
+import { WIDTH_MD } from '../../common/styles';
 
 import TitleBePart from '../../img/title_be_part.png';
 import TitleJoinUs from '../../img/title_join_us.png';
 
-const TitlePart1 = styled.img`
-  margin-top: 195px;
+const TitlePart1 = styled.div`
+  margin-top: 40px;
+
   margin-left: 20px;
-  margin-bottom: 37px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+
+  max-width: 500px;
+  height: 141px;
+
+  background-image: url(${TitleBePart});
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  @media (min-width: ${WIDTH_XS}) {
+    margin-right: 300px;
+    margin-left: auto;
+    margin-bottom: 37px;
+  }
+  @media (min-width: ${WIDTH_WX}) {
+  }
 `;
-const TitlePart2 = styled.img`
-  margin-bottom: 37px;
-  display: block;
+
+const TitlePart2 = styled.div`
+  margin-bottom: 0px;
+
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: 905px;
+  height: 145px;
+
+  background-image: url(${TitleJoinUs});
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  @media (min-width: ${WIDTH_XS}) {
+    margin-right: 20px;
+    margin-left: auto;
+    margin-bottom: 37px;
+  }
 `;
 
 const Container = styled.div`
-  float: right;
-  width: 985px;
+  width: 100%;
 `;
 
 const Introduction = styled.div`
@@ -30,26 +62,47 @@ const Introduction = styled.div`
   text-shadow: 1px 1px 2px black;
   font-weight: bold;
 
-  width: 761px;
-  margin-left: 75px;
+  margin-left: 30px;
+  margin-right: 30px;
+
   text-align: center;
 
   letter-spacing: 2px;
   color: ${PRIMARY_COLOR};
 
   margin-bottom: 34px;
+
+  @media (min-width: ${WIDTH_MD}) {
+    margin-right: 80px;
+    margin-left: auto;
+    max-width: 761px;
+    margin-bottom: 30px;
+  }
+`;
+
+const ButtonRow = styled.div`
+  @media (min-width: ${WIDTH_MD}) {
+    margin-right: 80px;
+    margin-left: auto;
+    max-width: 850px;
+  }
 `;
 
 const LoginButton = styled.div`
   height: 62px;
   border-radius: 30px;
-  width: 337px;
+  width: 80%;
   background-color: #42bb77;
 
   display: inline-block;
   position: relative;
 
-  margin-left: calc(75px + 28px);
+  margin-left: 10%;
+  margin-bottom: 10px;
+
+  @media (min-width: ${WIDTH_XS}) {
+    max-width: 337px;
+  }
 `;
 
 const LoginText = styled.div`
@@ -67,13 +120,18 @@ const LoginText = styled.div`
 const RegisterButton = styled.div`
   height: 62px;
   border-radius: 30px;
-  width: 337px;
+  width: 80%;
   background-color: #191b1b;
 
   display: inline-block;
   position: relative;
 
-  margin-left: 45px;
+  margin-left: 10%;
+  margin-bottom: 10px;
+
+  @media (min-width: ${WIDTH_XS}) {
+    max-width: 337px;
+  }
 `;
 
 const RegisterText = styled.div`
@@ -106,8 +164,8 @@ export const LandingPage: React.FC = () => {
   ///font-weight: bold;
   const welcomeText = (
     <>
-      <TitlePart1 src={TitleBePart} alt="Be part" />
-      <TitlePart2 src={TitleJoinUs} alt="Join us" />
+      <TitlePart1 />
+      <TitlePart2 />
       <Introduction>
         kSoccer is a soccer system with focus on arcade gameplay: easy, fluid
         and fast - but not 100% realistic. In the moment we are on BETA version,
@@ -115,27 +173,27 @@ export const LandingPage: React.FC = () => {
         a new soccer concept on Second Life, but still inspired on old Second
         Football.
       </Introduction>
-      <LoginButton>
-        <LoginText>LOGIN</LoginText>
-      </LoginButton>
-      <RegisterButton>
-        <RegisterText>REGISTER</RegisterText>
-      </RegisterButton>
+      <ButtonRow>
+        <LoginButton>
+          <LoginText>LOGIN</LoginText>
+        </LoginButton>
+        <RegisterButton>
+          <RegisterText>REGISTER</RegisterText>
+        </RegisterButton>
+      </ButtonRow>
     </>
   );
 
   return (
     <>
       <SearchPlayerInput />
-      <Col>
-        <Container>
-          {isRegistering ? (
-            <RegistrationForm onGoBack={handleGoBack} />
-          ) : (
-            welcomeText
-          )}
-        </Container>
-      </Col>
+      <Container>
+        {isRegistering ? (
+          <RegistrationForm onGoBack={handleGoBack} />
+        ) : (
+          welcomeText
+        )}
+      </Container>
     </>
   );
 };

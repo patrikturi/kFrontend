@@ -1,16 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NAVBAR_HEIGHT } from '../../common/styles';
+import { NAVBAR_HEIGHT, WIDTH_XS } from '../../common/styles';
 import SearchImg from '../../img/search_icon.png';
 
 const Container = styled.div`
-  position: absolute;
-  top: calc(${NAVBAR_HEIGHT} + 27px);
-  left: 45px;
-  width: 337px;
+  margin-left: 10%;
+
+  width: 80%;
   height: 62px;
   border-radius: 30px;
   background-color: rgba(0, 0, 0, 0.5);
+
+  position: relative;
+
+  @media (min-width: ${WIDTH_XS}) {
+    margin-left: 45px;
+    max-width: 337px;
+  }
 `;
 
 const SearchLabel = styled.div`

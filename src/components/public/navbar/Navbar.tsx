@@ -10,7 +10,7 @@ import {
   PRIMARY_COLOR,
   NAVBAR_FONT_SIZE,
   NAVBAR_HEIGHT,
-  MEDIA_WX,
+  WIDTH_MD,
 } from '../../../common/styles';
 import LanguageSelector from './LanguageSelector';
 
@@ -22,6 +22,25 @@ const StyledNavbar = styled(BootstrapNavbar)`
   color: ${PRIMARY_COLOR};
 `;
 
+const LinkWrapper = styled.div`
+  background-color: rgba(0, 0, 0, 1);
+  width: 300px;
+  text-align: right;
+  border-radius: 15px;
+  z-index: 1000;
+  height: 61px;
+  margin-right: 0;
+  margin-left: auto;
+
+  @media (min-width: 768px) {
+    width: auto;
+    margin-left: 0;
+    background-color: transparent;
+    min-width: 0;
+    text-align: none;
+  }
+`;
+
 const StyledNavLink = styled(Nav.Link)`
   color: ${PRIMARY_COLOR}!important;
   font-size: ${NAVBAR_FONT_SIZE}!important;
@@ -29,19 +48,14 @@ const StyledNavLink = styled(Nav.Link)`
   letter-spacing: 4px;
   padding-right: 65px !important;
   text-shadow: 0 0 5px black;
-
-  margin-left: auto;
-  @media (min-width: 768px) {
-    margin-left: 0;
-  }
 `;
 
-const LanguageSelectorWrapper = styled.div`
-  width: 110px;
-  margin-left: auto;
+const LanguageSelectorWrapper = styled(LinkWrapper)`
+  padding-right: 65px;
+
   @media (min-width: 768px) {
-    margin-left: 0;
-    width: 75px;
+    margin-right: 30px;
+    padding-right: 0;
   }
 `;
 
@@ -58,21 +72,21 @@ export const Navbar: React.FC = () => {
             <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
             <BootstrapNavbar.Collapse id="basic-navbar-nav">
               <Nav>
-                <LinkContainer exact to="/" className="ml-auto">
-                  <StyledNavLink>{t('Home')}</StyledNavLink>
-                </LinkContainer>
-                <LinkContainer to="/getting-started">
-                  <StyledNavLink>{t('Get Started')}</StyledNavLink>
-                </LinkContainer>
-                <LinkContainer to="/dummy">
-                  <StyledNavLink>{'Marketplace'}</StyledNavLink>
-                </LinkContainer>
-                <LinkContainer to="/updates">
-                  <StyledNavLink>{t('Updates')}</StyledNavLink>
-                </LinkContainer>
-                <LinkContainer to="/dummy">
-                  <StyledNavLink>{'KCoins'}</StyledNavLink>
-                </LinkContainer>
+                <LinkWrapper style={{ marginLeft: 'auto' }}>
+                  <LinkContainer exact to="/">
+                    <StyledNavLink>{t('Home')}</StyledNavLink>
+                  </LinkContainer>
+                </LinkWrapper>
+                <LinkWrapper>
+                  <LinkContainer to="/getting-started">
+                    <StyledNavLink>{t('Get Started')}</StyledNavLink>
+                  </LinkContainer>
+                </LinkWrapper>
+                <LinkWrapper>
+                  <LinkContainer to="/updates">
+                    <StyledNavLink>{t('Updates')}</StyledNavLink>
+                  </LinkContainer>
+                </LinkWrapper>
 
                 {LOGIN_ENABLED && (
                   <LinkContainer to="/login">

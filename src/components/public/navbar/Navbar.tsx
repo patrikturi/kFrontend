@@ -28,6 +28,7 @@ const StyledNavLink = styled(Nav.Link)`
   font-family: bebas_kairegular, tahoma;
   letter-spacing: 4px;
   padding-right: 65px !important;
+  text-shadow: 0 0 5px black;
 
   margin-left: auto;
   @media (min-width: 768px) {

@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 337px;
   height: 62px;
   border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const SearchLabel = styled.div`
@@ -18,7 +18,7 @@ const SearchLabel = styled.div`
   font-family: montserratmedium;
   font-size: 18px;
   letter-spacing: 2px;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 0 5px black;
 
   width: 250px;
 

@@ -20,13 +20,15 @@ const TitlePart2 = styled.img`
 `;
 
 const Container = styled.div`
-  margin-left: 935px;
+  float: right;
+  width: 985px;
 `;
 
 const Introduction = styled.div`
   font-family: montserratlight;
   font-size: 21px;
-  text-shadow: 0 0 5px rgba(227, 193, 144, 1);
+  text-shadow: 1px 1px 2px black;
+  font-weight: bold;
 
   width: 761px;
   margin-left: 75px;

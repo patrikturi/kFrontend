@@ -4,8 +4,8 @@ import { Card } from 'react-bootstrap';
 export const UpdatesPage = () => {
   return (
     <>
-      <div className="col-md-4"></div>
-      <div className="col-md-4">
+      <div className="col-md-3"></div>
+      <div className="col-md-5">
         <h2 className="mb-4">kSoccer Updates</h2>
         <Card className="mb-3">
           <Card.Header className="text-left">

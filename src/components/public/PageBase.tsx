@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { LandingPage } from './LandingPage';
 import { GettingStartedPage } from './GettingStartedPage';
-import { LoginPage } from './LoginPage';
 import { UpdatesPage } from './UpdatesPage';
 import { ResultsPage } from '../league/ResultsPage';
 import { StandingsPage } from '../league/StandingsPage';
@@ -11,6 +10,9 @@ import { RulesPage } from '../league/RulesPage';
 import { SchedulePage } from '../league/SchedulePage';
 import { MediaPage } from '../league/MediaPage';
 
+import { RegistrationForm } from './RegistrationForm';
+import { LoginForm } from './LoginForm';
+
 export const PageBase: React.FC = () => {
   return (
     <div className="row pt-5 pb-5 m-0">
@@ -18,7 +20,8 @@ export const PageBase: React.FC = () => {
         <Route exact path="/" component={LandingPage} />
         <Route path="/getting-started" component={GettingStartedPage} />
         <Route path="/updates" component={UpdatesPage} />
-        <Route path="/login" component={LoginPage} />
+        <Route path="/login" component={LoginForm} />
+        <Route path="/register" component={RegistrationForm} />
         <Route path="/leagues/:leagueId/results" component={ResultsPage} />
         <Route path="/leagues/:leagueId/standings" component={StandingsPage} />
         <Route path="/leagues/:leagueId/schedule" component={SchedulePage} />

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { RegistrationForm } from './RegistrationForm';
-// import { Trans, useTranslation } from 'react-i18next';
-import SearchPlayerInput from './SearchPlayerInput';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { PRIMARY_COLOR } from '../../common/styles';
-import { WIDTH_XS, WIDTH_WX } from '../../common/styles';
-import { WIDTH_MD } from '../../common/styles';
-
+import {
+  PRIMARY_COLOR,
+  WIDTH_MD,
+  WIDTH_WX,
+  WIDTH_XS,
+} from '../../common/styles';
 import TitleBePart from '../../img/title_be_part.png';
 import TitleJoinUs from '../../img/title_join_us.png';
+// import { Trans, useTranslation } from 'react-i18next';
+import SearchPlayerInput from './SearchPlayerInput';
 
 const TitlePart1 = styled.div`
   margin-top: 40px;
@@ -147,21 +149,21 @@ const RegisterText = styled.div`
 `;
 
 export const LandingPage: React.FC = () => {
+  const history = useHistory();
   // const { t, i18n } = useTranslation();
 
-  const [isRegistering, setRegistering] = useState(false);
-
-  // const handleRegisterNow = (e: React.FormEvent<HTMLElement>) => {
-  //   e.preventDefault();
-  //   setRegistering(true);
-  // };
-
-  const handleGoBack = (e: React.FormEvent<HTMLElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    setRegistering(false);
+    history.push('/login');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  ///font-weight: bold;
+  const handleRegisterNow = (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+    history.push('/register');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const welcomeText = (
     <>
       <TitlePart1 />
@@ -174,10 +176,10 @@ export const LandingPage: React.FC = () => {
         Football.
       </Introduction>
       <ButtonRow>
-        <LoginButton>
+        <LoginButton onClick={handleLogin}>
           <LoginText>LOGIN</LoginText>
         </LoginButton>
-        <RegisterButton>
+        <RegisterButton onClick={handleRegisterNow}>
           <RegisterText>REGISTER</RegisterText>
         </RegisterButton>
       </ButtonRow>
@@ -187,13 +189,7 @@ export const LandingPage: React.FC = () => {
   return (
     <>
       <SearchPlayerInput />
-      <Container>
-        {isRegistering ? (
-          <RegistrationForm onGoBack={handleGoBack} />
-        ) : (
-          welcomeText
-        )}
-      </Container>
+      <Container>{welcomeText}</Container>
     </>
   );
 };

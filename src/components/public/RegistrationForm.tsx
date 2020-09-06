@@ -1,21 +1,15 @@
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import React from 'react';
+import { Card, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { WIDTH_XS } from '../../common/styles';
-import { SiteContext } from '../../context/SiteContext';
 
 type RegProps = {};
 
 export const RegistrationForm = (props: RegProps) => {
-  const [, dispatch] = useContext(SiteContext);
   const history = useHistory();
-
-  const handleRegister = () => {
-    dispatch({ type: 'LOGIN_SUCCESS' });
-  };
 
   const handleGoBack = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
@@ -30,12 +24,11 @@ export const RegistrationForm = (props: RegProps) => {
       width: 460px;
       margin-right: 10vw;
       margin-left: auto;
-      margin-top: 45px;
     }
   `;
 
   return (
-    <>
+    <Row className="pt-5 pb-5 m-0">
       <Container>
         <Card style={{ backgroundColor: 'black', color: 'white' }}>
           <Card.Header
@@ -61,6 +54,6 @@ export const RegistrationForm = (props: RegProps) => {
           </Card.Body>
         </Card>
       </Container>
-    </>
+    </Row>
   );
 };

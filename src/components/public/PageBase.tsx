@@ -12,13 +12,15 @@ import { MediaPage } from '../league/MediaPage';
 
 import { RegistrationForm } from './RegistrationForm';
 import { LoginForm } from './LoginForm';
+import SearchPlayerPage from './SearchPlayerPage';
 
 export const PageBase: React.FC = () => {
   return (
-    <div className="row pt-5 pb-5 m-0">
+    <div>
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/getting-started" component={GettingStartedPage} />
+        <Route path="/search-player" component={SearchPlayerPage} />
         <Route path="/updates" component={UpdatesPage} />
         <Route path="/login" component={LoginForm} />
         <Route path="/register" component={RegistrationForm} />

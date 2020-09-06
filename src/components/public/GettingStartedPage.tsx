@@ -1,36 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
-import Totems from '../../img/totems.png';
 import { PRIMARY_COLOR } from '../../common/styles';
+import Totems from '../../img/totems.png';
+import { Row } from 'react-bootstrap';
+
+const Panel = styled.div`
+  margin: 0 auto;
+  background-color: black;
+  border-radius: 25px;
+  padding-bottom: 45px;
+  color: white;
+  padding: 20px;
+`;
+
+const Title = styled.h2`
+  padding-top: 10px;
+`;
+
+const ImgWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+`;
+
+const Step = styled.p``;
+
+const Num = styled.span`
+  color: ${PRIMARY_COLOR};
+  font-weight: bold;
+`;
 
 export const GettingStartedPage = () => {
-  const Panel = styled.div`
-    margin: 0 auto;
-    background-color: black;
-    border-radius: 25px;
-    padding-bottom: 45px;
-    color: white;
-    padding: 20px;
-  `;
-  const Title = styled.h2`
-    padding-top: 10px;
-  `;
-
-  const ImgWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-  `;
-
-  const Step = styled.p``;
-
-  const Num = styled.span`
-    color: ${PRIMARY_COLOR};
-    font-weight: bold;
-  `;
-
   return (
-    <>
+    <Row className="pt-5 pb-5 m-0">
       <Panel className="col-md-8 text-left">
         <Title>Getting Started with kSoccer</Title>
         <Step>
@@ -95,6 +97,6 @@ export const GettingStartedPage = () => {
           </li>
         </ul>
       </Panel>
-    </>
+    </Row>
   );
 };

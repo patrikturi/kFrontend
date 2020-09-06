@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { SiteContext } from '../../context/SiteContext';
@@ -33,7 +33,7 @@ export const LoginForm = (props: Props) => {
   `;
 
   return (
-    <>
+    <Row className="pt-5 pb-5 m-0">
       <Container>
         <Card style={{ backgroundColor: 'black', color: 'white' }}>
           <Card.Header
@@ -85,6 +85,6 @@ export const LoginForm = (props: Props) => {
           </Card.Body>
         </Card>
       </Container>
-    </>
+    </Row>
   );
 };

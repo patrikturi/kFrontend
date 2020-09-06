@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { Row } from 'react-bootstrap';
 import {
   PRIMARY_COLOR,
   WIDTH_MD,
@@ -164,6 +165,10 @@ export const LandingPage: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSearchClick = (e: React.FormEvent<HTMLElement>) => {
+    history.push('/search-player');
+  };
+
   const welcomeText = (
     <>
       <TitlePart1 />
@@ -187,9 +192,9 @@ export const LandingPage: React.FC = () => {
   );
 
   return (
-    <>
-      <SearchPlayerInput />
+    <Row className="pt-5 pb-5 m-0">
+      <SearchPlayerInput onClick={handleSearchClick} isTyping={false} />
       <Container>{welcomeText}</Container>
-    </>
+    </Row>
   );
 };

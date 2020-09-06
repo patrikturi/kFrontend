@@ -79,8 +79,6 @@ export const SearchPlayerPage = () => {
     }
   };
 
-  const handleGoBack = () => {};
-
   const resultsData = [
     {
       profilePictureUrl:
@@ -108,7 +106,9 @@ export const SearchPlayerPage = () => {
             />
           </CardCol1>
           <CardCol2>
-            <PlayerName>{result.username}</PlayerName>
+            <PlayerName>
+              {result.username} <a href="/profile/123456">=&gt;</a>
+            </PlayerName>
             <PlayerIntroduction>{result.introduction}</PlayerIntroduction>
           </CardCol2>
         </CardBody>
@@ -129,7 +129,7 @@ export const SearchPlayerPage = () => {
         ></SearchPlayerInput>
         <div style={{ flexBasis: '100%', height: '0' }}></div>
         <GoBack>
-          <a href="/" onClick={handleGoBack}>
+          <a href="/">
             <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" />
           </a>{' '}
           Go back

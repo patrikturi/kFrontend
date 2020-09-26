@@ -12,6 +12,7 @@ import TitleBePart from '../../img/title_be_part.png';
 import TitleJoinUs from '../../img/title_join_us.png';
 // import { Trans, useTranslation } from 'react-i18next';
 import SearchPlayerInput from './SearchPlayerInput';
+import { LOGIN_ENABLED } from '../../Settings';
 
 const TitlePart1 = styled.div`
   margin-top: 40px;
@@ -88,6 +89,19 @@ const ButtonRow = styled.div`
     margin-right: 80px;
     margin-left: auto;
     max-width: 850px;
+  }
+`;
+
+const LoginSoon = styled.div`
+  font-family: montserratmedium;
+  font-size: 24px;
+  letter-spacing: 3px;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+
+  margin-left: 30px;
+  @media (min-width: ${WIDTH_MD}) {
+    margin-left: 120px;
   }
 `;
 
@@ -181,12 +195,19 @@ export const LandingPage: React.FC = () => {
         Football.
       </Introduction>
       <ButtonRow>
-        <LoginButton onClick={handleLogin}>
-          <LoginText>LOGIN</LoginText>
-        </LoginButton>
-        <RegisterButton onClick={handleRegisterNow}>
-          <RegisterText>REGISTER</RegisterText>
-        </RegisterButton>
+        {LOGIN_ENABLED && (
+          <>
+            <LoginButton onClick={handleLogin}>
+              <LoginText>LOGIN</LoginText>
+            </LoginButton>
+            <RegisterButton onClick={handleRegisterNow}>
+              <RegisterText>REGISTER</RegisterText>
+            </RegisterButton>
+          </>
+        )}
+        {!LOGIN_ENABLED && (
+          <LoginSoon>Login/Registration is coming soon</LoginSoon>
+        )}
       </ButtonRow>
     </>
   );

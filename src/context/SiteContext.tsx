@@ -23,7 +23,7 @@ const reducer = (state: SiteState, action: SiteAction): SiteState => {
   }
 };
 
-export const SiteContextProvider = (props: any) => {
+export const SiteContextProvider: React.FC = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (

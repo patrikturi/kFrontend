@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { PRIMARY_COLOR } from '../../common/styles';
 import Totems from '../../img/totems.png';
 import { Row } from 'react-bootstrap';
+import { LOGIN_ENABLED } from '../../Settings';
 
 const Panel = styled.div`
   margin: 0 auto;
@@ -91,10 +92,12 @@ export const GettingStartedPage = () => {
             </em>{' '}
             to meet other players and get help
           </li>
-          <li>
-            <a href="/">Register / Log in</a> to see your stats and manage your
-            profile (not required to start playing the game)
-          </li>
+          {LOGIN_ENABLED && (
+            <li>
+              <a href="/">Register / Log in</a> to see your stats and manage
+              your profile (not required to start playing the game)
+            </li>
+          )}
         </ul>
       </Panel>
     </Row>

@@ -27,6 +27,7 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-use-fetch-ts": "^0.9.0",
     "styled-components": "^5.1.1",
     "typescript": "~3.8.3"
   },
@@ -56,5 +57,6 @@
     "@types/react-bootstrap": "^1.0.1",
     "bootstrap": "^4.5.0",
     "react-bootstrap": "^1.2.2"
-  }
+  },
+  "proxy": "https://backend.ksoccersl.com"
 }

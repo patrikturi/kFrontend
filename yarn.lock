@@ -9200,6 +9200,11 @@ react-transition-group@^4.0.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-use-fetch-ts@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-use-fetch-ts/-/react-use-fetch-ts-0.9.0.tgz#f2b7703f2171a56e393773979b2a3717e445d330"
+  integrity sha512-ABJLfgeWPiMqZX1ov4JX4YqceqTsHj9tffcTamsZagLyY3mvkvhUDgFJ7LGs0HeZ/fl03eR0DSG7WhDFvVaNKg==
+
 react@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"

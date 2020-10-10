@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Card, Row } from 'react-bootstrap';
+import { Card, Row, Spinner } from 'react-bootstrap';
 import { PRIMARY_COLOR } from '../../common/styles';
 import SearchPlayerInput from './SearchPlayerInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
+import { searchConfig } from '../../common/fetchConfig';
+import { useFetch } from 'react-use-fetch-ts';
 
 const Panel = styled.div`
   margin: 0 auto;
@@ -13,6 +15,7 @@ const Panel = styled.div`
   padding-bottom: 45px;
   color: white;
   padding: 20px;
+  min-height: 250px;
 `;
 
 const GoBack = styled.div`
@@ -55,9 +58,28 @@ const PlayerName = styled.div`
 
 const PlayerIntroduction = styled.div``;
 
+const SpinnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+interface SearchResult {
+  id: number;
+  username: string;
+  profile_picture_url: string;
+  introduction: string;
+}
+
 export const SearchPlayerPage = () => {
-  const [value, setValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(true);
+
+  const [searchResult, search] = useFetch(searchConfig);
+
+  if (searchResult.error) {
+    console.log(`Error: ${searchResult.errorResult}`);
+  }
 
   const handleClick = () => {
     setIsTyping(true);
@@ -68,60 +90,75 @@ export const SearchPlayerPage = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setInputValue(e.target.value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (!value) {
+      if (!inputValue) {
         setIsTyping(!isTyping);
+      } else {
+        //setIsTyping(!isTyping);
+        search(inputValue);
       }
     }
   };
 
-  const resultsData = [
-    {
-      profilePictureUrl:
-        'https://my-secondlife-agni.akamaized.net/users/m4ximo/sl_image.png',
-      username: 'Someguy',
-      introduction:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    },
-    {
-      profilePictureUrl:
-        'https://my-secondlife-agni.akamaized.net/users/hustler.levee/thumb_sl_image.png',
-      username: 'Other Guy',
-      introduction:
-        'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    },
-  ];
+  let results: any = [];
 
-  const results = resultsData.map((result) => {
-    return (
-      <PlayerCard>
-        <CardBody>
-          <CardCol1>
-            <ProfilePicture
-              style={{ backgroundImage: `url(${result.profilePictureUrl})` }}
-            />
-          </CardCol1>
-          <CardCol2>
-            <PlayerName>
-              {result.username} <a href="/profile/123456">=&gt;</a>
-            </PlayerName>
-            <PlayerIntroduction>{result.introduction}</PlayerIntroduction>
-          </CardCol2>
-        </CardBody>
-      </PlayerCard>
+  const resultsData = searchResult.result;
+  if (resultsData !== undefined) {
+    results = resultsData.map((result: SearchResult) => {
+      return (
+        <PlayerCard>
+          <CardBody>
+            <CardCol1>
+              <ProfilePicture
+                style={{
+                  backgroundImage: `url(${result.profile_picture_url})`,
+                }}
+              />
+            </CardCol1>
+            <CardCol2>
+              <PlayerName>
+                {result.username} <a href={`/profile/${result.id}`}>=&gt;</a>
+              </PlayerName>
+              <PlayerIntroduction>{result.introduction}</PlayerIntroduction>
+            </CardCol2>
+          </CardBody>
+        </PlayerCard>
+      );
+    });
+  }
+
+  let displayResults: JSX.Element = <></>;
+
+  if (searchResult.loading) {
+    displayResults = (
+      <SpinnerWrapper>
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </SpinnerWrapper>
     );
-  });
+  } else if (searchResult.error) {
+    if (searchResult.responseStatus === 400) {
+      displayResults = <div>Invalid search term. Try another one.</div>;
+    } else {
+      displayResults = <div>Search failed. Please try again later.</div>;
+    }
+  } else if (searchResult.result) {
+    displayResults = results ? results : <div>No results</div>;
+  } else {
+    displayResults = <div>No results yet</div>;
+  }
 
   return (
     <>
       <Row className="pt-5 pb-5 m-0">
         <SearchPlayerInput
           isTyping={isTyping}
-          value={value}
+          value={inputValue}
           onClick={handleClick}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -138,7 +175,7 @@ export const SearchPlayerPage = () => {
       <Row className="p-0 m-0">
         <Panel className="col-md-8 text-left">
           <h2 style={{ marginBottom: '30px' }}>Search Results</h2>
-          {results}
+          {displayResults}
         </Panel>
       </Row>
     </>

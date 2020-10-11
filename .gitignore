@@ -4,3 +4,4 @@ public/locales/
 virtualenv/
 env.sh
 *.pyc
+.firebase/

@@ -5,11 +5,10 @@ variables:
   - group: Credentials
 
 trigger:
-  - master
-  - azure-pipeline
+  - development
 
 jobs:
-  - job: DeployToProduction
+  - job: DeployToStaging
     timeoutInMinutes: 10
     pool:
       vmImage: 'ubuntu-18.04'
@@ -34,15 +33,15 @@ jobs:
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
 
-      - bash: ./scripts/ci/build.sh production
+      - bash: ./scripts/ci/build.sh staging
         displayName: 'Build'
 
-      - bash: ./scripts/ci/deploy.sh production
-        displayName: 'Deploy to Production'
+      - bash: ./scripts/ci/deploy.sh staging
+        displayName: 'Deploy to Staging'
         env:
           FIREBASE_TOKEN: $(FIREBASE_TOKEN)
 
-      - bash: ./scripts/ci/push_translations.sh production
+      - bash: ./scripts/ci/push_translations.sh staging
         displayName: 'Upload Translations'
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

@@ -27,6 +27,7 @@ jobs:
           ./scripts/translations.py download
           ./scripts/translations.py verify
           ./scripts/translations.py upload --dest-path /Fast.io/ksoccer-translations.imfast.io/staging/locales
+          ./scripts/translations.py upload --dest-path /Fast.io/ksoccer-translations.imfast.io/production/locales
         displayName: 'Sync'
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

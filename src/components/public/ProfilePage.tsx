@@ -4,6 +4,10 @@ import React from 'react';
 import { Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { useFetch } from 'react-use-fetch-ts';
+import { getProfileConfig, PlayerProfile } from '../../common/fetchConfig';
+import Spinner from '../common/Spinner';
+import { useLocation } from 'react-router-dom';
 
 const Panel = styled.div`
   margin: 0 auto;
@@ -24,12 +28,64 @@ const ProfilePicture = styled.img`
   border: 2px solid white;
 `;
 
+const renderProfile = (profileData: PlayerProfile): JSX.Element => {
+  const user_details = profileData.user_details;
+  let paragraphs: JSX.Element[] = [];
+  if (user_details.length > 0 && user_details[0].biography) {
+    paragraphs = user_details[0].biography.split('\n').map(
+      (par: string): JSX.Element => (
+        <>
+          {par}
+          <br />
+        </>
+      )
+    );
+  }
+
+  return (
+    <>
+      <h2>{profileData.username}</h2>
+      <ProfilePicture src={profileData.profile_picture_url} alt="profile" />
+      <h3>Introduction</h3>
+      <p>{profileData.introduction}</p>
+      <h3>Profile</h3>
+      <p>{paragraphs}</p>
+      <h3>Stats</h3>
+      <p>
+        Matches: {profileData.matches}, Goals: {profileData.goals}, Assists:{' '}
+        {profileData.assists}, kCoins: {profileData.kcoins}
+      </p>
+      <p>Joined: {profileData.date_joined.split('T')[0]}</p>
+    </>
+  );
+};
+
 const ProfilePage: React.FC = () => {
   const history = useHistory();
+  const location = useLocation();
+
+  let parts = location.pathname.split('/');
+  var profileId = parts.pop() || parts.pop();
+
+  const [fetchProfileState] = useFetch(getProfileConfig, [profileId!]);
 
   const handleGoBack = () => {
     history.goBack();
   };
+
+  let displayProfile: JSX.Element = <div></div>;
+
+  if (fetchProfileState.loading) {
+    displayProfile = <Spinner />;
+  } else if (fetchProfileState.error) {
+    if (fetchProfileState.responseStatus === 404) {
+      displayProfile = <div>No such user.</div>;
+    } else {
+      displayProfile = <div>Failed to load profile.</div>;
+    }
+  } else if (fetchProfileState.result) {
+    displayProfile = renderProfile(fetchProfileState.result);
+  }
 
   return (
     <Row className="pt-5 pb-5 m-0">
@@ -39,38 +95,7 @@ const ProfilePage: React.FC = () => {
         </div>{' '}
         Go back
       </GoBack>
-      <Panel className="col-md-8 text-left">
-        <h2>Someguy</h2>
-        <ProfilePicture
-          src="https://my-secondlife-agni.akamaized.net/users/m4ximo/sl_image.png"
-          alt="profile"
-        />
-        <h3>Introduction</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </p>
-        <h3>Profile</h3>
-        <p>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-          qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
-          dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-          quia non numquam eius modi tempora incidunt ut labore et dolore magnam
-          aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
-          exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex
-          ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in
-          ea voluptate velit esse quam nihil molestiae consequatur, vel illum
-          qui dolorem eum fugiat quo voluptas nulla pariatur?
-        </p>
-        <h3>Stats</h3>
-        <p>Matches: 15, Goals: 2, Assists: 3, Points: 1500</p>
-      </Panel>
+      <Panel className="col-md-8 text-left">{displayProfile}</Panel>
     </Row>
   );
 };

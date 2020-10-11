@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Card, Row, Spinner } from 'react-bootstrap';
+import { Card, Row } from 'react-bootstrap';
 import { PRIMARY_COLOR } from '../../common/styles';
 import SearchPlayerInput from './SearchPlayerInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { searchConfig } from '../../common/fetchConfig';
 import { useFetch } from 'react-use-fetch-ts';
+import Spinner from '../common/Spinner';
 
 const Panel = styled.div`
   margin: 0 auto;
@@ -58,12 +59,6 @@ const PlayerName = styled.div`
 
 const PlayerIntroduction = styled.div``;
 
-const SpinnerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 interface SearchResult {
   id: number;
   username: string;
@@ -98,7 +93,6 @@ export const SearchPlayerPage = () => {
       if (!inputValue) {
         setIsTyping(!isTyping);
       } else {
-        //setIsTyping(!isTyping);
         search(inputValue);
       }
     }
@@ -121,7 +115,9 @@ export const SearchPlayerPage = () => {
             </CardCol1>
             <CardCol2>
               <PlayerName>
-                {result.username} <a href={`/profile/${result.id}`}>=&gt;</a>
+                <a href={`/profile/${result.id}`} style={{ color: 'white' }}>
+                  {result.username}
+                </a>
               </PlayerName>
               <PlayerIntroduction>{result.introduction}</PlayerIntroduction>
             </CardCol2>
@@ -134,21 +130,15 @@ export const SearchPlayerPage = () => {
   let displayResults: JSX.Element = <></>;
 
   if (searchResult.loading) {
-    displayResults = (
-      <SpinnerWrapper>
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      </SpinnerWrapper>
-    );
+    displayResults = <Spinner />;
   } else if (searchResult.error) {
     if (searchResult.responseStatus === 400) {
-      displayResults = <div>Invalid search term. Try another one.</div>;
+      displayResults = <div>Search term too short, try a longer one</div>;
     } else {
       displayResults = <div>Search failed. Please try again later.</div>;
     }
   } else if (searchResult.result) {
-    displayResults = results ? results : <div>No results</div>;
+    displayResults = results.length === 0 ? <div>No results</div> : results;
   } else {
     displayResults = <div>No results yet</div>;
   }

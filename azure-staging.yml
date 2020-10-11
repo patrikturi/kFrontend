@@ -1,21 +1,47 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
+#
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+#
+variables:
+  - group: Credentials
 
 trigger:
   - development
 
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+  - job: DeployToStaging
+    timeoutInMinutes: 10
+    pool:
+      vmImage: 'ubuntu-18.04'
 
-steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '10.x'
-    displayName: 'Install Node.js'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '12.x'
+        displayName: 'Use Node'
 
-  - script: |
-      npm install
-      npm run build
-    displayName: 'npm install and build'
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+        displayName: 'Use Python'
+
+      - bash: ./scripts/ci/install.sh
+        displayName: 'Install'
+
+      - bash: ./scripts/ci/get_translations.sh
+        displayName: 'Download Translations'
+        env:
+          DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
+
+      - bash: ./scripts/ci/build.sh staging
+        displayName: 'Build'
+
+      - bash: ./scripts/ci/deploy.sh staging
+        displayName: 'Deploy to Staging'
+        env:
+          FIREBASE_TOKEN: $(FIREBASE_TOKEN)
+
+      - bash: ./scripts/ci/push_translations.sh staging
+        displayName: 'Upload Translations'
+        env:
+          DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

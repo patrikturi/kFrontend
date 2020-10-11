@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "kfrontend-staging"
+  },
+  "targets": {
+    "kfrontend-staging": {
+      "hosting": {
+        "production": [
+          "kfrontend"
+        ],
+        "staging": [
+          "kfrontend-staging"
+        ]
+      }
+    }
   }
 }

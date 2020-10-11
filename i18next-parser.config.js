@@ -16,8 +16,10 @@ module.exports = {
   indentation: 2,
   // Indentation of the catalog files
 
-  keepRemoved: false,
+  keepRemoved: true,
   // Keep keys from the catalog that are no longer in code
+  /* Note: Enabled to allow parallel staging/production with same translations
+   *       to clean up it would have to be run with 'false' manually */
 
   keySeparator: '.',
   // Key separator used in your translation keys

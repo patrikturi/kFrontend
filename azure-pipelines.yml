@@ -9,7 +9,7 @@ trigger:
   - azure-pipeline
 
 jobs:
-  - job: Stage
+  - job: Deploy
     timeoutInMinutes: 10
     pool:
       vmImage: 'ubuntu-18.04'
@@ -46,7 +46,7 @@ jobs:
           set -ex
           python -m unittest discover scripts
 
-          ./scripts/switchconfig.sh staging
+          ./scripts/switchconfig.sh production
           npm run build
 
           i18next
@@ -56,15 +56,15 @@ jobs:
 
       - bash: |
           set -ex
-          firebase deploy
-        displayName: 'Deploy to Staging'
+          firebase deploy --only hosting:production
+        displayName: 'Deploy to Production'
         env:
           FIREBASE_TOKEN: $(FIREBASE_TOKEN)
 
       - bash: |
           set -ex
           ./scripts/translations.py upload --dest-path /locales
-          ./scripts/translations.py upload --dest-path /Fast.io/ksoccer-translations.imfast.io/staging/locales
+          ./scripts/translations.py upload --dest-path /Fast.io/ksoccer-translations.imfast.io/production/locales
         displayName: 'Upload Translations'
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

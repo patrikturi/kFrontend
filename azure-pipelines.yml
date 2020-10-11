@@ -9,7 +9,7 @@ trigger:
   - azure-pipeline
 
 jobs:
-  - job: Deploy
+  - job: DeployToProduction
     timeoutInMinutes: 10
     pool:
       vmImage: 'ubuntu-18.04'
@@ -26,45 +26,23 @@ jobs:
           architecture: 'x64'
         displayName: 'Use Python'
 
-      - bash: |
-          set -ex
-          npm install -g i18next-parser
-          npm install
-          curl -sL https://firebase.tools | bash
-          pip3 install -r requirements.txt
+      - bash: ./scripts/ci/install.sh
         displayName: 'Install'
 
-      - bash: |
-          set -ex
-          ./scripts/translations.py download
-          ./scripts/translations.py verify
+      - bash: ./scripts/ci/get_translations.sh
         displayName: 'Download Translations'
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
 
-      - bash: |
-          set -ex
-          python -m unittest discover scripts
-
-          ./scripts/switchconfig.sh production
-          npm run build
-
-          i18next
-          ./scripts/translations.py normalize
-          ./scripts/translations.py verify
+      - bash: ./scripts/ci/build.sh production
         displayName: 'Build'
 
-      - bash: |
-          set -ex
-          firebase deploy --only hosting:production
+      - bash: ./scripts/ci/deploy.sh production
         displayName: 'Deploy to Production'
         env:
           FIREBASE_TOKEN: $(FIREBASE_TOKEN)
 
-      - bash: |
-          set -ex
-          ./scripts/translations.py upload --dest-path /locales
-          ./scripts/translations.py upload --dest-path /Fast.io/ksoccer-translations.imfast.io/production/locales
+      - bash: ./scripts/ci/push_translations.sh production
         displayName: 'Upload Translations'
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)

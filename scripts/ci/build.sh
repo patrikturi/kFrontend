@@ -6,7 +6,7 @@ set -ex
 python -m unittest discover scripts
 
 ./scripts/switchconfig.sh $1
-npm run build
+yarn run build
 
 i18next
 ./scripts/translations.py normalize

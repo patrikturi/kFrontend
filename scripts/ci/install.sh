@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-npm install -g i18next-parser
-npm install
+yarn global add i18next-parser
+yarn install
 curl -sL https://firebase.tools | bash
 pip3 install -r requirements.txt

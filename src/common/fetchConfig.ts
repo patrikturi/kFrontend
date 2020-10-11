@@ -1,5 +1,10 @@
 import { defaultGetInit, fetchConfig } from 'react-use-fetch-ts';
 
+const BACKEND_URL = 'https://backend.ksoccersl.com';
+const IS_PRODUCTION = process.env.NODE_ENV !== 'development';
+
+const API_PREFIX = IS_PRODUCTION ? BACKEND_URL : '';
+
 export interface SearchResult {
   id: number;
   username: string;
@@ -9,7 +14,7 @@ export interface SearchResult {
 
 export const searchConfig = fetchConfig({
   prepare: (term: string) => [
-    `/api/v1/users/search/?username=${term}`,
+    `${API_PREFIX}/api/v1/users/search/?username=${term}`,
     defaultGetInit,
   ],
   getResult: (json: any) => json as SearchResult[],
@@ -36,7 +41,10 @@ export interface PlayerProfile {
 }
 
 export const getProfileConfig = fetchConfig({
-  prepare: (id: string) => [`/api/v1/users/profile/${id}/`, defaultGetInit],
+  prepare: (id: string) => [
+    `${API_PREFIX}/api/v1/users/profile/${id}/`,
+    defaultGetInit,
+  ],
   getResult: (json: any) => json as PlayerProfile,
   getError: (json: any) => json as any,
 });

@@ -104,7 +104,7 @@ export const SearchPlayerPage = () => {
   if (resultsData !== undefined) {
     results = resultsData.map((result: SearchResult) => {
       return (
-        <PlayerCard>
+        <PlayerCard key={result.id}>
           <CardBody>
             <CardCol1>
               <ProfilePicture

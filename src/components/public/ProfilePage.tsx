@@ -44,7 +44,7 @@ const renderProfile = (profileData: PlayerProfile): JSX.Element => {
 
   return (
     <>
-      <h2>{profileData.username}</h2>
+      <h2>{profileData.display_name}</h2>
       <ProfilePicture src={profileData.profile_picture_url} alt="profile" />
       <h3>Introduction</h3>
       <p>{profileData.introduction}</p>

@@ -5,7 +5,7 @@ import { PRIMARY_COLOR } from '../../common/styles';
 import SearchPlayerInput from './SearchPlayerInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
-import { searchConfig } from '../../common/fetchConfig';
+import { searchConfig, SearchResult } from '../../common/fetchConfig';
 import { useFetch } from 'react-use-fetch-ts';
 import Spinner from '../common/Spinner';
 
@@ -59,13 +59,6 @@ const PlayerName = styled.div`
 
 const PlayerIntroduction = styled.div``;
 
-interface SearchResult {
-  id: number;
-  username: string;
-  profile_picture_url: string;
-  introduction: string;
-}
-
 export const SearchPlayerPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(true);
@@ -116,7 +109,7 @@ export const SearchPlayerPage = () => {
             <CardCol2>
               <PlayerName>
                 <a href={`/profile/${result.id}`} style={{ color: 'white' }}>
-                  {result.username}
+                  {result.display_name}
                 </a>
               </PlayerName>
               <PlayerIntroduction>{result.introduction}</PlayerIntroduction>

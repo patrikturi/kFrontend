@@ -8,6 +8,7 @@ const API_PREFIX = IS_PRODUCTION ? BACKEND_URL : '';
 export interface SearchResult {
   id: number;
   username: string;
+  display_name: string;
   profile_picture_url: string;
   introduction: string;
 }
@@ -29,6 +30,7 @@ export interface UserDetails {
 export interface PlayerProfile {
   id: number;
   username: string;
+  display_name: string;
   profile_picture_url: string;
   introduction: string;
   user_details: UserDetails[];

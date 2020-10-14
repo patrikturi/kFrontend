@@ -1,1 +1,1 @@
-export const LOGIN_ENABLED = false;
+export const LOGIN_ENABLED = true;

@@ -11,8 +11,8 @@ const StyledNavDropdown = styled(NavDropdown)`
 
 const StyledCurrentLanguageComp = styled.span`
   height: 24px;
-  font-size: 24px!important;
-  padding 0;
+  font-size: 24px !important;
+  padding: 0;
 `;
 
 const LanguageSelector: React.FC = () => {

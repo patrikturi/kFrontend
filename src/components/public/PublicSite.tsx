@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container } from 'react-bootstrap';
 import { Navbar } from './navbar/Navbar';
@@ -55,14 +54,12 @@ export const PublicSite: React.FC = () => {
         <Darkener />
         <Degrade />
         <DegradeInverse />
-        <Router>
-          <Suspense fallback="Loading">
-            <Navbar />
-          </Suspense>
-          <Suspense fallback="Loading">
-            <PageBase />
-          </Suspense>
-        </Router>
+        <Suspense fallback="Loading">
+          <Navbar />
+        </Suspense>
+        <Suspense fallback="Loading">
+          <PageBase />
+        </Suspense>
       </Container>
     </PageWrapper>
   );

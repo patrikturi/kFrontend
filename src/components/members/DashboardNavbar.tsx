@@ -1,13 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  Navbar as BootstrapNavbar,
-  Nav,
-  Row,
-  Col,
-  NavDropdown,
-  Dropdown,
-} from 'react-bootstrap';
+import { Navbar as BootstrapNavbar, Nav, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const StyledNavbar = styled(BootstrapNavbar)`

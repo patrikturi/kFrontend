@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import DashboardNavbar from './DashboardNavbar';
-import { Row, Container } from 'react-bootstrap';
-import StatCard from './StatCard';
-import {
-  faTrophy,
-  faFutbol,
-  faHandsHelping,
-  faStopwatch,
-} from '@fortawesome/free-solid-svg-icons';
+import { Container } from 'react-bootstrap';
+import DashboardContent from './DashboardContent';
+import MyProfile from './MyProfile';
+import { Route, Switch } from 'react-router-dom';
 
 const StyledDashboard = styled.div`
   display: flex;
@@ -30,10 +26,6 @@ const Content = styled.div`
 `;
 
 const StyledContainer = styled(Container)``;
-
-const Title = styled.h3`
-  margin-bottom: 1.5rem;
-`;
 
 const Footer = styled.footer`
   padding: 2rem 0;
@@ -58,34 +50,14 @@ export const Dashboard = (): JSX.Element => {
         <Content>
           <DashboardNavbar></DashboardNavbar>
           <StyledContainer fluid>
-            <Title className="text-gray-800">Dashboard</Title>
-            <Row>
-              <StatCard
-                variant="warning"
-                icon={faTrophy}
-                name="kCoins"
-                value={20}
-              ></StatCard>
-              <StatCard
-                variant="primary"
-                icon={faFutbol}
-                name="Goals"
-                value={3}
-              ></StatCard>
-              <StatCard
-                variant="success"
-                icon={faHandsHelping}
-                name="Assists"
-                value={5}
-              ></StatCard>
-              <StatCard
-                variant="info"
-                icon={faStopwatch}
-                name="Matches"
-                value={100}
-              ></StatCard>
-            </Row>
-            <Row></Row>
+            <Switch>
+              <Route
+                exact
+                path="/dashboard"
+                component={DashboardContent}
+              ></Route>
+              <Route path="/dashboard/profile" component={MyProfile}></Route>
+            </Switch>
           </StyledContainer>
         </Content>
         <Footer>

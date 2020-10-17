@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Row } from 'react-bootstrap';
@@ -105,7 +105,7 @@ const LoginSoon = styled.div`
   }
 `;
 
-const LoginButton = styled.div`
+const LoginButtonUp = styled.div`
   height: 62px;
   border-radius: 30px;
   width: 80%;
@@ -120,6 +120,16 @@ const LoginButton = styled.div`
   @media (min-width: ${WIDTH_XS}) {
     max-width: 337px;
   }
+
+  :hover {
+    background-color: #69bd8e;
+  }
+`;
+
+const LoginButtonPressed = styled(LoginButtonUp)`
+  :hover {
+    background-color: #2a8f56;
+  }
 `;
 
 const LoginText = styled.div`
@@ -132,9 +142,11 @@ const LoginText = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  -webkit-user-select: none;
+  user-select: none;
 `;
 
-const RegisterButton = styled.div`
+const RegisterButtonUp = styled.div`
   height: 62px;
   border-radius: 30px;
   width: 80%;
@@ -149,6 +161,16 @@ const RegisterButton = styled.div`
   @media (min-width: ${WIDTH_XS}) {
     max-width: 337px;
   }
+
+  :hover {
+    background-color: #2b2e2e;
+  }
+`;
+
+const RegisterButtonPressed = styled(RegisterButtonUp)`
+  :hover {
+    background-color: #1a1c1c;
+  }
 `;
 
 const RegisterText = styled.div`
@@ -161,20 +183,32 @@ const RegisterText = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  -webkit-user-select: none;
+  user-select: none;
 `;
 
 export const LandingPage: React.FC = () => {
+  const [isLoginPresed, setLoginPressed] = useState(false);
+  const [isRegisterPresed, setRegisterPressed] = useState(false);
   const history = useHistory();
   // const { t, i18n } = useTranslation();
 
-  const handleLogin = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
+  const handleLoginDown = () => {
+    setLoginPressed(true);
+  };
+
+  const handleLoginUp = () => {
+    setLoginPressed(false);
     history.push('/login');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleRegisterNow = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
+  const handleRegisterDown = () => {
+    setRegisterPressed(true);
+  };
+
+  const handleRegisterUp = () => {
+    setRegisterPressed(false);
     history.push('/register');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -182,6 +216,11 @@ export const LandingPage: React.FC = () => {
   const handleSearchClick = (e: React.FormEvent<HTMLElement>) => {
     history.push('/search-player');
   };
+
+  const LoginButton = isLoginPresed ? LoginButtonPressed : LoginButtonUp;
+  const RegisterButton = isRegisterPresed
+    ? RegisterButtonPressed
+    : RegisterButtonUp;
 
   const welcomeText = (
     <>
@@ -197,10 +236,16 @@ export const LandingPage: React.FC = () => {
       <ButtonRow>
         {LOGIN_ENABLED && (
           <>
-            <LoginButton onClick={handleLogin}>
+            <LoginButton
+              onMouseDown={handleLoginDown}
+              onMouseUp={handleLoginUp}
+            >
               <LoginText>LOGIN</LoginText>
             </LoginButton>
-            <RegisterButton onClick={handleRegisterNow}>
+            <RegisterButton
+              onMouseDown={handleRegisterDown}
+              onMouseUp={handleRegisterUp}
+            >
               <RegisterText>REGISTER</RegisterText>
             </RegisterButton>
           </>

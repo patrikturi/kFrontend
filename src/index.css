@@ -139,6 +139,14 @@ code {
   color: #e3c190;
 }
 
+#dashboard-nav .dropdown-toggle::after {
+  display: none !important;
+}
+
 button.navbar-toggler {
   margin-right: 15px;
+}
+
+#dashboard-nav .nav-item > a {
+  padding-right: 0 !important;
 }

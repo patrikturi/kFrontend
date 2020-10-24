@@ -2,15 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { Spinner as BootstrapSpinner } from 'react-bootstrap';
 
-const SpinnerWrapper = styled.div`
+interface Props {
+  width?: string;
+}
+
+const SpinnerWrapper = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${(props) => (props.width ? `width: ${props.width}` : '')}
 `;
 
-const Spinner = (): JSX.Element => {
+const Spinner = (props: Props): JSX.Element => {
   return (
-    <SpinnerWrapper>
+    <SpinnerWrapper width={props?.width}>
       <BootstrapSpinner animation="border" role="status">
         <span className="sr-only">Loading...</span>
       </BootstrapSpinner>

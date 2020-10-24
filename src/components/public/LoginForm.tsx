@@ -1,4 +1,10 @@
-import React, { useContext } from 'react';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  EventHandler,
+  FormEvent,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card, Form, Button, Row } from 'react-bootstrap';
@@ -6,31 +12,83 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { SiteContext } from '../../context/SiteContext';
 import { WIDTH_XS } from '../../common/styles';
+import { loginConfig } from '../../common/fetchConfig';
+import Spinner from '../common/Spinner';
+import { useFetch } from 'react-use-fetch-ts';
+
+const Container = styled.div`
+  width: 80%;
+  margin-left: 10%;
+
+  @media (min-width: ${WIDTH_XS}) {
+    width: 460px;
+    margin-right: 10vw;
+    margin-left: auto;
+  }
+`;
 
 type Props = {};
 
 export const LoginForm = (props: Props) => {
+  const [loginResult, login] = useFetch(loginConfig);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [csrfToken, setCsrfToken] = useState('');
   const [, dispatch] = useContext(SiteContext);
   const history = useHistory();
 
-  const handleLogin = () => {
-    dispatch({ type: 'LOGIN_SUCCESS' });
+  useEffect(() => {
+    const fetchCsrf = async () => {
+      const response = await fetch('/api/v1/core/csrf-token/');
+      const body = await response.json();
+      setCsrfToken(body['token']);
+    };
+
+    fetchCsrf();
+  }, []);
+
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form: HTMLFormElement = e.currentTarget;
+
+    const firstNameField = form[0] as HTMLInputElement;
+    const lastNameField = form[1] as HTMLInputElement;
+    const passwordNameField = form[2] as HTMLInputElement;
+    const username = (firstNameField.value + ' ' + lastNameField.value).trim();
+    const password = passwordNameField.value?.trim() || '';
+
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    if (errorMessage) {
+      setErrorMessage('');
+    }
+    if (csrfToken) {
+      login(formData, { 'X-CSRFToken': csrfToken });
+    }
   };
 
   const handleGoBack = (e: React.FormEvent<HTMLElement>) => {
-    history.push('/');
+    history.goBack();
   };
 
-  const Container = styled.div`
-    width: 80%;
-    margin-left: 10%;
-
-    @media (min-width: ${WIDTH_XS}) {
-      width: 460px;
-      margin-right: 10vw;
-      margin-left: auto;
+  useEffect(() => {
+    const responseStatus = loginResult.responseStatus;
+    if (responseStatus && responseStatus >= 400 && !errorMessage) {
+      if (responseStatus >= 500) {
+        setErrorMessage('Unable to login at the moment. Try again later.');
+      } else if (responseStatus === 401) {
+        setErrorMessage('Invalid username or password');
+      } else if (responseStatus >= 400) {
+        setErrorMessage('Something went wrong');
+      }
+    } else if (responseStatus === 200) {
+      history.push('/dashboard/');
+      dispatch({ type: 'LOGIN_SUCCESS' });
+    } else if (loginResult.error && !errorMessage) {
+      setErrorMessage('Something is broken');
     }
-  `;
+  }, [dispatch, history, loginResult, errorMessage]);
 
   return (
     <Row className="pt-5 pb-5 m-0">
@@ -47,14 +105,14 @@ export const LoginForm = (props: Props) => {
           </Card.Header>
           <Card.Body className="text-left">
             <h2>Log in</h2>
-            <p>Log in to get access to your kSoccer stats</p>
-            <Form>
+            <p>Log in to get access to your profile and stats</p>
+            <Form onSubmit={handleLogin}>
               <Form.Group>
-                <label htmlFor="first_name">SL first name</label>
+                <label htmlFor="first_name">SL First Name</label>
                 <input type="text" className="form-control" id="first_name" />
               </Form.Group>
               <Form.Group>
-                <label htmlFor="last_name">SL last name</label>
+                <label htmlFor="last_name">SL Last Name</label>
                 <input
                   type="text"
                   className="form-control"
@@ -70,13 +128,22 @@ export const LoginForm = (props: Props) => {
                   id="exampleInputPassword1"
                 />
               </Form.Group>
-              <Button
-                type="submit"
-                className="btn-primary"
-                onClick={handleLogin}
-              >
-                Log in
-              </Button>
+              <Form.Group>
+                <label style={{ color: '#d70000', fontWeight: 'bold' }}>
+                  {errorMessage}
+                </label>
+              </Form.Group>
+              {loginResult.loading ? (
+                <Spinner width="100px" />
+              ) : (
+                <Button
+                  type="submit"
+                  className="btn-primary"
+                  style={{ width: '100px' }}
+                >
+                  Log in
+                </Button>
+              )}
               <Form.Text>
                 Don't have an account yet? See{' '}
                 <a href="/register">registration steps</a>

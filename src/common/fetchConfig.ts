@@ -1,4 +1,9 @@
-import { defaultGetInit, fetchConfig } from 'react-use-fetch-ts';
+import {
+  defaultGetInit,
+  fetchConfig,
+  defaultFormDataPostInit,
+  defaultPostInit,
+} from 'react-use-fetch-ts';
 
 const BACKEND_URL = 'https://backend.ksoccersl.com';
 const IS_PRODUCTION = process.env.NODE_ENV !== 'development';
@@ -48,5 +53,60 @@ export const getProfileConfig = fetchConfig({
     defaultGetInit,
   ],
   getResult: (json: any) => json as PlayerProfile,
+  getError: (json: any) => json as any,
+});
+
+function initFormPost(
+  formData: FormData,
+  headers: Record<string, string>
+): RequestInit {
+  const entries = Array.from(formData.entries());
+  if (entries.some((entry) => entry[1] instanceof File)) {
+    return {
+      ...defaultFormDataPostInit,
+      body: formData,
+    };
+  }
+  const allHeaders: { [key: string]: string } = {
+    Accept: 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'X-CSRFToken': headers['X-CSRFToken'],
+  };
+  return {
+    ...defaultPostInit,
+    body: entries
+      .map(([key, value]) => `${key}=${encodeURIComponent(value.toString())}`)
+      .join('&'),
+    headers: allHeaders,
+  };
+}
+
+export const loginConfig = fetchConfig({
+  prepare: (formData: FormData, headers: Record<string, string>) => [
+    `${API_PREFIX}/api/v1/users/login/`,
+    {
+      ...initFormPost(formData, headers),
+      method: 'POST',
+    },
+  ],
+  getResult: (json: any) => json as any,
+  getError: (json: any) => json as any,
+});
+
+export const patchProfileConfig = fetchConfig({
+  prepare: (id: string, body: object, csrf: string) => [
+    `${API_PREFIX}/api/v1/users/profile/${id}/`,
+    {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf,
+      },
+      body: JSON.stringify(body),
+    },
+  ],
+  getResult: (json: any) => json as any,
   getError: (json: any) => json as any,
 });

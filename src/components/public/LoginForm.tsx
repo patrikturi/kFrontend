@@ -26,7 +26,6 @@ type Props = {};
 export const LoginForm = (props: Props) => {
   const [loginResult, login] = useFetch(loginConfig);
   const [errorMessage, setErrorMessage] = useState('');
-  const [csrfToken, setCsrfToken] = useState('');
   const [, dispatch] = useContext(SiteContext);
   const history = useHistory();
 
@@ -38,9 +37,7 @@ export const LoginForm = (props: Props) => {
       const API_PREFIX = IS_PRODUCTION ? BACKEND_URL : '';
 
       if(!getCookie('csrftoken')) {
-        const response = await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`);
-        const body = await response.json();
-        setCsrfToken(body['token']);
+        await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`, {mode: 'cors', credentials: 'include'});
       }
     };
 
@@ -64,9 +61,7 @@ export const LoginForm = (props: Props) => {
     if (errorMessage) {
       setErrorMessage('');
     }
-    if (csrfToken) {
-      login(formData, { 'X-CSRFToken': getCookie('csrftoken') });
-    }
+    login(formData, { 'X-CSRFToken': getCookie('csrftoken') });
   };
 
   const handleGoBack = (e: React.FormEvent<HTMLElement>) => {

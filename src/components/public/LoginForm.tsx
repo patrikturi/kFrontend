@@ -37,9 +37,11 @@ export const LoginForm = (props: Props) => {
 
       const API_PREFIX = IS_PRODUCTION ? BACKEND_URL : '';
 
-      const response = await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`);
-      const body = await response.json();
-      setCsrfToken(body['token']);
+      if(!getCookie('csrftoken')) {
+        const response = await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`);
+        const body = await response.json();
+        setCsrfToken(body['token']);
+      }
     };
 
     fetchCsrf();
@@ -63,7 +65,7 @@ export const LoginForm = (props: Props) => {
       setErrorMessage('');
     }
     if (csrfToken) {
-      login(formData, { 'X-CSRFToken': csrfToken });
+      login(formData, { 'X-CSRFToken': getCookie('csrftoken') });
     }
   };
 

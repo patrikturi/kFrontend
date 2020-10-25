@@ -32,7 +32,12 @@ export const LoginForm = (props: Props) => {
 
   useEffect(() => {
     const fetchCsrf = async () => {
-      const response = await fetch('/api/v1/core/csrf-token/');
+      const BACKEND_URL = 'https://backend.ksoccersl.com';
+      const IS_PRODUCTION = process.env.NODE_ENV !== 'development';
+
+      const API_PREFIX = IS_PRODUCTION ? BACKEND_URL : '';
+
+      const response = await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`);
       const body = await response.json();
       setCsrfToken(body['token']);
     };

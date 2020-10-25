@@ -8,6 +8,10 @@ import { SiteContextProvider } from './context/SiteContext';
 
 import './fonts/stylesheet.css';
 
+declare global {
+  const getCookie: getCookieMethod;
+}
+
 const StyledApp = styled.div`
   min-height: 100%;
 `;

@@ -12,7 +12,6 @@ import PageTitle from './atoms/PageTitle';
 import { useFetch } from 'react-use-fetch-ts';
 import { getMyProfileConfig, patchProfileConfig } from '../../common/fetchConfig';
 import { SiteContext } from '../../context/SiteContext';
-import { getCookie } from '../../common/utils';
 import { useHistory } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 
@@ -114,7 +113,7 @@ const DashboardContent = () => {
           <Form.Text>Check this if you are looking for a club</Form.Text>
         </Form.Group>
       </TitleRow>
-      {context.isProfileLoaded ? stats : <Spinner />}
+      {context.isProfileLoaded ? stats : getProfileResult.loading && <Spinner />}
       <Row></Row>
     </>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import {
   Navbar as BootstrapNavbar,
@@ -7,6 +7,10 @@ import {
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { logoutConfig } from '../../common/fetchConfig';
+import { useFetch } from 'react-use-fetch-ts';
+import { useHistory } from 'react-router-dom';
+import { SiteContext } from '../../context/SiteContext';
 
 const StyledNavbar = styled(BootstrapNavbar)`
   padding: 0;
@@ -45,11 +49,29 @@ const StyledIcon = styled(FontAwesomeIcon)`
 `;
 
 const DashboardNavbar = (): JSX.Element => {
+  const [logoutResult, logout] = useFetch(logoutConfig);
+  const [context, dispatch] = useContext(SiteContext);
+  const history = useHistory();
+
+  const displayName = localStorage.getItem('displayName');
+  const profilePictureUrl = localStorage.getItem('profilePictureUrl');
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  useEffect(() => {
+    if (logoutResult.responseStatus === 200) {
+      dispatch({type: 'LOGOUT_SUCCESS'})
+      history.push('/');
+    }
+  }, [dispatch, history, logoutResult]);
+
   const DropdownTitle = (
     <StyledDropdownTitle>
-      Kreison Jacobus
+      {displayName}
       <ProfilePicture
-        src="https://my-secondlife-agni.akamaized.net/users/kreison.jacobus/sl_image.png"
+        src={profilePictureUrl || ''}
         alt="Profile picture"
         width="48px"
         height="48px"
@@ -67,7 +89,7 @@ const DashboardNavbar = (): JSX.Element => {
           Edit Profile
         </StyledDropdownItem>
         <NavDropdown.Divider />
-        <StyledDropdownItem key="logout" onSelect={handleSelect}>
+        <StyledDropdownItem key="logout" onSelect={handleLogout}>
           <StyledIcon icon={faSignOutAlt} />
           Logout
         </StyledDropdownItem>

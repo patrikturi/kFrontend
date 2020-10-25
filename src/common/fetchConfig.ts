@@ -56,6 +56,15 @@ export const getProfileConfig = fetchConfig({
   getError: (json: any) => json as any,
 });
 
+export const getMyProfileConfig = fetchConfig({
+  prepare: () => [
+    `${API_PREFIX}/api/v1/users/me/profile/`,
+    defaultGetInit,
+  ],
+  getResult: (json: any) => json as PlayerProfile,
+  getError: (json: any) => json as any,
+});
+
 function initFormPost(
   formData: FormData,
   headers: Record<string, string>
@@ -94,7 +103,7 @@ export const loginConfig = fetchConfig({
 });
 
 export const patchProfileConfig = fetchConfig({
-  prepare: (id: string, body: object, csrf: string) => [
+  prepare: (id: number, body: object, csrf: string) => [
     `${API_PREFIX}/api/v1/users/profile/${id}/`,
     {
       method: 'PATCH',
@@ -107,6 +116,12 @@ export const patchProfileConfig = fetchConfig({
       body: JSON.stringify(body),
     },
   ],
+  getResult: (json: any) => json as any,
+  getError: (json: any) => json as any,
+});
+
+export const logoutConfig = fetchConfig({
+  prepare: () => [`${API_PREFIX}/api/v1/users/logout/`, defaultGetInit],
   getResult: (json: any) => json as any,
   getError: (json: any) => json as any,
 });

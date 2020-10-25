@@ -7,7 +7,7 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 interface Props {
   icon: IconDefinition;
   name: string;
-  value: number;
+  value: number | string;
   variant: 'warning' | 'primary' | 'info' | 'success';
 }
 

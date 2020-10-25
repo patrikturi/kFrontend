@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import ksoccerLogoImg from '../../img/ksoccer_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,7 +25,7 @@ const SidebarList = styled.ul`
   }
 `;
 
-const SidebarBrand = styled.a`
+const SidebarBrand = styled(RouterLink)`
   height: 60px;
   box-sizing: content-box;
   text-decoration: none;
@@ -40,7 +41,7 @@ const SidebarDivider = styled.hr`
   margin: 0 1rem;
 `;
 
-const SidebarLink = styled.a`
+const SidebarLink = styled(RouterLink)`
   color: rgba(255, 255, 255, 0.8);
   display: block;
   font-weight: 700;
@@ -85,21 +86,21 @@ const Sidebar = (): JSX.Element => {
   return (
     <StyledSidebar>
       <SidebarList>
-        <SidebarBrand href="/">
+        <SidebarBrand to={{ pathname: '/' }}>
           <div>
             <img src={ksoccerLogoImg} height={60} alt="kSoccer"></img>
           </div>
         </SidebarBrand>
         <SidebarDivider></SidebarDivider>
         <li>
-          <SidebarLink href="/dashboard/">
+          <SidebarLink to={{ pathname: '/dashboard/' }}>
             <SidebarIcon icon={faTachometerAlt} />
             Dashboard
           </SidebarLink>
         </li>
         <SidebarDivider></SidebarDivider>
         <li>
-          <SidebarLink href="/dashboard/profile/">
+          <SidebarLink to={{ pathname: '/dashboard/profile/' }}>
             <SidebarIcon icon={faUser} />
             Profile
           </SidebarLink>

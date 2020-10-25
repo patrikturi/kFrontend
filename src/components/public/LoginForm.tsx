@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  EventHandler,
-  FormEvent,
-} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card, Form, Button, Row } from 'react-bootstrap';
@@ -84,7 +78,7 @@ export const LoginForm = (props: Props) => {
       }
     } else if (responseStatus === 200) {
       history.push('/dashboard/');
-      dispatch({ type: 'LOGIN_SUCCESS' });
+      dispatch({ type: 'LOGIN_SUCCESS', data: loginResult.result });
     } else if (loginResult.error && !errorMessage) {
       setErrorMessage('Something is broken');
     }

@@ -27,6 +27,8 @@ const DashboardContent = () => {
   const [context, dispatch] = useContext(SiteContext);
   const history = useHistory();
 
+  const csrfToken = localStorage.getItem('csrfToken') || '';
+
   useEffect(() => {
     if (!context.isProfileLoaded) {
       const storedUserId = localStorage.getItem('userId');
@@ -64,7 +66,7 @@ const DashboardContent = () => {
     const formData = {
       available_for_transfer: context.availableForTransfer ? false : true,
     };
-    patchProfile(context.userId!, formData, getCookie('csrftoken'));
+    patchProfile(context.userId!, formData, csrfToken);
   };
 
   const stats = (
@@ -96,8 +98,6 @@ const DashboardContent = () => {
     </Row>
   );
 
-  console.log(`AV: ${context.availableForTransfer}`);
-
   return (
     <>
       <TitleRow>
@@ -107,7 +107,7 @@ const DashboardContent = () => {
             type="checkbox"
             label="Available for transfer"
             disabled={context.availableForTransfer === undefined}
-            checked={context.availableForTransfer}
+            checked={context.availableForTransfer || false}
             onChange={handleAvailabilityChange}
           />
           <Form.Text>Check this if you are looking for a club</Form.Text>

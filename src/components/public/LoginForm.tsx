@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card, Form, Button, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,18 +26,19 @@ type Props = {};
 export const LoginForm = (props: Props) => {
   const [loginResult, login] = useFetch(loginConfig);
   const [errorMessage, setErrorMessage] = useState('');
-  const [, dispatch] = useContext(SiteContext);
+  const [context, dispatch] = useContext(SiteContext);
   const history = useHistory();
+
+  const csrfToken = localStorage.getItem('csrfToken') || '';
 
   useEffect(() => {
     const fetchCsrf = async () => {
-      const BACKEND_URL = 'https://backend.ksoccersl.com';
-      const IS_PRODUCTION = process.env.NODE_ENV !== 'development';
+      const API_PREFIX = 'https://backend.ksoccersl.com';
 
-      const API_PREFIX = IS_PRODUCTION ? BACKEND_URL : '';
-
-      if(!getCookie('csrftoken')) {
-        await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`, {mode: 'cors', credentials: 'include'});
+      if(!csrfToken) {
+        const response = await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`, {mode: 'cors', credentials: 'include'});
+        const body = await response.json();
+        dispatch({type: 'SET_CSRF_TOKEN', data: body});
       }
     };
 
@@ -61,7 +62,7 @@ export const LoginForm = (props: Props) => {
     if (errorMessage) {
       setErrorMessage('');
     }
-    login(formData, { 'X-CSRFToken': getCookie('csrftoken') });
+    login(formData, csrfToken);
   };
 
   const handleGoBack = (e: React.FormEvent<HTMLElement>) => {
@@ -85,6 +86,10 @@ export const LoginForm = (props: Props) => {
       setErrorMessage('Something is broken');
     }
   }, [dispatch, history, loginResult, errorMessage]);
+
+  if(csrfToken && localStorage.getItem('userId')) {
+    return (<Redirect to='/dashboard/' />);
+  }
 
   return (
     <Row className="pt-5 pb-5 m-0">

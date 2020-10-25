@@ -5,10 +5,8 @@ import {
   defaultPostInit,
 } from 'react-use-fetch-ts';
 
-const BACKEND_URL = 'https://backend.ksoccersl.com';
-const IS_PRODUCTION = process.env.NODE_ENV !== 'development';
 
-const API_PREFIX = IS_PRODUCTION ? BACKEND_URL : '';
+const API_PREFIX = 'https://backend.ksoccersl.com';
 
 export interface SearchResult {
   id: number;
@@ -67,7 +65,7 @@ export const getMyProfileConfig = fetchConfig({
 
 function initFormPost(
   formData: FormData,
-  headers: Record<string, string>
+  csrf: string
 ): RequestInit {
   const entries = Array.from(formData.entries());
   if (entries.some((entry) => entry[1] instanceof File)) {
@@ -79,7 +77,7 @@ function initFormPost(
   const allHeaders: { [key: string]: string } = {
     Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded',
-    'X-CSRFToken': headers['X-CSRFToken'],
+    'X-CSRFToken': csrf,
   };
   return {
     ...defaultPostInit,
@@ -91,10 +89,10 @@ function initFormPost(
 }
 
 export const loginConfig = fetchConfig({
-  prepare: (formData: FormData, headers: Record<string, string>) => [
+  prepare: (formData: FormData, csrf: string) => [
     `${API_PREFIX}/api/v1/users/login/`,
     {
-      ...initFormPost(formData, headers),
+      ...initFormPost(formData, csrf),
       method: 'POST',
     },
   ],

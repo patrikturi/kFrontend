@@ -5,6 +5,7 @@ import {
   Dropdown,
   NavDropdown,
 } from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { logoutConfig } from '../../common/fetchConfig';
@@ -43,6 +44,7 @@ const StyledDropdownItem = styled(Dropdown.Item)`
   font-size: 1rem;
 `;
 
+
 const StyledIcon = styled(FontAwesomeIcon)`
   color: #d1d3e2;
   margin-right: 0.5rem;
@@ -53,12 +55,18 @@ const DashboardNavbar = (): JSX.Element => {
   const [context, dispatch] = useContext(SiteContext);
   const history = useHistory();
 
-  const displayName = localStorage.getItem('displayName');
-  const profilePictureUrl = localStorage.getItem('profilePictureUrl');
+  let displayName = localStorage.getItem('displayName');
+  let profilePictureUrl = localStorage.getItem('profilePictureUrl');
 
   const handleLogout = () => {
     logout();
   };
+
+  useEffect(() => {
+    if(displayName !== context.displayName) {
+      logout();
+    }
+  }, [displayName, context.displayName, logout]);
 
   useEffect(() => {
     if (logoutResult.responseStatus === 200) {
@@ -84,10 +92,12 @@ const DashboardNavbar = (): JSX.Element => {
   return (
     <StyledNavbar id="dashboard-nav">
       <StyledNavDropdown title={DropdownTitle} alignRight={true}>
-        <StyledDropdownItem key="edit-profile" onSelect={handleSelect}>
-          <StyledIcon icon={faUser} />
-          Edit Profile
-        </StyledDropdownItem>
+        <LinkContainer to='/dashboard/profile/'>
+          <StyledDropdownItem key="edit-profile" onSelect={handleSelect}>
+            <StyledIcon icon={faUser} />
+            Edit Profile
+          </StyledDropdownItem>
+        </LinkContainer>
         <NavDropdown.Divider />
         <StyledDropdownItem key="logout" onSelect={handleLogout}>
           <StyledIcon icon={faSignOutAlt} />

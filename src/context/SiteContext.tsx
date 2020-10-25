@@ -3,12 +3,14 @@ import React, { useReducer, createContext } from 'react';
 interface SiteState {
   isLoggedIn: boolean;
   isProfileLoaded: boolean;
+  csrfToken: string;
   userId?: number;
   username?: string;
   displayName?: string;
   availableForTransfer?: boolean;
   profilePictureUrl?: string;
   introduction?: string;
+  biography?: string;
   kcoins?: number;
   goals?: number;
   assists?: number;
@@ -19,10 +21,11 @@ interface SiteState {
 const initialState: SiteState = {
   isLoggedIn: false,
   isProfileLoaded: false,
+  csrfToken: '',
 };
 
 type SiteAction = {
-  type: 'LOGIN_SUCCESS' | 'LOGOUT_SUCCESS' | 'SET_PROFILE' | 'UPDATE_PROFILE';
+  type: 'LOGIN_SUCCESS' | 'LOGOUT_SUCCESS' | 'SET_PROFILE' | 'UPDATE_PROFILE' | 'SET_CSRF_TOKEN';
   data?: any;
 };
 
@@ -37,6 +40,7 @@ const updateProfile = (state: SiteState, data: any): SiteState => {
   delete dataMod.available_for_transfer;
   delete dataMod.profile_picture_url;
   delete dataMod.date_joined;
+  delete dataMod.user_details;
 
   if ('id' in data) {
     dataMod.userId = data.id;
@@ -53,6 +57,11 @@ const updateProfile = (state: SiteState, data: any): SiteState => {
   if ('date_joined' in data) {
     dataMod.dateJoined = data.date_joined;
   }
+  if('user_details' in data && data.user_details.length > 0) {
+    if('biography' in data.user_details[0]) {
+      dataMod.biography = data.user_details[0].biography;
+    }
+  }
   return {
     ...state,
     ...dataMod,
@@ -61,16 +70,21 @@ const updateProfile = (state: SiteState, data: any): SiteState => {
 
 const reducer = (state: SiteState, action: SiteAction): SiteState => {
   switch (action.type) {
+    case 'SET_CSRF_TOKEN':
+      localStorage.setItem('csrfToken', action.data.csrftoken);
+      return state;
     case 'LOGIN_SUCCESS':
+      localStorage.setItem('csrfToken', action.data.csrftoken);
       localStorage.setItem('userId', action.data.id);
       localStorage.setItem('displayName', action.data.display_name);
       localStorage.setItem('profilePictureUrl', action.data.profile_picture_url);
       return updateProfile(state, {...action.data, isLoggedIn: true});
     case 'LOGOUT_SUCCESS':
+      localStorage.removeItem('csrfToken');
       localStorage.removeItem('userId');
       localStorage.removeItem('displayName');
       localStorage.removeItem('profilePictureUrl');
-      return { isLoggedIn: false, isProfileLoaded: false };
+      return { isLoggedIn: false, isProfileLoaded: false, csrfToken: '' };
     case 'SET_PROFILE':
       return updateProfile(state, {...action.data, isProfileLoaded: true});
     case 'UPDATE_PROFILE':

@@ -63,7 +63,7 @@ const DashboardNavbar = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if(displayName !== context.displayName) {
+    if(context.displayName && displayName !== context.displayName) {
       logout();
     }
   }, [displayName, context.displayName, logout]);

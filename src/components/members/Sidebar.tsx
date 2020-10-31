@@ -9,8 +9,8 @@ const StyledSidebar = styled.div``;
 
 const SidebarList = styled.ul`
   display: flex;
-  background-color: #4e73df;
-  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-color: #1a1b1b;
+  background-image: linear-gradient(180deg, #1a1b1b 10%, #000000 100%);
   background-size: cover;
 
   flex-direction: column;
@@ -42,7 +42,7 @@ const SidebarDivider = styled.hr`
 `;
 
 const SidebarLink = styled(RouterLink)`
-  color: rgba(255, 255, 255, 0.8);
+  color: #e3c190;
   display: block;
   font-weight: 700;
   text-align: center;

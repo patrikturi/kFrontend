@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 import DashboardContent from './DashboardContent';
 import EditProfile from './EditProfile';
 import { Route, Switch } from 'react-router-dom';
+import ChangePasswordPage from './ChangePasswordPage';
 
 const StyledDashboard = styled.div`
   display: flex;
@@ -53,10 +54,14 @@ export const Dashboard = (): JSX.Element => {
             <Switch>
               <Route
                 exact
-                path="/dashboard"
+                path="/dashboard/"
                 component={DashboardContent}
               ></Route>
-              <Route path="/dashboard/profile" component={EditProfile}></Route>
+              <Route path="/dashboard/profile/" component={EditProfile}></Route>
+              <Route
+                path="/dashboard/password-change/"
+                component={ChangePasswordPage}
+              ></Route>
             </Switch>
           </StyledContainer>
         </Content>

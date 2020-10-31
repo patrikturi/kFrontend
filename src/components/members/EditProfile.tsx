@@ -26,21 +26,17 @@ const EditProfile = () => {
 
   useEffect(() => {
     const responseStatus = patchProfileResult.responseStatus;
-    if (
-      responseStatus &&
-      responseStatus >= 400 &&
-      (!saveMessage || !messageIsError)
-    ) {
+    if (responseStatus && responseStatus >= 400) {
       if (responseStatus >= 500) {
         setSaveMessage(
           'Unable to reach the server at the moment. Please try again later.'
         );
-        setMessageIsError(true);
+      } else {
+        setSaveMessage('Something went wrong');
       }
-      setSaveMessage('Something went wrong');
       setMessageIsError(true);
     } else if (responseStatus === 200) {
-      setSaveMessage('Profile saved!');
+      setSaveMessage('Profile saved');
       setMessageIsError(false);
       dispatch({ type: 'UPDATE_PROFILE', data: patchProfileResult.result });
     }

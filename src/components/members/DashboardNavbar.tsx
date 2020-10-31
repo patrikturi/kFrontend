@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faKey, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { logoutConfig } from '../../common/fetchConfig';
 import { useFetch } from 'react-use-fetch-ts';
 import { useHistory } from 'react-router-dom';
@@ -85,7 +85,6 @@ const DashboardNavbar = (): JSX.Element => {
       if (responseStatus === 200) {
         dispatch({ type: 'SET_PROFILE', data: getProfileResult.result });
       } else if (responseStatus === 401) {
-        // TODO: creat a utility for this, handle 302
         dispatch({ type: 'LOGOUT_SUCCESS' });
         history.push('/login/');
       } else if (responseStatus >= 500) {
@@ -137,6 +136,12 @@ const DashboardNavbar = (): JSX.Element => {
           <StyledDropdownItem key="edit-profile" onSelect={handleSelect}>
             <StyledIcon icon={faUser} />
             Edit Profile
+          </StyledDropdownItem>
+        </LinkContainer>
+        <LinkContainer to="/dashboard/password-change/">
+          <StyledDropdownItem key="change-password" onSelect={handleSelect}>
+            <StyledIcon icon={faKey} />
+            Change Password
           </StyledDropdownItem>
         </LinkContainer>
         <NavDropdown.Divider />

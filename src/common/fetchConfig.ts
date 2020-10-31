@@ -123,3 +123,15 @@ export const logoutConfig = fetchConfig({
   getResult: (json: any) => json as any,
   getError: (json: any) => json as any,
 });
+
+export const changePasswordConfig = fetchConfig({
+  prepare: (formData: FormData, csrf: string) => [
+    `${API_PREFIX}/api/v1/users/change-password/`,
+    {
+      ...initFormPost(formData, csrf),
+      method: 'POST',
+    },
+  ],
+  getResult: (json: any) => json as any,
+  getError: (json: any) => json as any,
+});

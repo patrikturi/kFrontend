@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import DashboardNavbar from './DashboardNavbar';
 import { Container } from 'react-bootstrap';
-import DashboardContent from './DashboardContent';
-import EditProfile from './EditProfile';
+import DashboardHomePage from './DashboardHomePage';
+import EditProfilePage from './EditProfilePage';
 import { Route, Switch } from 'react-router-dom';
 import ChangePasswordPage from './ChangePasswordPage';
 
@@ -55,9 +55,12 @@ export const Dashboard = (): JSX.Element => {
               <Route
                 exact
                 path="/dashboard/"
-                component={DashboardContent}
+                component={DashboardHomePage}
               ></Route>
-              <Route path="/dashboard/profile/" component={EditProfile}></Route>
+              <Route
+                path="/dashboard/profile/"
+                component={EditProfilePage}
+              ></Route>
               <Route
                 path="/dashboard/password-change/"
                 component={ChangePasswordPage}

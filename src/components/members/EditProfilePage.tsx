@@ -7,7 +7,7 @@ import { SiteContext } from '../../context/SiteContext';
 import Spinner from '../common/Spinner';
 import PageTitle from './atoms/PageTitle';
 
-const EditProfile = () => {
+const EditProfilePage = () => {
   const [context, dispatch] = useContext(SiteContext);
   const [introduction, setIntroduction] = useState('');
   const [biography, setBiography] = useState('');
@@ -134,4 +134,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default EditProfilePage;

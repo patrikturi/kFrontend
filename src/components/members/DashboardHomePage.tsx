@@ -22,7 +22,7 @@ const TitleRow = styled.div`
   margin-bottom: 2rem;
 `;
 
-const DashboardContent = () => {
+const DashboardHomePage = () => {
   const [patchProfileResult, patchProfile] = useFetch(patchProfileConfig);
   const [context, dispatch] = useContext(SiteContext);
   const history = useHistory();
@@ -90,11 +90,13 @@ const DashboardContent = () => {
           <Form.Text>Check this if you are looking for a club</Form.Text>
         </Form.Group>
       </TitleRow>
-      {context.errorMessage && <div style={{color: COLOR_FAILURE}}>{context.errorMessage}</div>}
+      {context.errorMessage && (
+        <div style={{ color: COLOR_FAILURE }}>{context.errorMessage}</div>
+      )}
       {context.isLoading ? <Spinner /> : stats}
       <Row></Row>
     </>
   );
 };
 
-export default DashboardContent;
+export default DashboardHomePage;

@@ -10,10 +10,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import PageTitle from './atoms/PageTitle';
 import { useFetch } from 'react-use-fetch-ts';
-import { getMyProfileConfig, patchProfileConfig } from '../../common/fetchConfig';
+import { patchProfileConfig } from '../../common/fetchConfig';
 import { SiteContext } from '../../context/SiteContext';
 import { useHistory } from 'react-router-dom';
 import Spinner from '../common/Spinner';
+import { COLOR_FAILURE } from '../../common/styles';
 
 const TitleRow = styled.div`
   display: flex;
@@ -22,35 +23,11 @@ const TitleRow = styled.div`
 `;
 
 const DashboardContent = () => {
-  const [getProfileResult, getProfile] = useFetch(getMyProfileConfig);
   const [patchProfileResult, patchProfile] = useFetch(patchProfileConfig);
   const [context, dispatch] = useContext(SiteContext);
   const history = useHistory();
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
-
-  useEffect(() => {
-    if (!context.isProfileLoaded) {
-      const storedUserId = localStorage.getItem('userId');
-      if (storedUserId) {
-        getProfile();
-      } else {
-        dispatch({ type: 'LOGOUT_SUCCESS' });
-        history.push('/login/');
-      }
-    }
-  }, [context.isProfileLoaded, context.username, dispatch, getProfile, history]);
-
-  useEffect(() => {
-    const responseStatus = getProfileResult.responseStatus;
-    if (responseStatus === 200) {
-      dispatch({ type: 'SET_PROFILE', data: getProfileResult.result });
-    } else if (responseStatus === 401) {
-      // TODO: creat a utility for this, handle 302
-      dispatch({ type: 'LOGOUT_SUCCESS' });
-      history.push('/login/');
-    }
-  }, [history, dispatch, getProfileResult]);
 
   useEffect(() => {
     const responseStatus = patchProfileResult.responseStatus;
@@ -106,14 +83,15 @@ const DashboardContent = () => {
           <Form.Check
             type="checkbox"
             label="Available for transfer"
-            disabled={context.availableForTransfer === undefined}
+            disabled={context.isLoading}
             checked={context.availableForTransfer || false}
             onChange={handleAvailabilityChange}
           />
           <Form.Text>Check this if you are looking for a club</Form.Text>
         </Form.Group>
       </TitleRow>
-      {context.isProfileLoaded ? stats : getProfileResult.loading && <Spinner />}
+      {context.errorMessage && <div style={{color: COLOR_FAILURE}}>{context.errorMessage}</div>}
+      {context.isLoading ? <Spinner /> : stats}
       <Row></Row>
     </>
   );

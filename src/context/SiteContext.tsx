@@ -2,6 +2,8 @@ import React, { useReducer, createContext } from 'react';
 
 interface SiteState {
   isLoggedIn: boolean;
+  isLoading: boolean;
+  errorMessage: string;
   isProfileLoaded: boolean;
   csrfToken: string;
   userId?: number;
@@ -20,12 +22,14 @@ interface SiteState {
 
 const initialState: SiteState = {
   isLoggedIn: false,
+  isLoading: true,
+  errorMessage: '',
   isProfileLoaded: false,
   csrfToken: '',
 };
 
 type SiteAction = {
-  type: 'LOGIN_SUCCESS' | 'LOGOUT_SUCCESS' | 'SET_PROFILE' | 'UPDATE_PROFILE' | 'SET_CSRF_TOKEN';
+  type: 'LOGIN_SUCCESS' | 'LOGOUT_SUCCESS' | 'SET_PROFILE' | 'UPDATE_PROFILE' | 'SET_CSRF_TOKEN' | 'SET_LOADING' | 'CLEAR_LOADING' | 'SET_ERROR_MESSAGE';
   data?: any;
 };
 
@@ -84,11 +88,17 @@ const reducer = (state: SiteState, action: SiteAction): SiteState => {
       localStorage.removeItem('userId');
       localStorage.removeItem('displayName');
       localStorage.removeItem('profilePictureUrl');
-      return { isLoggedIn: false, isProfileLoaded: false, csrfToken: '' };
+      return { isLoggedIn: false, isLoading: true, errorMessage: '', isProfileLoaded: false, csrfToken: '' };
     case 'SET_PROFILE':
       return updateProfile(state, {...action.data, isProfileLoaded: true});
     case 'UPDATE_PROFILE':
       return updateProfile(state, action.data);
+    case 'SET_LOADING':
+      return {...state, isLoading: true}
+    case 'CLEAR_LOADING':
+      return {...state, isLoading: false}
+    case 'SET_ERROR_MESSAGE':
+      return {...state, errorMessage: action.data}
     default:
       return state;
   }

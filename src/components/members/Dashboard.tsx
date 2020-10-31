@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import DashboardNavbar from './DashboardNavbar';
 import { Container } from 'react-bootstrap';
 import DashboardContent from './DashboardContent';
-import MyProfile from './MyProfile';
+import EditProfile from './EditProfile';
 import { Route, Switch } from 'react-router-dom';
 
 const StyledDashboard = styled.div`
@@ -56,7 +56,7 @@ export const Dashboard = (): JSX.Element => {
                 path="/dashboard"
                 component={DashboardContent}
               ></Route>
-              <Route path="/dashboard/profile" component={MyProfile}></Route>
+              <Route path="/dashboard/profile" component={EditProfile}></Route>
             </Switch>
           </StyledContainer>
         </Content>

@@ -16,3 +16,6 @@ export const MEDIA_LG = `min-width: ${WIDTH_MD}`;
 export const MEDIA_WX = `min-width: ${WIDTH_LG}`;
 export const MEDIA_XLw = `min-width: ${WIDTH_WX}`;
 export const MEDIA_XLl = `min-width: ${WIDTH_LG}`;
+
+export const COLOR_FAILURE = '#d70000';
+export const COLOR_SUCCESS = '#00EF00';

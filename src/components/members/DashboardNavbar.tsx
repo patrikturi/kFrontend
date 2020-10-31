@@ -12,6 +12,7 @@ import { logoutConfig } from '../../common/fetchConfig';
 import { useFetch } from 'react-use-fetch-ts';
 import { useHistory } from 'react-router-dom';
 import { SiteContext } from '../../context/SiteContext';
+import { getMyProfileConfig } from '../../common/fetchConfig';
 
 const StyledNavbar = styled(BootstrapNavbar)`
   padding: 0;
@@ -53,10 +54,43 @@ const StyledIcon = styled(FontAwesomeIcon)`
 const DashboardNavbar = (): JSX.Element => {
   const [logoutResult, logout] = useFetch(logoutConfig);
   const [context, dispatch] = useContext(SiteContext);
+  const [getProfileResult, getProfile] = useFetch(getMyProfileConfig);
   const history = useHistory();
 
   let displayName = localStorage.getItem('displayName');
   let profilePictureUrl = localStorage.getItem('profilePictureUrl');
+
+  useEffect(() => {
+    if (!context.isProfileLoaded) {
+      const storedUserId = localStorage.getItem('userId');
+      if (storedUserId) {
+        getProfile();
+        dispatch({type: 'SET_LOADING'})
+      } else {
+        dispatch({type: 'CLEAR_LOADING'})
+        dispatch({ type: 'LOGOUT_SUCCESS' });
+        history.push('/login/');
+      }
+    }
+  }, [context.isProfileLoaded, context.username, dispatch, getProfile, history]);
+
+  useEffect(() => {
+    const responseStatus = getProfileResult.responseStatus;
+    if(responseStatus !== undefined) {
+      dispatch({type: 'CLEAR_LOADING'});
+      if (responseStatus === 200) {
+        dispatch({ type: 'SET_PROFILE', data: getProfileResult.result });
+      } else if (responseStatus === 401) {
+        // TODO: creat a utility for this, handle 302
+        dispatch({ type: 'LOGOUT_SUCCESS' });
+        history.push('/login/');
+      } else if(responseStatus >= 500) {
+        dispatch({type: 'SET_ERROR_MESSAGE', data: 'Unable to reach the server. Please try again later.'});
+      } else {
+        dispatch({type: 'SET_ERROR_MESSAGE', data: 'Something went wrong.'});
+      }
+    }
+  }, [history, dispatch, getProfileResult]);
 
   const handleLogout = () => {
     logout();

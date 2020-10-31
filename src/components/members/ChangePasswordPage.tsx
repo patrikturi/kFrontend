@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useFetch } from 'react-use-fetch-ts';
 import { changePasswordConfig } from '../../common/fetchConfig';
-import { SiteContext } from '../../context/SiteContext';
-import PageTitle from './atoms/PageTitle';
-import Spinner from '../common/Spinner';
 import { COLOR_FAILURE, COLOR_SUCCESS } from '../../common/styles';
+import { SiteContext } from '../../context/SiteContext';
+import Spinner from '../common/Spinner';
+import PageTitle from './atoms/PageTitle';
 
 const ChangePasswordPage = () => {
   const [context, dispatch] = useContext(SiteContext);
@@ -13,8 +13,8 @@ const ChangePasswordPage = () => {
   const [newPassword, setNewPassword] = useState('');
   const [newPassword2, setNewPassword2] = useState('');
   const [changePasswordResult, changePassword] = useFetch(changePasswordConfig);
-  const [saveMessage, setSaveMessage] = useState('');
-  const [messageIsError, setMessageIsError] = useState(false);
+  const [message, setMessage] = useState('');
+  const [hasError, setHasError] = useState(false);
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
 
@@ -22,29 +22,29 @@ const ChangePasswordPage = () => {
     const responseStatus = changePasswordResult.responseStatus;
     if (responseStatus && responseStatus >= 400) {
       if (responseStatus >= 500) {
-        setSaveMessage(
+        setMessage(
           'Unable to reach the server at the moment. Please try again later.'
         );
       } else if (responseStatus === 400) {
-        setSaveMessage(
+        setMessage(
           'New Password was not accepted. Try choosing a different password.'
         );
       } else if (responseStatus === 401) {
-        setSaveMessage('Old Password is incorrect');
+        setMessage('Old Password is incorrect');
       } else {
-        setSaveMessage('Something went wrong');
+        setMessage('Something went wrong');
       }
-      setMessageIsError(true);
+      setHasError(true);
     } else if (responseStatus === 200) {
-      setSaveMessage('Password updated');
-      setMessageIsError(false);
+      setMessage('Password updated');
+      setHasError(false);
     }
   }, [
     dispatch,
     changePasswordResult.result,
     changePasswordResult.responseStatus,
-    messageIsError,
-    saveMessage,
+    hasError,
+    message,
   ]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,26 +52,26 @@ const ChangePasswordPage = () => {
 
     let error = false;
     if (!oldPassword) {
-      setSaveMessage('Old Password is empty');
+      setMessage('Old Password is empty');
       error = true;
     } else if (!newPassword) {
-      setSaveMessage('New Password is empty');
+      setMessage('New Password is empty');
       error = true;
     } else if (!newPassword2) {
-      setSaveMessage('Repeat New Password is empty');
+      setMessage('Repeat New Password is empty');
       error = true;
     } else if (newPassword.length < 8) {
-      setSaveMessage('New Password must be at least 8 characters long');
+      setMessage('New Password must be at least 8 characters long');
       error = true;
     } else if (newPassword !== newPassword2) {
-      setSaveMessage('The specified passwords do not match');
+      setMessage('The specified passwords do not match');
       error = true;
     }
     if (error) {
-      setMessageIsError(true);
+      setHasError(true);
     } else {
-      if (saveMessage) {
-        setSaveMessage('');
+      if (message) {
+        setMessage('');
       }
       const formData = new FormData();
       formData.append('old_password', oldPassword);
@@ -146,11 +146,11 @@ const ChangePasswordPage = () => {
           <Form.Group>
             <label
               style={{
-                color: `${messageIsError ? COLOR_FAILURE : COLOR_SUCCESS}`,
+                color: `${hasError ? COLOR_FAILURE : COLOR_SUCCESS}`,
                 fontWeight: 'bold',
               }}
             >
-              {saveMessage}
+              {message}
             </label>
           </Form.Group>
         </Col>

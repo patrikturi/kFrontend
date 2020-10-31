@@ -2,18 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useFetch } from 'react-use-fetch-ts';
 import { patchProfileConfig } from '../../common/fetchConfig';
-import { SiteContext } from '../../context/SiteContext';
-import PageTitle from './atoms/PageTitle';
-import Spinner from '../common/Spinner';
 import { COLOR_FAILURE, COLOR_SUCCESS } from '../../common/styles';
+import { SiteContext } from '../../context/SiteContext';
+import Spinner from '../common/Spinner';
+import PageTitle from './atoms/PageTitle';
 
 const EditProfile = () => {
   const [context, dispatch] = useContext(SiteContext);
   const [introduction, setIntroduction] = useState('');
   const [biography, setBiography] = useState('');
   const [patchProfileResult, patchProfile] = useFetch(patchProfileConfig);
-  const [saveMessage, setSaveMessage] = useState('');
-  const [messageIsError, setMessageIsError] = useState(false);
+  const [message, setMessage] = useState('');
+  const [hasError, setHasError] = useState(false);
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
 
@@ -28,24 +28,24 @@ const EditProfile = () => {
     const responseStatus = patchProfileResult.responseStatus;
     if (responseStatus && responseStatus >= 400) {
       if (responseStatus >= 500) {
-        setSaveMessage(
+        setMessage(
           'Unable to reach the server at the moment. Please try again later.'
         );
       } else {
-        setSaveMessage('Something went wrong');
+        setMessage('Something went wrong');
       }
-      setMessageIsError(true);
+      setHasError(true);
     } else if (responseStatus === 200) {
-      setSaveMessage('Profile saved');
-      setMessageIsError(false);
+      setMessage('Profile saved');
+      setHasError(false);
       dispatch({ type: 'UPDATE_PROFILE', data: patchProfileResult.result });
     }
   }, [
     dispatch,
     patchProfileResult.result,
     patchProfileResult.responseStatus,
-    messageIsError,
-    saveMessage,
+    hasError,
+    message,
   ]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,11 +110,11 @@ const EditProfile = () => {
           <Form.Group>
             <label
               style={{
-                color: `${messageIsError ? COLOR_FAILURE : COLOR_SUCCESS}`,
+                color: `${hasError ? COLOR_FAILURE : COLOR_SUCCESS}`,
                 fontWeight: 'bold',
               }}
             >
-              {saveMessage}
+              {message}
             </label>
           </Form.Group>
           <a href="/profile/2">See your profile here</a>

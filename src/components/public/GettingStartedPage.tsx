@@ -94,8 +94,8 @@ export const GettingStartedPage = () => {
           </li>
           {LOGIN_ENABLED && (
             <li>
-              <a href="/">Register / Log in</a> to see your stats and manage
-              your profile (not required to start playing the game)
+              <a href="/register/">Register / Log in</a> to see your stats and
+              manage your profile (not required to start playing the game)
             </li>
           )}
         </ul>

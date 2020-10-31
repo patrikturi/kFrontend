@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card, Row } from 'react-bootstrap';
-import { PRIMARY_COLOR } from '../../common/styles';
 import SearchPlayerInput from './SearchPlayerInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';

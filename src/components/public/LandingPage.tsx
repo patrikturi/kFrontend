@@ -199,7 +199,7 @@ export const LandingPage: React.FC = () => {
 
   const handleLoginUp = () => {
     setLoginPressed(false);
-    history.push('/login');
+    history.push('/login/');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -209,12 +209,12 @@ export const LandingPage: React.FC = () => {
 
   const handleRegisterUp = () => {
     setRegisterPressed(false);
-    history.push('/register');
+    history.push('/register/');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSearchClick = (e: React.FormEvent<HTMLElement>) => {
-    history.push('/search-player');
+    history.push('/search-player/');
   };
 
   const LoginButton = isLoginPresed ? LoginButtonPressed : LoginButtonUp;

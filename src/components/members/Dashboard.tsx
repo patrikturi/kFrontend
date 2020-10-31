@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import DashboardNavbar from './DashboardNavbar';
@@ -58,13 +58,14 @@ export const Dashboard = (): JSX.Element => {
                 component={DashboardHomePage}
               ></Route>
               <Route
-                path="/dashboard/profile/"
+                path="/dashboard/profile"
                 component={EditProfilePage}
               ></Route>
               <Route
-                path="/dashboard/password-change/"
+                path="/dashboard/password-change"
                 component={ChangePasswordPage}
               ></Route>
+              <Route component={DashboardHomePage} />
             </Switch>
           </StyledContainer>
         </Content>

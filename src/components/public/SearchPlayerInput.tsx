@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { WIDTH_XS } from '../../common/styles';
 import SearchImg from '../../img/search_icon.png';

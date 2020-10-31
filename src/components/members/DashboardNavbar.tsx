@@ -127,19 +127,17 @@ const DashboardNavbar = (): JSX.Element => {
     </StyledDropdownTitle>
   );
 
-  const handleSelect = () => {};
-
   return (
     <StyledNavbar id="dashboard-nav">
       <StyledNavDropdown title={DropdownTitle} alignRight={true}>
         <LinkContainer to="/dashboard/profile/">
-          <StyledDropdownItem key="edit-profile" onSelect={handleSelect}>
+          <StyledDropdownItem key="edit-profile">
             <StyledIcon icon={faUser} />
             Edit Profile
           </StyledDropdownItem>
         </LinkContainer>
         <LinkContainer to="/dashboard/password-change/">
-          <StyledDropdownItem key="change-password" onSelect={handleSelect}>
+          <StyledDropdownItem key="change-password">
             <StyledIcon icon={faKey} />
             Change Password
           </StyledDropdownItem>

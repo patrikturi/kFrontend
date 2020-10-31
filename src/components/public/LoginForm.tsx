@@ -158,7 +158,7 @@ export const LoginForm = (props: Props) => {
               </div>
               <Form.Text>
                 Don't have an account yet? See{' '}
-                <a href="/register">registration steps</a>
+                <a href="/register/">registration steps</a>
               </Form.Text>
             </Form>
           </Card.Body>

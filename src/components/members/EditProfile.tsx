@@ -63,11 +63,17 @@ const EditProfile = () => {
   };
 
   const onChangeIntro = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIntroduction(e.currentTarget.value);
+    const newValue = e.currentTarget.value;
+    if (newValue.length <= 255) {
+      setIntroduction(newValue);
+    }
   };
 
   const onChangeBio = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBiography(e.currentTarget.value);
+    const newValue = e.currentTarget.value;
+    if (newValue.length <= 2048) {
+      setBiography(newValue);
+    }
   };
 
   const editForm = (

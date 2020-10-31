@@ -5,7 +5,7 @@ import {
   Dropdown,
   NavDropdown,
 } from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { logoutConfig } from '../../common/fetchConfig';
@@ -45,7 +45,6 @@ const StyledDropdownItem = styled(Dropdown.Item)`
   font-size: 1rem;
 `;
 
-
 const StyledIcon = styled(FontAwesomeIcon)`
   color: #d1d3e2;
   margin-right: 0.5rem;
@@ -65,29 +64,37 @@ const DashboardNavbar = (): JSX.Element => {
       const storedUserId = localStorage.getItem('userId');
       if (storedUserId) {
         getProfile();
-        dispatch({type: 'SET_LOADING'})
+        dispatch({ type: 'SET_LOADING' });
       } else {
-        dispatch({type: 'CLEAR_LOADING'})
         dispatch({ type: 'LOGOUT_SUCCESS' });
         history.push('/login/');
       }
     }
-  }, [context.isProfileLoaded, context.username, dispatch, getProfile, history]);
+  }, [
+    context.isProfileLoaded,
+    context.username,
+    dispatch,
+    getProfile,
+    history,
+  ]);
 
   useEffect(() => {
     const responseStatus = getProfileResult.responseStatus;
-    if(responseStatus !== undefined) {
-      dispatch({type: 'CLEAR_LOADING'});
+    if (responseStatus !== undefined) {
+      dispatch({ type: 'CLEAR_LOADING' });
       if (responseStatus === 200) {
         dispatch({ type: 'SET_PROFILE', data: getProfileResult.result });
       } else if (responseStatus === 401) {
         // TODO: creat a utility for this, handle 302
         dispatch({ type: 'LOGOUT_SUCCESS' });
         history.push('/login/');
-      } else if(responseStatus >= 500) {
-        dispatch({type: 'SET_ERROR_MESSAGE', data: 'Unable to reach the server. Please try again later.'});
+      } else if (responseStatus >= 500) {
+        dispatch({
+          type: 'SET_ERROR_MESSAGE',
+          data: 'Unable to reach the server. Please try again later.',
+        });
       } else {
-        dispatch({type: 'SET_ERROR_MESSAGE', data: 'Something went wrong.'});
+        dispatch({ type: 'SET_ERROR_MESSAGE', data: 'Something went wrong.' });
       }
     }
   }, [history, dispatch, getProfileResult]);
@@ -97,14 +104,14 @@ const DashboardNavbar = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if(context.displayName && displayName !== context.displayName) {
+    if (context.displayName && displayName !== context.displayName) {
       logout();
     }
   }, [displayName, context.displayName, logout]);
 
   useEffect(() => {
     if (logoutResult.responseStatus === 200) {
-      dispatch({type: 'LOGOUT_SUCCESS'})
+      dispatch({ type: 'LOGOUT_SUCCESS' });
       history.push('/');
     }
   }, [dispatch, history, logoutResult]);
@@ -126,7 +133,7 @@ const DashboardNavbar = (): JSX.Element => {
   return (
     <StyledNavbar id="dashboard-nav">
       <StyledNavDropdown title={DropdownTitle} alignRight={true}>
-        <LinkContainer to='/dashboard/profile/'>
+        <LinkContainer to="/dashboard/profile/">
           <StyledDropdownItem key="edit-profile" onSelect={handleSelect}>
             <StyledIcon icon={faUser} />
             Edit Profile

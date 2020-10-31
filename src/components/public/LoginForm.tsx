@@ -35,15 +35,18 @@ export const LoginForm = (props: Props) => {
     const fetchCsrf = async () => {
       const API_PREFIX = 'https://backend.ksoccersl.com';
 
-      if(!csrfToken) {
-        const response = await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`, {mode: 'cors', credentials: 'include'});
+      if (!context.csrfToken) {
+        const response = await fetch(`${API_PREFIX}/api/v1/core/csrf-token/`, {
+          mode: 'cors',
+          credentials: 'include',
+        });
         const body = await response.json();
-        dispatch({type: 'SET_CSRF_TOKEN', data: body});
+        dispatch({ type: 'SET_CSRF_TOKEN', data: body });
       }
     };
 
     fetchCsrf();
-  }, []);
+  }, [context.csrfToken, dispatch]);
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,10 +62,16 @@ export const LoginForm = (props: Props) => {
     formData.append('username', username);
     formData.append('password', password);
 
-    if (errorMessage) {
-      setErrorMessage('');
+    if (!username) {
+      setErrorMessage('First Name is empty');
+    } else if (!password) {
+      setErrorMessage('Password is empty');
+    } else {
+      if (errorMessage) {
+        setErrorMessage('');
+      }
+      login(formData, csrfToken);
     }
-    login(formData, csrfToken);
   };
 
   const handleGoBack = (e: React.FormEvent<HTMLElement>) => {
@@ -87,8 +96,8 @@ export const LoginForm = (props: Props) => {
     }
   }, [dispatch, history, loginResult, errorMessage]);
 
-  if(csrfToken && localStorage.getItem('userId')) {
-    return (<Redirect to='/dashboard/' />);
+  if (csrfToken && localStorage.getItem('userId')) {
+    return <Redirect to="/dashboard/" />;
   }
 
   return (
@@ -134,17 +143,19 @@ export const LoginForm = (props: Props) => {
                   {errorMessage}
                 </label>
               </Form.Group>
-              {loginResult.loading ? (
-                <Spinner width="100px" />
-              ) : (
-                <Button
-                  type="submit"
-                  className="btn-primary"
-                  style={{ width: '100px' }}
-                >
-                  Log in
-                </Button>
-              )}
+              <div style={{ width: '100px', height: '40px' }}>
+                {loginResult.loading ? (
+                  <Spinner />
+                ) : (
+                  <Button
+                    type="submit"
+                    className="btn-primary"
+                    disabled={!context.csrfToken}
+                  >
+                    Log in
+                  </Button>
+                )}
+              </div>
               <Form.Text>
                 Don't have an account yet? See{' '}
                 <a href="/register">registration steps</a>

@@ -45,11 +45,11 @@ export const RegistrationForm = (props: RegProps) => {
             <p>1. Type "reset password" near a totem</p>
             <p>
               2. Copy your password from the chat and{' '}
-              <a href="/login">login here</a>
+              <a href="/login/">login here</a>
             </p>
             <p>
               Need more help? Go to{' '}
-              <a href="/getting-started">Getting Started</a>
+              <a href="/getting-started/">Getting Started</a>
             </p>
           </Card.Body>
         </Card>

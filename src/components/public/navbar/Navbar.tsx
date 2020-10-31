@@ -78,12 +78,12 @@ export const Navbar: React.FC = () => {
                   </LinkContainer>
                 </LinkWrapper>
                 <LinkWrapper>
-                  <LinkContainer to="/getting-started">
+                  <LinkContainer to="/getting-started/">
                     <StyledNavLink>{t('Get Started')}</StyledNavLink>
                   </LinkContainer>
                 </LinkWrapper>
                 {LOGIN_ENABLED && (
-                  <LinkContainer to="/login">
+                  <LinkContainer to="/login/">
                     <StyledNavLink>{t('Login')}</StyledNavLink>
                   </LinkContainer>
                 )}

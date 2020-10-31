@@ -24,7 +24,7 @@ export const PageBase: React.FC = () => {
         <Route path="/search-player" component={SearchPlayerPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route path="/updates" component={UpdatesPage} />
-        <Route path="/login" component={LoginForm} />
+        <Route path="/login/" component={LoginForm} />
         <Route path="/register" component={RegistrationForm} />
         <Route path="/leagues/:leagueId/results" component={ResultsPage} />
         <Route path="/leagues/:leagueId/standings" component={StandingsPage} />

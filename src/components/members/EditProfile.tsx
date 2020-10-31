@@ -10,7 +10,7 @@ import Spinner from '../common/Spinner';
 const COLOR_RED = '#d70000';
 const COLOR_GREEN = '#00EF00';
 
-const MyProfile = () => {
+const EditProfile = () => {
   const [context, dispatch] = useContext(SiteContext);
   const [introduction, setIntroduction] = useState(context.introduction);
   const [biography, setBiography] = useState(context.biography);
@@ -99,4 +99,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default EditProfile;

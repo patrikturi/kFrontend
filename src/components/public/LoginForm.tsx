@@ -9,6 +9,8 @@ import { WIDTH_XS } from '../../common/styles';
 import { loginConfig } from '../../common/fetchConfig';
 import Spinner from '../common/Spinner';
 import { useFetch } from 'react-use-fetch-ts';
+import { useTranslation, Trans } from 'react-i18next';
+import { checkResponseErrors } from '../../common/utils';
 
 const Container = styled.div`
   width: 80%;
@@ -27,6 +29,7 @@ export const LoginForm = (props: Props) => {
   const [loginResult, login] = useFetch(loginConfig);
   const [errorMessage, setErrorMessage] = useState('');
   const [context, dispatch] = useContext(SiteContext);
+  const { t } = useTranslation();
   const history = useHistory();
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
@@ -63,9 +66,9 @@ export const LoginForm = (props: Props) => {
     formData.append('password', password);
 
     if (!username) {
-      setErrorMessage('First Name is empty');
+      setErrorMessage(t('First Name is empty'));
     } else if (!password) {
-      setErrorMessage('Password is empty');
+      setErrorMessage(t('Password is empty'));
     } else {
       if (errorMessage) {
         setErrorMessage('');
@@ -80,21 +83,16 @@ export const LoginForm = (props: Props) => {
 
   useEffect(() => {
     const responseStatus = loginResult.responseStatus;
-    if (responseStatus && responseStatus >= 400 && !errorMessage) {
-      if (responseStatus >= 500) {
-        setErrorMessage('Unable to login at the moment. Try again later.');
-      } else if (responseStatus === 401) {
-        setErrorMessage('Invalid username or password');
-      } else if (responseStatus >= 400) {
-        setErrorMessage('Something went wrong');
-      }
-    } else if (responseStatus === 200) {
+
+    if (responseStatus === 200 && !loginResult.error) {
       history.push('/dashboard/');
       dispatch({ type: 'LOGIN_SUCCESS', data: loginResult.result });
-    } else if (loginResult.error && !errorMessage) {
-      setErrorMessage('Something is broken');
+    } else if (responseStatus === 401) {
+      setErrorMessage(t('Invalid username or password'));
+    } else {
+      checkResponseErrors(loginResult, t, setErrorMessage);
     }
-  }, [dispatch, history, loginResult, errorMessage]);
+  }, [dispatch, history, loginResult, errorMessage, t]);
 
   if (csrfToken && localStorage.getItem('userId')) {
     return <Redirect to="/dashboard/" />;
@@ -111,18 +109,18 @@ export const LoginForm = (props: Props) => {
             <a href="/" onClick={handleGoBack}>
               <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" />
             </a>{' '}
-            Go back
+            {t('Go back')}
           </Card.Header>
           <Card.Body className="text-left">
-            <h2>Log in</h2>
-            <p>Log in to get access to your profile and stats</p>
+            <h2>{t('Log in')}</h2>
+            <p>{t('Log in to get access to your profile and stats')}</p>
             <Form onSubmit={handleLogin}>
               <Form.Group>
-                <label htmlFor="first_name">SL First Name</label>
+                <label htmlFor="first_name">{t('SL First Name')}</label>
                 <input type="text" className="form-control" id="first_name" />
               </Form.Group>
               <Form.Group>
-                <label htmlFor="last_name">SL Last Name</label>
+                <label htmlFor="last_name">{t('SL Last Name')}</label>
                 <input
                   type="text"
                   className="form-control"
@@ -131,7 +129,7 @@ export const LoginForm = (props: Props) => {
                 />
               </Form.Group>
               <Form.Group>
-                <label htmlFor="exampleInputPassword1">Password</label>
+                <label htmlFor="exampleInputPassword1">{t('Password')}</label>
                 <input
                   type="password"
                   className="form-control"
@@ -152,13 +150,15 @@ export const LoginForm = (props: Props) => {
                     className="btn-primary"
                     disabled={!context.csrfToken}
                   >
-                    Log in
+                    {t('Log in')}
                   </Button>
                 )}
               </div>
               <Form.Text>
-                Don't have an account yet? See{' '}
-                <a href="/register/">registration steps</a>
+                {t("Don't have an account yet?")}{' '}
+                <Trans>
+                  See <a href="/register/">registration steps</a>
+                </Trans>
               </Form.Text>
             </Form>
           </Card.Body>

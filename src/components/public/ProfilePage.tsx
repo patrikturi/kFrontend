@@ -1,6 +1,6 @@
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +8,8 @@ import { useFetch } from 'react-use-fetch-ts';
 import { getProfileConfig, PlayerProfile } from '../../common/fetchConfig';
 import Spinner from '../common/Spinner';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { checkResponseErrors } from '../../common/utils';
 
 const Panel = styled.div`
   margin: 0 auto;
@@ -28,41 +30,46 @@ const ProfilePicture = styled.img`
   border: 2px solid white;
 `;
 
-const renderProfile = (profileData: PlayerProfile): JSX.Element => {
-  const user_details = profileData.user_details;
-  let paragraphs: JSX.Element[] = [];
-  if (user_details.length > 0 && user_details[0].biography) {
-    paragraphs = user_details[0].biography.split('\n').map(
-      (par: string): JSX.Element => (
-        <>
-          {par}
-          <br />
-        </>
-      )
-    );
-  }
-
-  return (
-    <>
-      <h2>{profileData.display_name}</h2>
-      <ProfilePicture src={profileData.profile_picture_url} alt="profile" />
-      <h3>Introduction</h3>
-      <p>{profileData.introduction}</p>
-      <h3>Profile</h3>
-      <p>{paragraphs}</p>
-      <h3>Stats</h3>
-      <p>
-        Matches: {profileData.matches}, Goals: {profileData.goals}, Assists:{' '}
-        {profileData.assists}, kCoins: {profileData.kcoins}
-      </p>
-      <p>Joined: {profileData.date_joined.split('T')[0]}</p>
-    </>
-  );
-};
-
 const ProfilePage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
+  const [message, setMessage] = useState('');
+  const { t } = useTranslation();
+
+  const renderProfile = (profileData: PlayerProfile): JSX.Element => {
+    const user_details = profileData.user_details;
+    let paragraphs: JSX.Element[] = [];
+    if (user_details.length > 0 && user_details[0].biography) {
+      paragraphs = user_details[0].biography.split('\n').map(
+        (par: string): JSX.Element => (
+          <>
+            {par}
+            <br />
+          </>
+        )
+      );
+    }
+
+    return (
+      <>
+        <h2>{profileData.display_name}</h2>
+        <ProfilePicture src={profileData.profile_picture_url} alt="profile" />
+        <h3>{t('Introduction')}</h3>
+        <p>{profileData.introduction}</p>
+        <h3>{t('Profile')}</h3>
+        <p>{paragraphs}</p>
+        <h3>{t('Stats')}</h3>
+        <p>
+          {t('Matches')}: {profileData.matches}, {t('Goals')}:{' '}
+          {profileData.goals}, {t('Assists')}: {profileData.assists},{' '}
+          {t('kCoins')}: {profileData.kcoins}
+        </p>
+        <p>
+          {t('Joined')}: {profileData.date_joined.split('T')[0]}
+        </p>
+      </>
+    );
+  };
 
   let parts = location.pathname.split('/');
   var profileId = parts.pop() || parts.pop();
@@ -73,18 +80,20 @@ const ProfilePage: React.FC = () => {
     history.goBack();
   };
 
-  let displayProfile: JSX.Element = <div></div>;
+  const responseStatus = fetchProfileState.responseStatus;
 
-  if (fetchProfileState.loading) {
-    displayProfile = <Spinner />;
-  } else if (fetchProfileState.error) {
-    if (fetchProfileState.responseStatus === 404) {
-      displayProfile = <div>No such user.</div>;
+  useEffect(() => {
+    if (responseStatus === 200 && !fetchProfileState.error) {
+    } else if (responseStatus === 404) {
+      setMessage(t('No such user'));
     } else {
-      displayProfile = <div>Failed to load profile.</div>;
+      checkResponseErrors(fetchProfileState, t, setMessage);
     }
-  } else if (fetchProfileState.result) {
-    displayProfile = renderProfile(fetchProfileState.result);
+  }, [responseStatus, fetchProfileState, t]);
+
+  let displayResults: JSX.Element = <div>{message}</div>;
+  if (responseStatus === 200 && fetchProfileState.result) {
+    displayResults = renderProfile(fetchProfileState.result);
   }
 
   return (
@@ -93,9 +102,11 @@ const ProfilePage: React.FC = () => {
         <div onClick={handleGoBack}>
           <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" />
         </div>{' '}
-        Go back
+        {t('Go back')}
       </GoBack>
-      <Panel className="col-md-8 text-left">{displayProfile}</Panel>
+      <Panel className="col-md-8 text-left">
+        {fetchProfileState.loading ? <Spinner /> : displayResults}
+      </Panel>
     </Row>
   );
 };

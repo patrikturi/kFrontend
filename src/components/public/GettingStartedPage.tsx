@@ -4,6 +4,7 @@ import { PRIMARY_COLOR } from '../../common/styles';
 import Totems from '../../img/totems.png';
 import { Row } from 'react-bootstrap';
 import { LOGIN_ENABLED } from '../../Settings';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Panel = styled.div`
   margin: 0 auto;
@@ -32,22 +33,28 @@ const Num = styled.span`
 `;
 
 export const GettingStartedPage = () => {
+  const { t } = useTranslation();
+
   return (
     <Row className="pt-5 pb-5 m-0">
       <Panel className="col-md-8 text-left">
-        <Title>Getting Started with kSoccer</Title>
+        <Title>{t('Getting Started with kSoccer')}</Title>
         <Step>
-          <Num>1.</Num> If you are not a <em>SecondLife</em> player,{' '}
-          <a
-            href="https://secondlife.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            click here
-          </a>{' '}
-          to register and download the game
+          <Num>1.</Num>{' '}
+          <Trans>
+            If you are not a <em>SecondLife</em> player,{' '}
+            <a
+              href="https://secondlife.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              click here
+            </a>{' '}
+            to register and download the game
+          </Trans>
         </Step>
         <Step>
+          {/* FIXME: This does not take directly to the field! +is this the default field? */}
           <Num>2.</Num> Teleport to a soccer field in the game with{' '}
           <a
             href="http://maps.secondlife.com/secondlife/JHRA/213/167/22"
@@ -60,7 +67,7 @@ export const GettingStartedPage = () => {
         </Step>
         <Step>
           <Num>3.</Num> Find the kSoccer totems and click one of them to get a
-          new HUD.
+          new HUD
         </Step>
         <p>The totems look like this:</p>
         <ImgWrapper>
@@ -95,7 +102,7 @@ export const GettingStartedPage = () => {
           {LOGIN_ENABLED && (
             <li>
               <a href="/register/">Register / Log in</a> to see your stats and
-              manage your profile (not required to start playing the game)
+              manage your profile (not required to start playing)
             </li>
           )}
         </ul>

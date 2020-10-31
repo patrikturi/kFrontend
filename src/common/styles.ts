@@ -1,4 +1,5 @@
 export const PRIMARY_COLOR = '#E3C190';
+export const SECONDARY_COLOR = '#FFF';
 
 export const NAVBAR_FONT_SIZE = '30px';
 export const NAVBAR_HEIGHT = '112px';

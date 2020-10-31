@@ -10,9 +10,9 @@ import {
 } from '../../common/styles';
 import TitleBePart from '../../img/title_be_part.png';
 import TitleJoinUs from '../../img/title_join_us.png';
-// import { Trans, useTranslation } from 'react-i18next';
 import SearchPlayerInput from './SearchPlayerInput';
 import { LOGIN_ENABLED } from '../../Settings';
+import { useTranslation } from 'react-i18next';
 
 const TitlePart1 = styled.div`
   margin-top: 40px;
@@ -191,7 +191,7 @@ export const LandingPage: React.FC = () => {
   const [isLoginPresed, setLoginPressed] = useState(false);
   const [isRegisterPresed, setRegisterPressed] = useState(false);
   const history = useHistory();
-  // const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const handleLoginDown = () => {
     setLoginPressed(true);
@@ -227,11 +227,11 @@ export const LandingPage: React.FC = () => {
       <TitlePart1 />
       <TitlePart2 />
       <Introduction>
-        kSoccer is a soccer system with focus on arcade gameplay: easy, fluid
-        and fast - but not 100% realistic. In the moment we are on BETA version,
-        doing tests and adjustments for a clean and perfect release. Looking for
-        a new soccer concept on Second Life, but still inspired on old Second
-        Football.
+        kSoccer is a soccer system in the game SecondLife. Its focus is arcade
+        gameplay: easy, fluid and fast - but not 100% realistic. At the moment
+        we are on BETA version, doing tests and adjustments for a clean and
+        perfect release. Looking for a new soccer concept on Second Life, but
+        still inspired on old Second Football.
       </Introduction>
       <ButtonRow>
         {LOGIN_ENABLED && (
@@ -240,18 +240,18 @@ export const LandingPage: React.FC = () => {
               onMouseDown={handleLoginDown}
               onMouseUp={handleLoginUp}
             >
-              <LoginText>LOGIN</LoginText>
+              <LoginText>{t('LOGIN')}</LoginText>
             </LoginButton>
             <RegisterButton
               onMouseDown={handleRegisterDown}
               onMouseUp={handleRegisterUp}
             >
-              <RegisterText>REGISTER</RegisterText>
+              <RegisterText>{t('REGISTER')}</RegisterText>
             </RegisterButton>
           </>
         )}
         {!LOGIN_ENABLED && (
-          <LoginSoon>Login/Registration is coming soon</LoginSoon>
+          <LoginSoon>{t('Login is temporarily disabled')}</LoginSoon>
         )}
       </ButtonRow>
     </>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { WIDTH_XS } from '../../common/styles';
 import SearchImg from '../../img/search_icon.png';
@@ -65,6 +66,8 @@ interface Props {
 }
 
 const SearchPlayerInput: React.FC<Props> = (props: Props) => {
+  const { t } = useTranslation();
+
   return (
     <Container onClick={props.onClick} onBlur={props.onBlur}>
       {props.isTyping || !!props.value ? (
@@ -77,7 +80,7 @@ const SearchPlayerInput: React.FC<Props> = (props: Props) => {
       ) : (
         <>
           <SearchIcon src={SearchImg} alt="icon" />
-          <SearchLabel>SEARCH A PLAYER</SearchLabel>
+          <SearchLabel>{t('SEARCH A PLAYER')}</SearchLabel>
         </>
       )}
     </Container>

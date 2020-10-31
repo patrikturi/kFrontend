@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Card, Row } from 'react-bootstrap';
 import SearchPlayerInput from './SearchPlayerInput';
@@ -7,6 +7,9 @@ import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { searchConfig, SearchResult } from '../../common/fetchConfig';
 import { useFetch } from 'react-use-fetch-ts';
 import Spinner from '../common/Spinner';
+import { useTranslation } from 'react-i18next';
+import { checkResponseErrors } from '../../common/utils';
+import { COLOR_FAILURE, SECONDARY_COLOR } from '../../common/styles';
 
 const Panel = styled.div`
   margin: 0 auto;
@@ -61,6 +64,10 @@ const PlayerIntroduction = styled.div``;
 export const SearchPlayerPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(true);
+  const { t } = useTranslation();
+  const defaultMessage: string = t('No results yet');
+  const [message, setMessage] = useState(defaultMessage);
+  const [hasError, setHasError] = useState(false);
 
   const [searchResult, search] = useFetch(searchConfig);
 
@@ -85,7 +92,12 @@ export const SearchPlayerPage = () => {
       if (!inputValue) {
         setIsTyping(!isTyping);
       } else {
-        search(inputValue);
+        if (inputValue.length < 3) {
+          setMessage(t('Search term is too short'));
+          setHasError(true);
+        } else {
+          search(inputValue);
+        }
       }
     }
   };
@@ -119,21 +131,28 @@ export const SearchPlayerPage = () => {
     });
   }
 
-  let displayResults: JSX.Element = <></>;
+  useEffect(() => {
+    const responseStatus = searchResult.responseStatus;
 
-  if (searchResult.loading) {
-    displayResults = <Spinner />;
-  } else if (searchResult.error) {
-    if (searchResult.responseStatus === 400) {
-      displayResults = <div>Search term too short, try a longer one</div>;
+    if (responseStatus === 200 && !searchResult.error) {
+      setMessage('');
+      if (results.length === 0) {
+        setMessage(t('No results'));
+        setHasError(false);
+      }
     } else {
-      displayResults = <div>Search failed. Please try again later.</div>;
+      checkResponseErrors(searchResult, t, setMessage, setHasError);
     }
-  } else if (searchResult.result) {
-    displayResults = results.length === 0 ? <div>No results</div> : results;
-  } else {
-    displayResults = <div>No results yet</div>;
-  }
+  }, [searchResult, setMessage, t, results.length]);
+
+  const displayResults =
+    results.length > 0 ? (
+      results
+    ) : (
+      <div style={{ color: hasError ? COLOR_FAILURE : SECONDARY_COLOR }}>
+        {message}
+      </div>
+    );
 
   return (
     <>
@@ -151,13 +170,13 @@ export const SearchPlayerPage = () => {
           <a href="/">
             <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" />
           </a>{' '}
-          Go back
+          {t('Go back')}
         </GoBack>
       </Row>
       <Row className="p-0 m-0">
         <Panel className="col-md-8 text-left">
-          <h2 style={{ marginBottom: '30px' }}>Search Results</h2>
-          {displayResults}
+          <h2 style={{ marginBottom: '30px' }}>{t('Search Results')}</h2>
+          {searchResult.loading ? <Spinner /> : displayResults}
         </Panel>
       </Row>
     </>

@@ -7,9 +7,10 @@ set -ex
 python -m unittest discover scripts
 
 ./scripts/switchconfig.sh $1
-yarn run build
 
 export PATH="$(yarn global bin):$PATH"
 i18next
 ./scripts/translations.py normalize
 ./scripts/translations.py verify
+
+yarn run build

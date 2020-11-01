@@ -36,12 +36,12 @@ jobs:
       - bash: ./scripts/ci/build.sh staging
         displayName: 'Build'
 
-      - bash: ./scripts/ci/deploy.sh staging
-        displayName: 'Deploy to Staging'
-        env:
-          FIREBASE_TOKEN: $(FIREBASE_TOKEN)
-
       - bash: ./scripts/ci/push_translations.sh staging
         displayName: 'Upload Translations'
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
+
+      - bash: ./scripts/ci/deploy.sh staging
+        displayName: 'Deploy to Staging'
+        env:
+          FIREBASE_TOKEN: $(FIREBASE_TOKEN)

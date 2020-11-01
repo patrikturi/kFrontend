@@ -37,12 +37,12 @@ jobs:
       - bash: ./scripts/ci/build.sh production
         displayName: 'Build'
 
-      - bash: ./scripts/ci/deploy.sh production
-        displayName: 'Deploy to Production'
-        env:
-          FIREBASE_TOKEN: $(FIREBASE_TOKEN)
-
       - bash: ./scripts/ci/push_translations.sh production
         displayName: 'Upload Translations'
         env:
           DROPBOX_ACCESS_TOKEN: $(DROPBOX_ACCESS_TOKEN)
+
+      - bash: ./scripts/ci/deploy.sh production
+        displayName: 'Deploy to Production'
+        env:
+          FIREBASE_TOKEN: $(FIREBASE_TOKEN)

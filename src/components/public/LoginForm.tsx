@@ -117,14 +117,22 @@ export const LoginForm = (props: Props) => {
             <Form onSubmit={handleLogin}>
               <Form.Group>
                 <label htmlFor="first_name">{t('SL First Name')}</label>
-                <input type="text" className="form-control" id="first_name" />
+                <input
+                  type="text"
+                  className="form-control"
+                  id="slFirstName"
+                  name="slfirstname"
+                  autoComplete="sl-first-name"
+                />
               </Form.Group>
               <Form.Group>
                 <label htmlFor="last_name">{t('SL Last Name')}</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="last_name"
+                  id="slLastName"
+                  name="sllastname"
+                  autoComplete="sl-last-name"
                   placeholder="Resident"
                 />
               </Form.Group>
@@ -133,7 +141,9 @@ export const LoginForm = (props: Props) => {
                 <input
                   type="password"
                   className="form-control"
-                  id="exampleInputPassword1"
+                  id="password"
+                  name="password"
+                  autoComplete="password"
                 />
               </Form.Group>
               <Form.Group>

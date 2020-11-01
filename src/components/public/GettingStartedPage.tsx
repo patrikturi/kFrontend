@@ -42,7 +42,7 @@ export const GettingStartedPage = () => {
         <Step>
           <Num>1.</Num>{' '}
           <Trans>
-            If you are not a <em>SecondLife</em> player,{' '}
+            If you are not a <em>Second Life</em> player,{' '}
             <a
               href="https://secondlife.com"
               target="_blank"

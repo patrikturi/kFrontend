@@ -227,11 +227,10 @@ export const LandingPage: React.FC = () => {
       <TitlePart1 />
       <TitlePart2 />
       <Introduction>
-        kSoccer is a soccer system in the game SecondLife. Its focus is arcade
+        kSoccer is a soccer system in the game Second Life. Its focus is arcade
         gameplay: easy, fluid and fast - but not 100% realistic. At the moment
         we are on BETA version, doing tests and adjustments for a clean and
-        perfect release. Looking for a new soccer concept on Second Life, but
-        still inspired on old Second Football.
+        perfect release.
       </Introduction>
       <ButtonRow>
         {LOGIN_ENABLED && (

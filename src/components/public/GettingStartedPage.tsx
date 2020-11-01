@@ -92,7 +92,7 @@ export const GettingStartedPage = () => {
           <Num>3.</Num>{' '}
           {t('Find the kSoccer totems and click one of them to get a new HUD')}
         </Step>
-        <p>{t('The totems look like this:')}</p>
+        <p>{t('The totems look like this')}:</p>
         <ImgWrapper>
           <img src={Totems} alt="Totems" style={{ maxWidth: '100%' }} />
         </ImgWrapper>
@@ -112,7 +112,7 @@ export const GettingStartedPage = () => {
           <Num>6.</Num>{' '}
           {t('Kick the ball with holding left click then releasing it')}
         </Step>
-        {t('Is that all? No...')}
+        {t('Is that all? No')}...
         <ul>
           <li>
             <Trans>

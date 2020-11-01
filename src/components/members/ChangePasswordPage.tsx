@@ -32,7 +32,7 @@ const ChangePasswordPage = () => {
     const responseStatus = changePasswordResult.responseStatus;
 
     if (responseStatus === 200 && !changePasswordResult.error) {
-      setMessage(t('Password updated! You will be logged out now...'));
+      setMessage(t('Password updated! You will be logged out now') + '...');
       setHasError(false);
       setTimeout(logoutCallback, 4000);
     } else if (responseStatus === 403) {
@@ -40,7 +40,9 @@ const ChangePasswordPage = () => {
       setHasError(true);
     } else if (responseStatus === 401) {
       setMessage(
-        t('Request failed. Please try logging out and logging in again.')
+        t('Request failed.') +
+          ' ' +
+          t('Please try logging out and logging in again.')
       );
       setHasError(true);
     } else {
@@ -70,7 +72,7 @@ const ChangePasswordPage = () => {
       setMessage(t('Repeat New Password is empty'));
       error = true;
     } else if (newPassword.length < 8) {
-      setMessage(t(`New Password must be at least ${8} characters long`));
+      setMessage(t('New Password must be at least 8 characters long'));
       error = true;
     } else if (newPassword !== newPassword2) {
       setMessage(t('The specified passwords do not match'));

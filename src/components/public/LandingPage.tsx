@@ -227,11 +227,14 @@ export const LandingPage: React.FC = () => {
       <TitlePart1 />
       <TitlePart2 />
       <Introduction>
+        <Trans>kSoccer is a soccer system in the game Second Life.</Trans>{' '}
         <Trans>
-          kSoccer is a soccer system in the game Second Life. Its focus is
-          arcade gameplay: easy, fluid and fast - but not 100% realistic. At the
-          moment we are on BETA version, doing tests and adjustments for a clean
-          and perfect release
+          Its focus is arcade gameplay: easy, fluid and fast - but not 100%
+          realistic.
+        </Trans>{' '}
+        <Trans>
+          At the moment we are on BETA version, doing tests and adjustments for
+          a clean and perfect release.
         </Trans>
       </Introduction>
       <ButtonRow>
@@ -241,13 +244,13 @@ export const LandingPage: React.FC = () => {
               onMouseDown={handleLoginDown}
               onMouseUp={handleLoginUp}
             >
-              <LoginText>{t('LOGIN')}</LoginText>
+              <LoginText>{t('Login').toUpperCase()}</LoginText>
             </LoginButton>
             <RegisterButton
               onMouseDown={handleRegisterDown}
               onMouseUp={handleRegisterUp}
             >
-              <RegisterText>{t('REGISTER')}</RegisterText>
+              <RegisterText>{t('Register').toUpperCase()}</RegisterText>
             </RegisterButton>
           </>
         )}

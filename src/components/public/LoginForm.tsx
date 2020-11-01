@@ -122,7 +122,6 @@ export const LoginForm = (props: Props) => {
                   className="form-control"
                   id="first-name"
                   name="first-name"
-                  autoComplete="sl-first-name"
                 />
               </Form.Group>
               <Form.Group>
@@ -131,8 +130,7 @@ export const LoginForm = (props: Props) => {
                   type="text"
                   className="form-control"
                   id="last-name"
-                  name="last-name"
-                  placeholder="Resident"
+                  autoComplete="nope"
                 />
               </Form.Group>
               <Form.Group>
@@ -142,7 +140,6 @@ export const LoginForm = (props: Props) => {
                   className="form-control"
                   id="password"
                   name="password"
-                  autoComplete="password"
                 />
               </Form.Group>
               <Form.Group>

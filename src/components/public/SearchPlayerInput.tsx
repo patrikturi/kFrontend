@@ -80,7 +80,7 @@ const SearchPlayerInput: React.FC<Props> = (props: Props) => {
       ) : (
         <>
           <SearchIcon src={SearchImg} alt="icon" />
-          <SearchLabel>{t('SEARCH A PLAYER')}</SearchLabel>
+          <SearchLabel>{t('Search a player').toUpperCase()}</SearchLabel>
         </>
       )}
     </Container>

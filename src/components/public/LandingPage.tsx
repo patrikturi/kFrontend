@@ -12,7 +12,7 @@ import TitleBePart from '../../img/title_be_part.png';
 import TitleJoinUs from '../../img/title_join_us.png';
 import SearchPlayerInput from './SearchPlayerInput';
 import { LOGIN_ENABLED } from '../../Settings';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 const TitlePart1 = styled.div`
   margin-top: 40px;
@@ -227,10 +227,12 @@ export const LandingPage: React.FC = () => {
       <TitlePart1 />
       <TitlePart2 />
       <Introduction>
-        kSoccer is a soccer system in the game Second Life. Its focus is arcade
-        gameplay: easy, fluid and fast - but not 100% realistic. At the moment
-        we are on BETA version, doing tests and adjustments for a clean and
-        perfect release.
+        <Trans>
+          kSoccer is a soccer system in the game Second Life. Its focus is
+          arcade gameplay: easy, fluid and fast - but not 100% realistic. At the
+          moment we are on BETA version, doing tests and adjustments for a clean
+          and perfect release
+        </Trans>
       </Introduction>
       <ButtonRow>
         {LOGIN_ENABLED && (

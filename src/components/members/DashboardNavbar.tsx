@@ -13,6 +13,8 @@ import { useFetch } from 'react-use-fetch-ts';
 import { useHistory } from 'react-router-dom';
 import { SiteContext } from '../../context/SiteContext';
 import { getMyProfileConfig } from '../../common/fetchConfig';
+import { useTranslation } from 'react-i18next';
+import { checkResponseErrorsWithLogout } from '../../common/utils';
 
 const StyledNavbar = styled(BootstrapNavbar)`
   padding: 0;
@@ -55,6 +57,7 @@ const DashboardNavbar = (): JSX.Element => {
   const [context, dispatch] = useContext(SiteContext);
   const [getProfileResult, getProfile] = useFetch(getMyProfileConfig);
   const history = useHistory();
+  const { t } = useTranslation();
 
   let displayName = localStorage.getItem('displayName');
   let profilePictureUrl = localStorage.getItem('profilePictureUrl');
@@ -79,24 +82,26 @@ const DashboardNavbar = (): JSX.Element => {
   ]);
 
   useEffect(() => {
+    const setMessage = (message: string) => {
+      dispatch({
+        type: 'SET_ERROR_MESSAGE',
+        data: message,
+      });
+    };
     const responseStatus = getProfileResult.responseStatus;
-    if (responseStatus !== undefined) {
+
+    if (responseStatus) {
       dispatch({ type: 'CLEAR_LOADING' });
-      if (responseStatus === 200) {
-        dispatch({ type: 'SET_PROFILE', data: getProfileResult.result });
-      } else if (responseStatus === 401) {
-        dispatch({ type: 'LOGOUT_SUCCESS' });
-        history.push('/login/');
-      } else if (responseStatus >= 500) {
-        dispatch({
-          type: 'SET_ERROR_MESSAGE',
-          data: 'Unable to reach the server. Please try again later.',
-        });
-      } else {
-        dispatch({ type: 'SET_ERROR_MESSAGE', data: 'Something went wrong.' });
-      }
     }
-  }, [history, dispatch, getProfileResult]);
+
+    if (responseStatus === 200 && !getProfileResult.error) {
+      dispatch({ type: 'SET_PROFILE', data: getProfileResult.result });
+      setMessage('');
+    } else {
+      const res = getProfileResult;
+      checkResponseErrorsWithLogout(res, t, dispatch, history, setMessage);
+    }
+  }, [history, dispatch, getProfileResult, t]);
 
   const handleLogout = () => {
     logout();
@@ -133,19 +138,19 @@ const DashboardNavbar = (): JSX.Element => {
         <LinkContainer to="/dashboard/profile/">
           <StyledDropdownItem key="edit-profile">
             <StyledIcon icon={faUser} />
-            Edit Profile
+            {t('Edit Profile')}
           </StyledDropdownItem>
         </LinkContainer>
         <LinkContainer to="/dashboard/password-change/">
           <StyledDropdownItem key="change-password">
             <StyledIcon icon={faKey} />
-            Change Password
+            {t('Change Password')}
           </StyledDropdownItem>
         </LinkContainer>
         <NavDropdown.Divider />
         <StyledDropdownItem key="logout" onSelect={handleLogout}>
           <StyledIcon icon={faSignOutAlt} />
-          Logout
+          {t('Logout')}
         </StyledDropdownItem>
       </StyledNavDropdown>
     </StyledNavbar>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import DashboardNavbar from './DashboardNavbar';
@@ -46,33 +46,35 @@ const FooterText = styled.div`
 export const Dashboard = (): JSX.Element => {
   return (
     <StyledDashboard>
-      <Sidebar></Sidebar>
-      <ContentWrapper>
-        <Content>
-          <DashboardNavbar></DashboardNavbar>
-          <StyledContainer fluid>
-            <Switch>
-              <Route
-                exact
-                path="/dashboard/"
-                component={DashboardHomePage}
-              ></Route>
-              <Route
-                path="/dashboard/profile"
-                component={EditProfilePage}
-              ></Route>
-              <Route
-                path="/dashboard/password-change"
-                component={ChangePasswordPage}
-              ></Route>
-              <Route component={DashboardHomePage} />
-            </Switch>
-          </StyledContainer>
-        </Content>
-        <Footer>
-          <FooterText>Copyright © kSoccer 2020</FooterText>
-        </Footer>
-      </ContentWrapper>
+      <Suspense fallback="Loading">
+        <Sidebar></Sidebar>
+        <ContentWrapper>
+          <Content>
+            <DashboardNavbar></DashboardNavbar>
+            <StyledContainer fluid>
+              <Switch>
+                <Route
+                  exact
+                  path="/dashboard/"
+                  component={DashboardHomePage}
+                ></Route>
+                <Route
+                  path="/dashboard/profile"
+                  component={EditProfilePage}
+                ></Route>
+                <Route
+                  path="/dashboard/password-change"
+                  component={ChangePasswordPage}
+                ></Route>
+                <Route component={DashboardHomePage} />
+              </Switch>
+            </StyledContainer>
+          </Content>
+          <Footer>
+            <FooterText>Copyright © kSoccer 2020</FooterText>
+          </Footer>
+        </ContentWrapper>
+      </Suspense>
     </StyledDashboard>
   );
 };

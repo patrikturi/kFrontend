@@ -6,6 +6,8 @@ import { COLOR_FAILURE, COLOR_SUCCESS } from '../../common/styles';
 import { SiteContext } from '../../context/SiteContext';
 import Spinner from '../common/Spinner';
 import PageTitle from './atoms/PageTitle';
+import { useTranslation } from 'react-i18next';
+import { checkResponseErrors } from '../../common/utils';
 
 const ChangePasswordPage = () => {
   const [context, dispatch] = useContext(SiteContext);
@@ -15,56 +17,42 @@ const ChangePasswordPage = () => {
   const [changePasswordResult, changePassword] = useFetch(changePasswordConfig);
   const [message, setMessage] = useState('');
   const [hasError, setHasError] = useState(false);
+  const { t } = useTranslation();
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
 
   useEffect(() => {
     const responseStatus = changePasswordResult.responseStatus;
-    if (responseStatus && responseStatus >= 400) {
-      if (responseStatus >= 500) {
-        setMessage(
-          'Unable to reach the server at the moment. Please try again later.'
-        );
-      } else if (responseStatus === 400) {
-        setMessage(
-          'New Password was not accepted. Try choosing a different password.'
-        );
-      } else if (responseStatus === 401) {
-        setMessage('Old Password is incorrect');
-      } else {
-        setMessage('Something went wrong');
-      }
-      setHasError(true);
-    } else if (responseStatus === 200) {
-      setMessage('Password updated');
+
+    if (responseStatus === 200 && !hasError) {
+      setMessage(t('Password updated'));
       setHasError(false);
+    } else if (responseStatus === 401) {
+      setMessage(t('Old Password is incorrect'));
+      setHasError(true);
+    } else {
+      checkResponseErrors(changePasswordResult, t, setMessage, setHasError);
     }
-  }, [
-    dispatch,
-    changePasswordResult.result,
-    changePasswordResult.responseStatus,
-    hasError,
-    message,
-  ]);
+  }, [dispatch, changePasswordResult, hasError, message, t]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let error = false;
     if (!oldPassword) {
-      setMessage('Old Password is empty');
+      setMessage(t('Old Password is empty'));
       error = true;
     } else if (!newPassword) {
-      setMessage('New Password is empty');
+      setMessage(t('New Password is empty'));
       error = true;
     } else if (!newPassword2) {
-      setMessage('Repeat New Password is empty');
+      setMessage(t('Repeat New Password is empty'));
       error = true;
     } else if (newPassword.length < 8) {
-      setMessage('New Password must be at least 8 characters long');
+      setMessage(t(`New Password must be at least ${8} characters long`));
       error = true;
     } else if (newPassword !== newPassword2) {
-      setMessage('The specified passwords do not match');
+      setMessage(t('The specified passwords do not match'));
       error = true;
     }
     if (error) {
@@ -107,7 +95,7 @@ const ChangePasswordPage = () => {
       <Row>
         <Col xl={3}>
           <Form.Group>
-            <Form.Label>Old Password</Form.Label>
+            <Form.Label>{t('Old Password')}</Form.Label>
             <Form.Control
               value={oldPassword}
               onChange={onChangeOldPassword}
@@ -115,7 +103,7 @@ const ChangePasswordPage = () => {
             ></Form.Control>
           </Form.Group>
           <Form.Group>
-            <Form.Label>New Password</Form.Label>
+            <Form.Label>{t('New Password')}</Form.Label>
             <Form.Control
               value={newPassword}
               onChange={onChangeNewPassword}
@@ -123,7 +111,7 @@ const ChangePasswordPage = () => {
             ></Form.Control>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Repeat New Password</Form.Label>
+            <Form.Label>{t('Repeat New Password')}</Form.Label>
             <Form.Control
               value={newPassword2}
               onChange={onChangeNewPassword2}
@@ -139,7 +127,7 @@ const ChangePasswordPage = () => {
                 className="btn-primary"
                 style={{ width: '100%' }}
               >
-                Save
+                {t('Save')}
               </Button>
             )}
           </div>
@@ -160,7 +148,7 @@ const ChangePasswordPage = () => {
 
   return (
     <>
-      <PageTitle>Change Password</PageTitle>
+      <PageTitle>{t('Change Password')}</PageTitle>
       {context.errorMessage && (
         <div style={{ color: COLOR_FAILURE }}>{context.errorMessage}</div>
       )}

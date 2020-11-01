@@ -15,6 +15,8 @@ import { SiteContext } from '../../context/SiteContext';
 import { useHistory } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 import { COLOR_FAILURE } from '../../common/styles';
+import { useTranslation } from 'react-i18next';
+import { checkResponseLogout } from '../../common/utils';
 
 const TitleRow = styled.div`
   display: flex;
@@ -26,16 +28,16 @@ const DashboardHomePage = () => {
   const [patchProfileResult, patchProfile] = useFetch(patchProfileConfig);
   const [context, dispatch] = useContext(SiteContext);
   const history = useHistory();
+  const { t } = useTranslation();
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
 
   useEffect(() => {
     const responseStatus = patchProfileResult.responseStatus;
-    if (responseStatus === 200) {
+    if (responseStatus === 200 && !patchProfileResult.error) {
       dispatch({ type: 'UPDATE_PROFILE', data: patchProfileResult.result });
-    } else if (responseStatus === 401) {
-      dispatch({ type: 'LOGOUT_SUCCESS' });
-      history.push('/login/');
+    } else {
+      checkResponseLogout(patchProfileResult, dispatch, history);
     }
   }, [dispatch, history, patchProfileResult]);
 
@@ -51,25 +53,25 @@ const DashboardHomePage = () => {
       <StatCard
         variant="warning"
         icon={faTrophy}
-        name="kCoins"
+        name={t('kCoins')}
         value={context.kcoins ?? '?'}
       ></StatCard>
       <StatCard
         variant="primary"
         icon={faFutbol}
-        name="Goals"
+        name={t('Goals')}
         value={context.goals ?? '?'}
       ></StatCard>
       <StatCard
         variant="success"
         icon={faHandsHelping}
-        name="Assists"
+        name={t('Assists')}
         value={context.assists ?? '?'}
       ></StatCard>
       <StatCard
         variant="info"
         icon={faStopwatch}
-        name="Matches"
+        name={t('Matches')}
         value={context.matches ?? '?'}
       ></StatCard>
     </Row>
@@ -78,16 +80,16 @@ const DashboardHomePage = () => {
   return (
     <>
       <TitleRow>
-        <PageTitle>Dashboard</PageTitle>
+        <PageTitle>{t('Dashboard')}</PageTitle>
         <Form.Group>
           <Form.Check
             type="checkbox"
-            label="Available for transfer"
+            label={t('Available for transfer')}
             disabled={context.isLoading}
             checked={context.availableForTransfer || false}
             onChange={handleAvailabilityChange}
           />
-          <Form.Text>Check this if you are looking for a club</Form.Text>
+          <Form.Text>{t('Check this if you are looking for a club')}</Form.Text>
         </Form.Group>
       </TitleRow>
       {context.errorMessage && (

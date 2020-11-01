@@ -1,3 +1,4 @@
+import * as H from 'history';
 import { FetchState } from 'react-use-fetch-ts';
 import { TFunction } from 'i18next';
 
@@ -32,3 +33,30 @@ export const checkResponseErrors = (
     setError(true);
   }
 };
+
+export const checkResponseErrorsWithLogout = (
+  requestResult: FetchState<any, any>,
+  t: TFunction,
+  dispatch: React.Dispatch<any>,
+  history: H.History<any>,
+  setErrorMessage: (value: any) => void,
+  setHasError?: (hasError: any) => void
+) => {
+  if(requestResult.responseStatus === 401) {
+    dispatch({ type: 'LOGOUT_SUCCESS' });
+    history.push('/login/');
+  } else {
+    checkResponseErrors(requestResult, t, setErrorMessage, setHasError);
+  }
+}
+
+export const checkResponseLogout = (
+  requestResult: FetchState<any, any>,
+  dispatch: React.Dispatch<any>,
+  history: H.History<any>,
+) => {
+  if(requestResult.responseStatus === 401) {
+    dispatch({ type: 'LOGOUT_SUCCESS' });
+    history.push('/login/');
+  }
+}

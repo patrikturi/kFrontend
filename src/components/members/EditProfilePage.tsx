@@ -6,6 +6,9 @@ import { COLOR_FAILURE, COLOR_SUCCESS } from '../../common/styles';
 import { SiteContext } from '../../context/SiteContext';
 import Spinner from '../common/Spinner';
 import PageTitle from './atoms/PageTitle';
+import { useTranslation } from 'react-i18next';
+import { checkResponseErrorsWithLogout } from '../../common/utils';
+import { useHistory } from 'react-router-dom';
 
 const EditProfilePage = () => {
   const [context, dispatch] = useContext(SiteContext);
@@ -14,6 +17,8 @@ const EditProfilePage = () => {
   const [patchProfileResult, patchProfile] = useFetch(patchProfileConfig);
   const [message, setMessage] = useState('');
   const [hasError, setHasError] = useState(false);
+  const history = useHistory();
+  const { t } = useTranslation();
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
 
@@ -26,27 +31,22 @@ const EditProfilePage = () => {
 
   useEffect(() => {
     const responseStatus = patchProfileResult.responseStatus;
-    if (responseStatus && responseStatus >= 400) {
-      if (responseStatus >= 500) {
-        setMessage(
-          'Unable to reach the server at the moment. Please try again later.'
-        );
-      } else {
-        setMessage('Something went wrong');
-      }
-      setHasError(true);
-    } else if (responseStatus === 200) {
-      setMessage('Profile saved');
+
+    if (responseStatus === 200) {
+      setMessage(t('Profile saved'));
       setHasError(false);
       dispatch({ type: 'UPDATE_PROFILE', data: patchProfileResult.result });
+    } else {
+      checkResponseErrorsWithLogout(
+        patchProfileResult,
+        t,
+        dispatch,
+        history,
+        setMessage,
+        setHasError
+      );
     }
-  }, [
-    dispatch,
-    patchProfileResult.result,
-    patchProfileResult.responseStatus,
-    hasError,
-    message,
-  ]);
+  }, [dispatch, patchProfileResult, message, t, history]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,22 +77,22 @@ const EditProfilePage = () => {
       <Row>
         <Col xl={9}>
           <Form.Group controlId="introduction">
-            <Form.Label>Introduction</Form.Label>
+            <Form.Label>{t('Introduction')}</Form.Label>
             <Form.Control
               value={introduction}
               onChange={onChangeIntro}
             ></Form.Control>
-            <Form.Text>Your short introduction.</Form.Text>
+            <Form.Text>{t('Your short introduction')}</Form.Text>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Biography</Form.Label>
+            <Form.Label>{t('Biography')}</Form.Label>
             <Form.Control
               as="textarea"
               rows={12}
               value={biography}
               onChange={onChangeBio}
             />
-            <Form.Text>Your biography in kSoccer.</Form.Text>
+            <Form.Text>{t('Your biography in kSoccer')}</Form.Text>
           </Form.Group>
           <div style={{ height: '40px', width: '100px', marginBottom: '20px' }}>
             {patchProfileResult.loading ? (
@@ -103,7 +103,7 @@ const EditProfilePage = () => {
                 className="btn-primary"
                 style={{ width: '100%' }}
               >
-                Save
+                {t('Save')}
               </Button>
             )}
           </div>
@@ -117,7 +117,7 @@ const EditProfilePage = () => {
               {message}
             </label>
           </Form.Group>
-          <a href="/profile/2">See your profile here</a>
+          <a href="/profile/2">{t('See your profile here')}</a>
         </Col>
       </Row>
     </Form>
@@ -125,7 +125,7 @@ const EditProfilePage = () => {
 
   return (
     <>
-      <PageTitle>Edit Profile</PageTitle>
+      <PageTitle>{t('Edit Profile')}</PageTitle>
       {context.errorMessage && (
         <div style={{ color: COLOR_FAILURE }}>{context.errorMessage}</div>
       )}

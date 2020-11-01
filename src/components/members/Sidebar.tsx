@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ksoccerLogoImg from '../../img/ksoccer_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 const StyledSidebar = styled.div``;
 
@@ -83,6 +84,8 @@ const SiderbarHeading = styled.div`
 `;
 
 const Sidebar = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <StyledSidebar>
       <SidebarList>
@@ -95,14 +98,14 @@ const Sidebar = (): JSX.Element => {
         <li>
           <SidebarLink to={{ pathname: '/dashboard/' }}>
             <SidebarIcon icon={faTachometerAlt} />
-            Dashboard
+            {t('Dashboard')}
           </SidebarLink>
         </li>
         <SidebarDivider></SidebarDivider>
         <li>
           <SidebarLink to={{ pathname: '/dashboard/profile/' }}>
             <SidebarIcon icon={faUser} />
-            Profile
+            {t('Profile')}
           </SidebarLink>
         </li>
         <SiderbarHeading>Category</SiderbarHeading>

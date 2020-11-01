@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useFetch } from 'react-use-fetch-ts';
 import { changePasswordConfig } from '../../common/fetchConfig';
@@ -8,6 +8,7 @@ import Spinner from '../common/Spinner';
 import PageTitle from './atoms/PageTitle';
 import { useTranslation } from 'react-i18next';
 import { checkResponseErrors } from '../../common/utils';
+import { useHistory } from 'react-router-dom';
 
 const ChangePasswordPage = () => {
   const [context, dispatch] = useContext(SiteContext);
@@ -17,23 +18,43 @@ const ChangePasswordPage = () => {
   const [changePasswordResult, changePassword] = useFetch(changePasswordConfig);
   const [message, setMessage] = useState('');
   const [hasError, setHasError] = useState(false);
+  const history = useHistory();
   const { t } = useTranslation();
 
   const csrfToken = localStorage.getItem('csrfToken') || '';
 
+  const logoutCallback = useCallback(() => {
+    dispatch({ type: 'LOGOUT_SUCCESS' });
+    history.push('/login/');
+  }, [dispatch, history]);
+
   useEffect(() => {
     const responseStatus = changePasswordResult.responseStatus;
 
-    if (responseStatus === 200 && !hasError) {
-      setMessage(t('Password updated'));
+    if (responseStatus === 200 && !changePasswordResult.error) {
+      setMessage(t('Password updated! You will be logged out now...'));
       setHasError(false);
-    } else if (responseStatus === 401) {
+      setTimeout(logoutCallback, 4000);
+    } else if (responseStatus === 403) {
       setMessage(t('Old Password is incorrect'));
+      setHasError(true);
+    } else if (responseStatus === 401) {
+      setMessage(
+        t('Request failed. Please try logging out and logging in again.')
+      );
       setHasError(true);
     } else {
       checkResponseErrors(changePasswordResult, t, setMessage, setHasError);
     }
-  }, [dispatch, changePasswordResult, hasError, message, t]);
+  }, [
+    dispatch,
+    changePasswordResult,
+    setMessage,
+    hasError,
+    message,
+    t,
+    logoutCallback,
+  ]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -117,6 +138,11 @@ const ChangePasswordPage = () => {
               onChange={onChangeNewPassword2}
               type="password"
             ></Form.Control>
+            <Form.Text>
+              {t(
+                'You will be logged out and you must log in again with your new password.'
+              )}
+            </Form.Text>
           </Form.Group>
           <div style={{ height: '40px', width: '100px', marginBottom: '20px' }}>
             {changePasswordResult.loading ? (

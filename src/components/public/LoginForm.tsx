@@ -1,9 +1,20 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import { Card, Form, Button, Row } from 'react-bootstrap';
+import {
+  Card,
+  Form,
+  Button,
+  Row,
+  OverlayTrigger,
+  Popover,
+  PopoverContent,
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDoubleLeft,
+  faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { SiteContext } from '../../context/SiteContext';
 import { WIDTH_XS } from '../../common/styles';
 import { loginConfig } from '../../common/fetchConfig';
@@ -21,6 +32,14 @@ const Container = styled.div`
     margin-right: 10vw;
     margin-left: auto;
   }
+`;
+
+const NoWrap = styled.span`
+  white-space: nowrap;
+`;
+
+const InfoWrapper = styled.span`
+  margin-left: 10px;
 `;
 
 type Props = {};
@@ -55,10 +74,9 @@ export const LoginForm = (props: Props) => {
     e.preventDefault();
     const form: HTMLFormElement = e.currentTarget;
 
-    const firstNameField = form[0] as HTMLInputElement;
-    const lastNameField = form[1] as HTMLInputElement;
-    const passwordNameField = form[2] as HTMLInputElement;
-    const username = (firstNameField.value + ' ' + lastNameField.value).trim();
+    const fullNameField = form[0] as HTMLInputElement;
+    const passwordNameField = form[1] as HTMLInputElement;
+    const username = fullNameField.value.trim();
     const password = passwordNameField.value?.trim() || '';
 
     const formData = new FormData();
@@ -66,7 +84,7 @@ export const LoginForm = (props: Props) => {
     formData.append('password', password);
 
     if (!username) {
-      setErrorMessage(t('First Name is empty'));
+      setErrorMessage(t('Name field is empty'));
     } else if (!password) {
       setErrorMessage(t('Password is empty'));
     } else {
@@ -113,24 +131,36 @@ export const LoginForm = (props: Props) => {
           </Card.Header>
           <Card.Body className="text-left">
             <h2>{t('Log in')}</h2>
-            <p>{t('Log in to get access to your profile and stats')}</p>
+            <p>{t('Log in to access to your profile and stats')}</p>
             <Form onSubmit={handleLogin}>
               <Form.Group>
-                SL <label htmlFor="first-name">{t('First Name')}</label>
+                <label htmlFor="sl-full-name">{t('SL Full Name')}</label>
+                <InfoWrapper>
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Popover id="tooltip-fullname">
+                        <PopoverContent>
+                          <Trans>
+                            The name you use for logging in to{' '}
+                            <NoWrap>Second Life</NoWrap>.
+                          </Trans>
+                        </PopoverContent>
+                      </Popover>
+                    }
+                  >
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      style={{ color: '#007bff' }}
+                    />
+                  </OverlayTrigger>
+                </InfoWrapper>
                 <input
                   type="text"
                   className="form-control"
-                  id="first-name"
-                  name="first-name"
-                />
-              </Form.Group>
-              <Form.Group>
-                SL <label htmlFor="last-name">{t('Last Name')}</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="last-name"
-                  autoComplete="nope"
+                  id="slfullname"
+                  name="sl-full-name"
+                  autoComplete="sl-full-name"
                 />
               </Form.Group>
               <Form.Group>
